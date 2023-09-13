@@ -1,0 +1,9 @@
+@mixin spacing-x($property, $value: auto) {
+    #{$property}-right: $value;
+    #{$property}-left: $value;
+}
+
+@mixin spacing-y($property, $value: auto) {
+    #{$property}-top: $value;
+    #{$property}-bottom: $value;
+}
