@@ -18,5 +18,21 @@
     },
     "[json]": {
         "editor.defaultFormatter": "vscode.json-language-features"
-    }
+    },
+    "cSpell.words": [
+        "fontawesome",
+        "fortawesome",
+        "hocs",
+        "hookform",
+        "ickai",
+        "khóa",
+        "pendingpay",
+        "persistor",
+        "reduxjs",
+        "Swal",
+        "sweetalert",
+        "tippyjs",
+        "toastify",
+        "vnpay"
+    ]
 }

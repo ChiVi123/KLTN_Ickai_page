@@ -1,5 +1,7 @@
+import { Outlet } from 'react-router-dom';
+
 function PublicRoutes() {
-    return <div>PublicRoutes</div>;
+    return <Outlet />;
 }
 
 export default PublicRoutes;

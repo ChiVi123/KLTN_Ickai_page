@@ -1,0 +1,91 @@
+@use '../abstracts/color-v' as color;
+@use '../abstracts/spacing-m' as spa-m;
+@use '../abstracts/spacing-v' as spa-v;
+@use '../abstracts/typography-v' as typo;
+
+%df-align-center {
+    display: flex;
+    align-items: center;
+}
+
+.wrap {
+    --header-color: var(--primary-color);
+    --text-color: var(--typography-1-color);
+
+    position: sticky;
+    top: 0;
+    right: 0;
+    left: 0;
+    @extend %df-align-center;
+    height: var(--header-height);
+    background-color: var(--bg-color);
+    box-shadow: var(--shadow-theme);
+    z-index: 99;
+
+    &-row {
+        align-items: center;
+    }
+}
+
+.logo {
+    @extend %df-align-center;
+    column-gap: 10px;
+    height: 100%;
+    padding: 1px 2px;
+    color: var(--header-color);
+
+    &-wrap {
+        display: inline-flex;
+        border: none;
+    }
+
+    &-image {
+        font-size: 3.2rem;
+    }
+
+    &-text {
+        color: currentColor;
+        font-family: var(--font-reggae-one);
+    }
+}
+
+.form {
+    @extend %df-align-center;
+    height: 100%;
+
+    &-inner {
+        flex: 1px;
+        @extend %df-align-center;
+        height: 36px;
+        @include spa-m.spacing-x(padding, var(--spacer-3, #{spa-v.$spacer}));
+        border-radius: var(--round, #{spa-v.$round});
+        background-color: var(--bg-gray-color, #{color.$bg-gray-color});
+        color: var(--gray-color, #{color.$gray-color});
+    }
+}
+
+.input {
+    flex: 1;
+    margin-left: 6px;
+    background-color: transparent;
+    color: var(--text-color);
+}
+
+.separate {
+    width: 1px;
+    height: 14px;
+    @include spa-m.spacing-x(margin, 12px);
+    background-color: currentColor;
+}
+
+.btn-submit {
+    height: 100%;
+    color: currentColor;
+    font-size: #{typo.$font-size-sm};
+    line-height: #{typo.$line-height-xs};
+    cursor: pointer;
+
+    &:hover {
+        color: var(--header-color);
+    }
+}

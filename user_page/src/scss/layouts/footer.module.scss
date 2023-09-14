@@ -1,0 +1,17 @@
+@use '../abstracts/color-v' as color;
+@use '../abstracts/spacing-m' as space-m;
+@use '../abstracts/spacing-v' as space-v;
+@use '../abstracts/typography-v' as typo;
+
+.footer {
+    height: var(--footer-height);
+    @include space-m.spacing-y(padding, var(--spacer-3));
+    background-color: var(--bg-footer-color);
+}
+
+.text {
+    color: #{color.$white};
+    line-height: var(--line-height-xs);
+    font-size: #{typo.$font-size-sm};
+    text-align: center;
+}

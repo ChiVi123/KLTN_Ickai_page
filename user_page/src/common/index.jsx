@@ -1,5 +1,7 @@
 export * as autoCompletes from './autoCompletes';
 export * as contextButton from './contextButton';
+export * as contextPage from './contextPage';
+export * as contextParams from './contextParams';
 export * as directions from './directions';
 export * as enums from './enums';
 export * as errorMessages from './errorMessages';

@@ -1,0 +1,122 @@
+.inner {
+    margin: 4px 0;
+}
+
+.title {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.normal-text {
+    color: #666;
+    font-size: 1.4rem;
+
+    & ~ & {
+        padding-left: 4px;
+        margin-left: 6px;
+        border-left: 1px solid #666;
+    }
+}
+
+.tag {
+    --height: 24px;
+
+    display: inline-block;
+    height: var(--height);
+    padding: 0 8px;
+    border-radius: 20px;
+
+    color: var(--white);
+    line-height: var(--height);
+    font-size: 1.4rem;
+
+    &--delivery {
+        background-color: #22c55e;
+    }
+
+    &--complete {
+        background-color: var(--fourth-color);
+    }
+
+    &--process {
+        background-color: var(--primary);
+    }
+
+    &--pendingpay,
+    &--pending {
+        background-color: #ffd21e;
+    }
+
+    &--cancel {
+        background-color: var(--second-color);
+    }
+}
+
+.wrap-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+
+// Responsive
+
+/* Mobile, Tablet */
+@media screen and (max-width: 1023px) {
+}
+
+/* Tablet */
+@media screen and (min-width: 740px) and (max-width: 1023px) {
+    .section {
+        width: 100%;
+    }
+
+    .info {
+        width: 52rem;
+    }
+}
+
+/* Mobile */
+@media screen and (max-width: 739px) {
+    .section {
+        flex-direction: column;
+        align-items: flex-start;
+        width: 100%;
+    }
+
+    .info {
+        width: 14rem;
+        margin-bottom: 1.4rem;
+
+        &__section {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        &__summary {
+            display: none;
+        }
+    }
+
+    .bold-text {
+        margin-right: 1.4rem;
+        margin-bottom: 1.2rem;
+        font-size: 1.2rem;
+    }
+
+    .tag {
+        --height: 2.4rem;
+
+        padding: 0 0.4rem;
+        font-size: 1.2rem;
+    }
+
+    .normal-text {
+        & ~ & {
+            padding-left: 0;
+            margin-left: 0;
+            border-left: none;
+        }
+    }
+}

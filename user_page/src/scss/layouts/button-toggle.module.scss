@@ -1,0 +1,47 @@
+.btn {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    color: var(--text-1-color);
+    overflow: hidden;
+
+    &-icon {
+        position: absolute;
+        transition: left 0.4s;
+
+        &--moon {
+            height: 24px;
+        }
+
+        &:first-child {
+            left: 150%;
+        }
+
+        &:last-child {
+            left: 50%;
+            transform: translateX(-50%);
+        }
+    }
+
+    &--checked &-icon:first-child {
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    &--checked &-icon:last-child {
+        left: -150%;
+    }
+
+    & span {
+        width: 0;
+        height: 0;
+        opacity: 0;
+    }
+
+    &:hover * {
+        color: var(--primary-color);
+    }
+}

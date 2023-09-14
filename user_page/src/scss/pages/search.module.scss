@@ -1,0 +1,46 @@
+%df-dir-column {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--spacer-3);
+}
+
+.line {
+    width: 40px;
+    height: 0.5px;
+    border-radius: var(--spacer-1);
+    background-color: var(--bg-contrast-4-color);
+}
+
+.filter {
+    @extend %df-dir-column;
+
+    &-item {
+        @extend %df-dir-column;
+        padding-bottom: var(--spacer-1);
+        border-bottom: 1px solid var(--border-color);
+    }
+
+    &-input {
+        width: 68px;
+        padding: var(--spacer-1);
+        border: 1px solid var(--border-color);
+        border-radius: var(--spacer-1);
+    }
+}
+
+.form-price {
+    text-align: center;
+    font-size: 1.2rem;
+}
+
+.group-price {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 var(--spacer-2) var(--spacer-1);
+}
+
+.sorts,
+.list {
+    margin-bottom: var(--spacer-3);
+}
