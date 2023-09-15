@@ -23,9 +23,9 @@ function CartItem({ product, isLoading = false }) {
         setQuantity(value);
         setLoading(true);
 
-        const { productid: producId } = product;
+        const { productid: productId } = product;
         const data = {
-            producId,
+            productId,
             quantity: value - quantity,
             productOptionId: null,
             value: null,

@@ -9,6 +9,14 @@ const authServices = {
             console.log(error);
         }
     },
+    withSocial: async (data = { name: '', email: '', avatar: '' }) => {
+        try {
+            const response = await request.post('auth/register/social', data);
+            return response.data;
+        } catch (error) {
+            console.log(error);
+        }
+    },
     register: async (data) => {
         try {
             const response = await request.post('auth/register', data);

@@ -51,25 +51,6 @@ function Login() {
     });
 
     useEffect(() => {
-        if (userId) {
-            navigate(directions.home);
-        }
-    }, [userId, navigate]);
-    useEffect(() => {
-        if (profile) {
-            const result = {
-                id: profile.id,
-                email: profile.email,
-                name: profile.name,
-                avatar: profile.picture,
-            };
-
-            dispatch(userActions.addUser(result));
-            toast.success(notifies.loginGoogleSuccess);
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [profile]);
-    useEffect(() => {
         (async () => {
             if (user) {
                 const result = await googleServices.getProfile(
@@ -83,6 +64,27 @@ function Login() {
             setProfile(null);
         };
     }, [user]);
+    useEffect(() => {
+        if (userId) {
+            navigate(directions.home);
+        }
+    }, [userId, navigate]);
+    useEffect(() => {
+        (async () => {
+            if (profile) {
+                const data = {
+                    id: profile.id,
+                    email: profile.email,
+                    name: profile.name,
+                    avatar: profile.picture,
+                };
+                const result = await authServices.withSocial(data);
+
+                dispatch(userActions.addUser(result));
+                toast.success(notifies.loginGoogleSuccess);
+            }
+        })();
+    }, [dispatch, profile]);
 
     const handleSubmitData = async (data) => {
         const result = await authServices.login(data);
@@ -113,7 +115,7 @@ function Login() {
                     onSubmit={handleSubmit(handleSubmitData)}
                     className='form-sm'
                 >
-                    <Row cols={1} gy={4}>
+                    <Row cols={1} gy={2}>
                         {inputGroups.login.map((input) => (
                             <Col key={input.inputName}>
                                 <TextField

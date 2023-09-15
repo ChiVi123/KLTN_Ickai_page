@@ -96,7 +96,7 @@ function CheckOtpRegister() {
 
     return (
         <article className='width-sm'>
-            <section className='section' style={{ '--grid-gutter-y': '16px' }}>
+            <section className='section'>
                 <Typography variant='h1' center>
                     {contextPage.confirmCode}
                 </Typography>

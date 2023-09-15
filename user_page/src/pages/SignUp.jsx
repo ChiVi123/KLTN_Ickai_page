@@ -73,7 +73,7 @@ function Register() {
                     onSubmit={handleSubmit(handleOnSubmit)}
                     className='form-sm'
                 >
-                    <Row cols={1} gy={4}>
+                    <Row cols={1} gy={2}>
                         {inputGroups.register.map((input) => (
                             <Col key={input.inputName}>
                                 <TextField
