@@ -67,6 +67,11 @@
     }
 
     &__message {
+        display: block;
+        height: 12px;
+        margin-top: 4px;
+        margin-bottom: 8px;
+        color: var(--second-color);
         font-weight: 300;
     }
 

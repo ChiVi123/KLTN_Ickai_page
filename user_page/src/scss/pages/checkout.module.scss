@@ -1,30 +1,3 @@
-.form {
-    margin-top: 0;
-}
-
-.logo {
-    display: inline-block;
-    height: 5.4rem;
-    margin: 2rem 0;
-}
-
-.logo-img {
-    height: 100%;
-    padding: 0.2rem;
-    background-color: var(--primary);
-    border-radius: 0.4rem;
-}
-
-.input-select {
-    --height: 4.4rem;
-
-    height: var(--height);
-
-    & > div {
-        min-height: var(--height);
-    }
-}
-
 .disable {
     cursor: no-drop;
     background-color: #ddd;
@@ -39,7 +12,7 @@
         position: relative;
         padding: 14px;
 
-        &::before {
+        &:not(&:last-child):before {
             position: absolute;
             left: 50%;
             transform: translateX(-50%);
@@ -77,6 +50,7 @@
 .product {
     position: relative;
     display: flex;
+    justify-content: space-between;
     max-width: 427px;
     padding-top: var(--spacer-3);
 }

@@ -1,19 +1,7 @@
 import cx from 'classnames';
 import Typography from './Typography';
 
-function Radio({
-    children,
-    id,
-    name,
-    value,
-    isChecked = false,
-    onChange = () => {},
-    classes,
-}) {
-    const handleChange = () => {
-        onChange(value);
-    };
-
+function Radio({ children, id, name, value, classes, register = () => ({}) }) {
     return (
         <label
             htmlFor={id}
@@ -23,13 +11,11 @@ function Radio({
         >
             <input
                 type='radio'
-                name={name}
                 id={id}
-                className='radio-input'
                 hidden
-                checked={isChecked}
                 value={value}
-                onChange={handleChange}
+                className='radio-input'
+                {...register(name)}
             />
             <span className='radio-custom'></span>
             <Typography variant='text1' classes='radio-invisible'>

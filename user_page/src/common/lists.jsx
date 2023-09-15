@@ -10,14 +10,12 @@ export const menuAccount = [
         context: 'Đơn hàng',
     },
 ];
-
 export const sorts = [
     { name: 'Mới nhất', value: 'latest' },
     { name: 'Khuyến mãi', value: 'sale' },
     { name: 'Giá: thấp đến cao', value: 'price', order: 'asc' },
     { name: 'Giá: cao đến thấp', value: 'price', order: 'desc' },
 ];
-
 export const tabs = [
     { content: 'Tất cả', value: '' },
     { content: 'Đã thanh toán', value: 'pendingpay' },

@@ -1,20 +1,9 @@
-// export { default as Form } from './form/Form';
-// export { default as FormQuill } from './form_quill/FormQuill';
-// export { default as FormCreatable } from './form_select/FormCreatable';
-// export { default as FormSelect } from './form_select/FormSelect';
-// export { default as Input } from './input/Input';
-// export { default as Loading } from './loading/Loading';
-// export { default as Modal } from './modal/Modal';
-// export { default as Section } from './section/Section';
-// export { default as Table } from './table/Table';
-// export { default as Title } from './title/Title';
-// export { default as Wrapper } from './wrapper/Wrapper';
-
 export { default as Button } from './Button';
 export { default as Carousel } from './Carousel';
 export { default as Checkbox } from './Checkbox';
 export { default as Col } from './Col';
 export { default as FormGroup } from './FormGroup';
+export { default as FormSelect } from './FormSelect';
 export { default as InputQuantity } from './InputQuantity';
 export { default as Pagination } from './Pagination';
 export { default as ProcessBar } from './ProcessBar';

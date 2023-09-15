@@ -1,3 +1,6 @@
+import { faCcPaypal } from '@fortawesome/free-brands-svg-icons';
+import { faMoneyBill } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import * as autoCompletes from './autoCompletes';
 import * as inputNames from './inputNames';
 import * as labels from './labels';
@@ -34,7 +37,6 @@ const phone = {
 };
 
 export const login = [email, password];
-
 export const register = [
     name,
     email,
@@ -47,5 +49,47 @@ export const register = [
         autoComplete: autoCompletes.off,
     },
 ];
-
 export const profile = [name, { ...email, disabled: true }, phone];
+export const checkout = [
+    {
+        type: types.text,
+        inputName: inputNames.email,
+        label: labels.email,
+        placeholder: placeholders.email,
+        isDisable: true,
+    },
+    {
+        type: types.text,
+        inputName: inputNames.name,
+        label: labels.name,
+        placeholder: placeholders.name,
+        isDisable: false,
+    },
+    {
+        type: types.text,
+        inputName: inputNames.phone,
+        label: labels.phone,
+        placeholder: placeholders.phone,
+        isDisable: false,
+    },
+];
+export const payments = [
+    {
+        name: inputNames.payment,
+        icon: <FontAwesomeIcon icon={faCcPaypal} />,
+        text: 'PayPal',
+        value: 'paypal',
+    },
+    // {
+    //     name: inputNames.payment,
+    //     icon: <FontAwesomeIcon icon={faCcPaypal} />,
+    //     text: 'VNPAY',
+    //     value: 'vnpay',
+    // },
+    {
+        name: inputNames.payment,
+        icon: <FontAwesomeIcon icon={faMoneyBill} />,
+        text: 'COD',
+        value: 'cod',
+    },
+];

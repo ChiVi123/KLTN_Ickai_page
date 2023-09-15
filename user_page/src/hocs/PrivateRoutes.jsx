@@ -1,5 +1,12 @@
+import { useSelector } from 'react-redux';
+import { Navigate, Outlet } from 'react-router-dom';
+import { directions } from '~/common';
+import { userSelector } from '~/redux';
+
 function PrivateRoutes() {
-    return <div>PrivateRoutes</div>;
+    const userId = useSelector(userSelector.getUserId);
+
+    return userId ? <Outlet /> : <Navigate to={directions.signIn} />;
 }
 
 export default PrivateRoutes;

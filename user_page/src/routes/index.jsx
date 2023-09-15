@@ -3,6 +3,7 @@ import { PrivateRoutes, PublicRoutes } from '~/hocs';
 import { DefaultLayout } from '~/layouts';
 import {
     Cart,
+    Checkout,
     Home,
     Login,
     NotifyOrder,
@@ -124,6 +125,14 @@ export const router = createBrowserRouter([
                 ),
             },
             {
+                path: paths.checkout,
+                element: (
+                    <DefaultLayout>
+                        <Checkout />
+                    </DefaultLayout>
+                ),
+            },
+            {
                 path: paths.notifyOrder,
                 element: (
                     <DefaultLayout>
@@ -132,18 +141,18 @@ export const router = createBrowserRouter([
                 ),
             },
             {
-                path: paths.order,
-                element: (
-                    <DefaultLayout>
-                        <Order />
-                    </DefaultLayout>
-                ),
-            },
-            {
                 path: paths.orderHistory,
                 element: (
                     <DefaultLayout>
                         <OrderHistory />
+                    </DefaultLayout>
+                ),
+            },
+            {
+                path: paths.order,
+                element: (
+                    <DefaultLayout>
+                        <Order />
                     </DefaultLayout>
                 ),
             },
