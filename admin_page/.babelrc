@@ -1,0 +1,18 @@
+{
+    "plugins": [
+        [
+            "module-resolver",
+            {
+                "alias": {
+                    "~": "./src",
+                    "~profile": "./src/scss/components/profile",
+                    "~product": "./src/scss/components/product",
+                    "~search": "./src/scss/components/search",
+                    "~cart": "./src/scss/components/cart",
+                    "~order-history": "src/scss/components/order_history",
+                    "~order": "./src/scss/components/order"
+                }
+            }
+        ]
+    ]
+}

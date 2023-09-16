@@ -1,0 +1,19 @@
+@use '../abstracts/color-v' as color;
+
+.link {
+    display: inline-block;
+    color: var(--primary-color, #{color.$primary-color});
+
+    &:not([href]) {
+        cursor: pointer;
+    }
+
+    &--center {
+        width: 100%;
+        text-align: center;
+    }
+
+    &:hover {
+        text-decoration: underline;
+    }
+}

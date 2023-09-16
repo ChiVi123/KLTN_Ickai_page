@@ -1,0 +1,16 @@
+export const search = 'Nhập từ khóa...';
+export const name = 'Điền tên của bạn';
+export const guestName = 'Điền tên khách hàng...';
+export const email = 'Vd: email@gmail.com...';
+export const phone = 'Số điện thoại liên lạc...';
+export const password = 'Nhập mật khẩu...';
+export const passwordConfirm = 'Nhập lại mật khẩu...';
+export const minPrice = 'Từ';
+export const maxPrice = 'Đến';
+export const location = 'Số nhà tên đường...';
+export const province = 'Tỉnh thành ...';
+export const district = 'Quận, huyện ...';
+export const ward = 'Xã ...';
+export const address = 'Số nhà tên đường...';
+export const otp = 'Nhập otp...';
+export const content = 'Hãy chia sẻ cảm nhận của bạn về sản phẩm...';

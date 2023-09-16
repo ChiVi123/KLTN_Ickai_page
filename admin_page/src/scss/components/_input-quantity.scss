@@ -1,0 +1,52 @@
+.quantity {
+    --width: 64px;
+    --size: 32px;
+
+    display: flex;
+
+    &__btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: var(--size);
+        height: var(--size);
+        border: 1px solid var(--border-color);
+        color: var(--text-1-color);
+
+        &:first-child {
+            border-top-left-radius: var(--spacer-1);
+            border-bottom-left-radius: var(--spacer-1);
+        }
+
+        &:last-child {
+            border-top-right-radius: var(--spacer-1);
+            border-bottom-right-radius: var(--spacer-1);
+        }
+
+        &--disable {
+            opacity: 0.4;
+            pointer-events: none;
+        }
+
+        &:hover {
+            background-color: var(--bg-contrast-2-color);
+        }
+    }
+
+    &__input {
+        width: var(--width);
+        text-align: center;
+        border-width: 1px 0;
+        border-style: solid;
+        border-color: var(--border-color);
+        background-color: transparent;
+        color: var(--text-1-color);
+
+        &::-webkit-outer-spin-button,
+        &::-webkit-inner-spin-button {
+            /* display: none; <- Crashes Chrome on hover */
+            -webkit-appearance: none;
+            margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+        }
+    }
+}
