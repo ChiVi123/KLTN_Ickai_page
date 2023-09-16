@@ -1,0 +1,23 @@
+.wrap {
+    margin-top: var(--spacer-3);
+}
+
+.btn {
+    min-width: 120px;
+    height: 32px;
+    padding: var(--spacer-1) var(--spacer-3);
+    border: 1px solid var(--border-color);
+    border-radius: var(--spacer-3);
+
+    &--active {
+        border-color: var(--primary-color);
+    }
+
+    & + & {
+        margin-left: var(--spacer-3);
+    }
+
+    &:hover {
+        background-color: var(--bg-contrast-3-color);
+    }
+}

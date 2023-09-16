@@ -1,0 +1,36 @@
+@use './color-v' as color;
+@use './typography-v' as typography;
+@use './spacing-v' as spacing;
+
+$variants: text contained outlined;
+
+$width-md: 140px;
+$height-md: 34px;
+$text-md: typography.$font-size-sm;
+
+$widths: (
+    sm: 80px,
+    lg: 180px,
+);
+$heights: (
+    sm: 30px,
+    lg: 48px,
+);
+
+$colors: (
+    primary: color.$primary-color,
+    second: color.$second-color,
+);
+$hover-colors: (
+    primary: color.$primary-light-1-color,
+    second: color.$second-light-color,
+);
+
+$texts: (
+    sm: typography.$font-size-sm,
+    lg: typography.$font-size-md,
+);
+
+$padding-x: map-get(spacing.$spacers, 3);
+
+$border-radius: map-get(spacing.$spacers, 1);

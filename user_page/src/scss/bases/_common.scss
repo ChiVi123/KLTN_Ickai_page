@@ -1,0 +1,72 @@
+@use '../abstracts/spacing-m' as space-m;
+@use '../abstracts/spacing-v' as space-v;
+
+.section {
+    padding: var(--spacer-3);
+    height: 100%;
+    background-color: var(--bg-color);
+    box-shadow: var(--shadow-theme);
+    border-radius: var(--spacer-3);
+}
+
+.inner {
+    --padding: calc(var(--spacer-3) * 2);
+    min-height: calc(var(--main-min-height) - var(--padding));
+}
+
+%base-width {
+    width: 100%;
+    max-width: 684px;
+    @include space-m.spacing-x(padding, space-v.$spacer * 3);
+    @include space-m.spacing-x(margin);
+}
+
+.width {
+    &-sm {
+        @extend %base-width;
+        max-width: 684px;
+    }
+
+    &-md {
+        @extend %base-width;
+        max-width: 880px;
+    }
+}
+
+.form-sm {
+    --width: 360px;
+
+    width: 100%;
+    max-width: var(--width);
+    margin: 0 auto;
+}
+
+.df-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.gradient {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 200px;
+
+    body & {
+        background-image: linear-gradient(
+            rgba(255, 255, 255, 0),
+            rgba(255, 255, 255, 1)
+        );
+    }
+
+    body.dark & {
+        background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 1));
+    }
+}
+
+.invalid {
+    color: var(--second-color) !important;
+}

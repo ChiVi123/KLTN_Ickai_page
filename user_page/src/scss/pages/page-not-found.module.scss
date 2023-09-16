@@ -1,0 +1,16 @@
+.wrap {
+    text-align: center;
+    padding-top: var(--spacer-3);
+    background-color: var(--fourth-color);
+    border-radius: var(--spacer-3);
+    overflow: hidden;
+}
+
+.background-heading {
+    padding: var(--spacer-3) 0;
+    background-color: var(--second-color);
+
+    > h1 {
+        color: var(--white);
+    }
+}

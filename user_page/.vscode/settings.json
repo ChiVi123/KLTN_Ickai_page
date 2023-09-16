@@ -1,0 +1,38 @@
+{
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.fontFamily": "Cascadia Code, Fira Code, Roboto Mono, monospace",
+    "[javascript]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "editor.fontLigatures": true,
+        "editor.codeActionsOnSave": {
+            "source.organizeImports": true
+        }
+    },
+    "[javascriptreact]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "editor.fontLigatures": true,
+        "editor.codeActionsOnSave": {
+            "source.organizeImports": true
+        }
+    },
+    "[json]": {
+        "editor.defaultFormatter": "vscode.json-language-features"
+    },
+    "cSpell.words": [
+        "fontawesome",
+        "fortawesome",
+        "hocs",
+        "hookform",
+        "ickai",
+        "khóa",
+        "pendingpay",
+        "persistor",
+        "reduxjs",
+        "Swal",
+        "sweetalert",
+        "tippyjs",
+        "toastify",
+        "vnpay"
+    ]
+}

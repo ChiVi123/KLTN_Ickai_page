@@ -1,0 +1,94 @@
+%insert-element {
+    display: block;
+    content: '';
+    position: absolute;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    border-bottom-style: solid;
+}
+
+%focus-element {
+    transform: scaleX(1) translateX(0);
+    opacity: 1;
+}
+
+.text-field {
+    &__label {
+        display: block;
+        width: max-content;
+        color: var(--gray-color);
+    }
+
+    &__wrap {
+        position: relative;
+        margin-top: 4px;
+
+        &::before {
+            @extend %insert-element;
+            border-bottom-width: 1px;
+            transition: opacity 200ms, border-bottom-width 200ms;
+        }
+
+        &::after {
+            @extend %insert-element;
+            border-bottom-width: 2px;
+            transform: scaleX(0);
+            transition: transform 400ms ease;
+        }
+
+        &:not(&--invalid)::before {
+            border-bottom-color: var(--bg-contrast-4-color);
+        }
+
+        &:not(&--invalid)::after {
+            border-bottom-color: var(--primary-color);
+        }
+
+        &--invalid::before,
+        &--disabled {
+            opacity: 0.4;
+        }
+
+        &--invalid::before,
+        &--invalid::after {
+            border-bottom-color: var(--second-color);
+        }
+
+        &:not(&--disabled, &--invalid):hover::before {
+            border-bottom-width: 2px;
+        }
+    }
+
+    &__input {
+        width: 100%;
+        padding: 2px 0 var(--spacer-1);
+        background-color: transparent;
+    }
+
+    &__message {
+        display: block;
+        height: 12px;
+        margin-top: 4px;
+        margin-bottom: 8px;
+        color: var(--second-color);
+        font-weight: 300;
+    }
+
+    &__wrap--disabled &__input {
+        color: var(--gray-color);
+    }
+
+    &:focus-within &__label {
+        color: var(--primary-color);
+    }
+
+    &:focus-within &__wrap:not(&__wrap--invalid)::after {
+        @extend %focus-element;
+    }
+
+    &:focus-within &__wrap--invalid::after {
+        background-color: var(--second-color);
+        @extend %focus-element;
+    }
+}

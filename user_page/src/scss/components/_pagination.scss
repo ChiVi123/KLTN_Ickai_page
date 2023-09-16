@@ -1,0 +1,51 @@
+.pages {
+    display: flex;
+    align-items: center;
+    column-gap: var(--spacer-1);
+    color: var(--text-2-color);
+
+    &--center {
+        justify-content: center;
+    }
+
+    &-btn {
+        --size: 34px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: var(--size);
+        height: var(--size);
+        border-radius: var(--spacer-1);
+        color: currentColor;
+        transition: color 300ms, opacity 300ms;
+
+        &--active,
+        &:hover {
+            color: var(--white);
+        }
+
+        &--active {
+            background-color: var(--primary-color);
+        }
+
+        &--border {
+            border: 1px solid var(--border-color);
+        }
+
+        &--hidden {
+            opacity: 0.4;
+            pointer-events: none;
+        }
+
+        &:hover {
+            background-color: var(--primary-light-1-color);
+        }
+    }
+
+    .chevron {
+        --height: 12px;
+
+        width: calc(var(--height) * 8 / 14);
+    }
+}

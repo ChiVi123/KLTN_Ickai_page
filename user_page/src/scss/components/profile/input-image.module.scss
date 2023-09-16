@@ -1,0 +1,27 @@
+.input {
+    position: relative;
+
+    .avatar {
+        --size: 60px;
+
+        width: var(--size);
+        height: var(--size);
+        border-radius: var(--round);
+        background-color: var(--bg-theme-color);
+    }
+
+    &-label {
+        display: block;
+        margin-bottom: var(--spacer-2);
+        color: var(--text-1-color);
+    }
+
+    &-image {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        opacity: 0;
+    }
+}

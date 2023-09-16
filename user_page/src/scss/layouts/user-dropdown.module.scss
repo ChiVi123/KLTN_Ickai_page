@@ -1,0 +1,27 @@
+.menu {
+    display: flex;
+    flex-direction: column;
+    min-width: 180px;
+    padding: var(--spacer-1) 0;
+    border-radius: var(--spacer-2);
+    background-color: var(--bg-color);
+    box-shadow: var(--shadow-theme);
+    overflow: hidden;
+
+    .item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: 40px;
+        padding: var(--spacer-1) var(--spacer-2);
+        cursor: pointer;
+
+        &--separate {
+            border-top: 1px solid var(--gray-color);
+        }
+
+        &:hover {
+            background-color: var(--bg-contrast-2-color);
+        }
+    }
+}

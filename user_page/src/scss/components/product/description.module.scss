@@ -1,0 +1,10 @@
+.description {
+    position: relative;
+    color: var(--text-1-color);
+    overflow: hidden;
+    transition: height 800ms;
+
+    &--more {
+        height: var(--height);
+    }
+}
