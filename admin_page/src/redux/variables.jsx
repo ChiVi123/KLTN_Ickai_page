@@ -1,21 +1,21 @@
-import { createObjectList } from "~/utils/funcs";
+import { createObjectList } from '~/utils/funcs';
 
 export const products = {
-    name: "products",
+    name: 'products',
     initialState: {
         admin: createObjectList(),
         item: {
-            description: "",
-            id: "",
-            images: [{ id_image: "", url: "" }],
+            description: '',
+            id: '',
+            images: [{ id_image: '', url: '' }],
             isLoading: false,
-            message: "",
-            name: "",
+            message: '',
+            name: '',
             options: [],
             price: 0,
             quantity: 0,
             sale: 0,
-            summary: "",
+            summary: '',
             tags: [],
             starMembers: [
                 { star: 5, members: 0 },
@@ -28,43 +28,45 @@ export const products = {
     },
 };
 export const categories = {
-    name: "categories",
+    name: 'categories',
     initialState: {
         isLoadingAdmin: false,
         itemsAdmin: [],
-        message: "",
+        message: '',
     },
 };
 export const user = {
-    name: "user",
+    name: 'user',
     initialState: {
-        accessToken: "",
-        address: "",
-        avatar: "",
-        email: "",
-        id: "",
-        name: "",
-        phone: "",
-        role: "",
+        accessToken: '',
+        address: '',
+        admin: createObjectList(),
+        avatar: '',
+        email: '',
+        id: '',
+        name: '',
+        phone: '',
+        role: '',
     },
 };
 export const orderHistory = {
-    name: "orderHistory",
+    name: 'orderHistory',
     initialState: {
         admin: createObjectList(),
     },
 };
 export const reviews = {
-    name: "reviews",
+    name: 'reviews',
     initialState: {
         admin: createObjectList(),
-        item: {
-            isLoading: false,
-            list: [],
-            message: "",
-            totalPage: 0,
-            totalQuantity: 0,
-        },
+    },
+};
+export const statistical = {
+    name: 'statistical',
+    initialState: {
+        isLoading: false,
+        statisticalAmount: [],
+        message: '',
     },
 };
 
@@ -74,4 +76,5 @@ export const typeState = {
     products: products.initialState,
     reviews: reviews.initialState,
     user: user.initialState,
+    statistical: statistical.initialState,
 };

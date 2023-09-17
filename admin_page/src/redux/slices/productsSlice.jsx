@@ -1,11 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { logger } from '~/utils/logger';
 import {
     getAllProductByAdmin,
-    getAllProductByClient,
     getProductById,
 } from '../async_thunks/productsAsync';
 import { products } from '../variables';
 
+const isLogger = false;
 const { name, initialState } = products;
 const productsSlice = createSlice({
     name,
@@ -33,22 +34,13 @@ const productsSlice = createSlice({
             state.item.message = 'error';
         },
 
-        // getAllProductByClient
-        [getAllProductByClient.pending]: (state) => {
-            state.client.isLoading = true;
-        },
-        [getAllProductByClient.fulfilled]: (state, { payload }) => {
-            state.client.isLoading = false;
-            state.client.items = payload.list;
-            state.client.totalPage = payload.totalPage;
-        },
-        [getAllProductByClient.rejected]: (state, { payload }) => {
-            state.client.message = 'error';
-        },
-
         // getAllProductByAdmin
         [getAllProductByAdmin.pending]: (state) => {
             state.admin.isLoading = true;
+
+            if (isLogger) {
+                logger({ groupName: productsSlice.name, values: [state] });
+            }
         },
         [getAllProductByAdmin.fulfilled]: (state, { payload }) => {
             state.admin.isLoading = false;

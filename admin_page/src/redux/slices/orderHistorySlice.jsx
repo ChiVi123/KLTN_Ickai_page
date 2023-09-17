@@ -1,6 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
 import {
-    getAllOrder,
     getAllOrderByAdmin,
     getAllOrderEnableByAdmin,
 } from '../async_thunks/ordersAsync';
@@ -19,22 +18,6 @@ const orderHistorySlice = createSlice({
         },
     },
     extraReducers: {
-        // getAllOrder
-        [getAllOrder.pending]: (state) => {
-            state.client.isLoading = true;
-            state.clientFilter.isLoading = true;
-        },
-        [getAllOrder.fulfilled]: (state, { payload }) => {
-            state.client.isLoading = false;
-            state.client.items = payload.list;
-
-            state.clientFilter.isLoading = false;
-            state.clientFilter.items = payload.list;
-        },
-        [getAllOrder.rejected]: (state, { payload }) => {
-            state.client.message = 'error';
-        },
-
         // getAllOrderByAdmin
         [getAllOrderByAdmin.pending]: (state) => {
             state.admin.isLoading = true;

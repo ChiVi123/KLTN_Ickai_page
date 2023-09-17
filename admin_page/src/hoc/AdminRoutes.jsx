@@ -3,8 +3,8 @@ import { isExpired } from 'react-jwt';
 import { useDispatch, useSelector } from 'react-redux';
 import { Navigate, Outlet } from 'react-router-dom';
 
+import { directions } from '~/common';
 import { userActions, userSelector } from '~/redux';
-import { directions } from '~/utils';
 
 function AdminRoutes() {
     const user = useSelector(userSelector.getUser);
@@ -18,12 +18,12 @@ function AdminRoutes() {
     }, []);
 
     if (isExpired(user.accessToken)) {
-        return <Navigate to={directions.loginAdmin} />;
+        return <Navigate to={directions.signIn} />;
     } else {
         return user.role === 'role_admin' ? (
             <Outlet />
         ) : (
-            <Navigate to={directions.loginAdmin} />
+            <Navigate to={directions.signIn} />
         );
     }
 }

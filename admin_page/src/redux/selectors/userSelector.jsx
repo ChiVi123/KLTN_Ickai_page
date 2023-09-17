@@ -1,4 +1,4 @@
-import { typeState } from "../variables";
+import { typeState } from '../variables';
 
 export const getUser = (state = typeState) => state.user;
 export const getUsers = (state = typeState) => state.user.admin;

@@ -1,22 +1,16 @@
-import classNames from 'classnames/bind';
-
-import styles from './AdminLayout.module.scss';
-import { Footer, Sidebar } from '~/components_layout';
-import { Section, Wrapper } from '~/admin/components';
-
-const cx = classNames.bind(styles);
+import { Col, Row } from '~/components';
+import Sidebar from './Sidebar';
 
 function AdminLayout({ children }) {
     return (
-        <>
-            <div className={cx('wrapper')}>
+        <Row gx={3} noSide>
+            <Col baseCols={3}>
                 <Sidebar />
-                <Wrapper>
-                    <Section>{children}</Section>
-                </Wrapper>
-            </div>
-            <Footer />
-        </>
+            </Col>
+            <Col baseCols={9}>
+                <main>{children}</main>
+            </Col>
+        </Row>
     );
 }
 

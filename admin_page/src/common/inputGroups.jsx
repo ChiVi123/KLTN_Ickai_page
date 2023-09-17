@@ -1,6 +1,3 @@
-import { faCcPaypal } from '@fortawesome/free-brands-svg-icons';
-import { faMoneyBill } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import * as autoCompletes from './autoCompletes';
 import * as inputNames from './inputNames';
 import * as labels from './labels';
@@ -71,25 +68,5 @@ export const checkout = [
         label: labels.phone,
         placeholder: placeholders.phone,
         isDisable: false,
-    },
-];
-export const payments = [
-    {
-        name: inputNames.payment,
-        icon: <FontAwesomeIcon icon={faCcPaypal} />,
-        text: 'PayPal',
-        value: 'paypal',
-    },
-    // {
-    //     name: inputNames.payment,
-    //     icon: <FontAwesomeIcon icon={faCcPaypal} />,
-    //     text: 'VNPAY',
-    //     value: 'vnpay',
-    // },
-    {
-        name: inputNames.payment,
-        icon: <FontAwesomeIcon icon={faMoneyBill} />,
-        text: 'COD',
-        value: 'cod',
     },
 ];

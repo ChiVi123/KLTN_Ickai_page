@@ -1,15 +1,10 @@
 export const root = '/';
-export const login = 'sign-in';
-export const product = 'product/:id';
-export const search = 'search';
-export const sendOTP = 'send-otp';
-export const signUp = 'sign-up';
-export const verify = 'check-otp';
-export const verifyRegister = 'check-otp-register';
-
-export const cart = 'cart';
-export const checkout = 'checkout';
-export const notifyOrder = 'redirect/payment';
-export const order = 'order/:id';
-export const orderHistory = 'orders';
-export const profile = 'profile';
+export const categories = 'categories';
+export const login = 'login';
+export const order = 'orders:id';
+export const orders = 'orders';
+export const productAdd = 'product-form';
+export const productEdit = 'product-form/:id/edit';
+export const products = 'products';
+export const reviews = 'reviews';
+export const users = 'users';

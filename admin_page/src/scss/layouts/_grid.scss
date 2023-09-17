@@ -56,6 +56,10 @@ $gutters: (
     margin-top: calc(var(--grid-gutter-y) * -1);
     @include spacing-x(margin, calc(var(--grid-gutter-x) * 0.5 * -1));
 
+    &.no-gutter-side {
+        @include spacing-x(margin, 0);
+    }
+
     &.no-wrap {
         flex-wrap: nowrap;
     }

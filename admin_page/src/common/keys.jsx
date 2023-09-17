@@ -1,5 +1,5 @@
 // includes search params
-export const persist = 'ickai_user_page';
+export const persist = 'ickai_admin_page';
 export const page = 'page';
 export const cate = 'cate';
 export const query = 'query';

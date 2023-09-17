@@ -3,12 +3,9 @@ import { userServices } from '~/services';
 
 export const getUsers = createAsyncThunk(
     'users/getUsers',
-    async ({ page, size }, { rejectWithValue }) => {
+    async (data = { page: 1, size: 1 }, { rejectWithValue }) => {
         try {
-            const result = await userServices.getUsers({
-                page,
-                size,
-            });
+            const result = await userServices.getUsers(data);
 
             return result;
         } catch (error) {

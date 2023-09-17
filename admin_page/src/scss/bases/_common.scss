@@ -22,6 +22,11 @@
 }
 
 .width {
+    &-xs {
+        @extend %base-width;
+        max-width: 460px;
+    }
+
     &-sm {
         @extend %base-width;
         max-width: 684px;

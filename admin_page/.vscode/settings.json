@@ -20,11 +20,19 @@
         "editor.defaultFormatter": "vscode.json-language-features"
     },
     "cSpell.words": [
+        "datetime",
+        "fontawesome",
+        "fortawesome",
         "hookform",
+        "ickai",
+        "khóa",
         "Parens",
         "persistor",
+        "ramonak",
         "reduxjs",
+        "Swal",
         "sweetalert",
-        "toastify"
+        "toastify",
+        "vnpay"
     ]
 }

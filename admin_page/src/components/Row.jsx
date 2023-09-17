@@ -12,8 +12,9 @@ function Row({
     g,
     gx,
     gy,
-    center,
-    sb,
+    center = false,
+    sb = false,
+    noSide = false,
     classes,
 }) {
     return (
@@ -30,6 +31,7 @@ function Row({
                 [`gy-${gy}`]: gy || gy === 0,
                 center,
                 sb,
+                'no-gutter-side': noSide,
                 [classes]: classes,
             })}
         >

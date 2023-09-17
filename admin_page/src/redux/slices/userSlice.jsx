@@ -1,10 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { getUsers } from '../async_thunks/usersAsync';
-import { products } from '../variables';
+import { user } from '../variables';
 
-const { name, initialState } = products;
+const { name, initialState } = user;
 const userSlice = createSlice({
-    name: name,
+    name,
     initialState,
     reducers: {
         addUser(state, { payload }) {
@@ -45,7 +45,7 @@ const userSlice = createSlice({
             state.admin.totalPage = payload.totalPage;
         },
         [getUsers.rejected]: (state, { payload }) => {
-            state.admin.message = '';
+            state.admin.message = 'rejected';
         },
     },
 });

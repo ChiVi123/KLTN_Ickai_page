@@ -2,33 +2,29 @@ import cx from 'classnames';
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
+import { keys, types } from '~/common';
 import {
     ChevronLeft,
     ChevronRight,
     DoubleChevronLeft,
     DoubleChevronRight,
 } from '~/icons';
-import { params, types } from '~/utils';
 import { createObjectParams, getPageArray } from '~/utils/funcs';
+import { logger } from '~/utils/logger';
 
 function Pagination({ total = 7, display = 5, step = 1, center }) {
+    const isLogger = false;
     const [searchParams, setSearchParams] = useSearchParams();
     const [pages, setPages] = useState([]);
     const [current, setCurrent] = useState(
-        parseInt(searchParams.get(params.page)) || 1,
+        parseInt(searchParams.get(keys.page)) || 1,
     );
     const [isFirst, setIsFirst] = useState(current === step);
     const [isLast, setIsLast] = useState(current === total);
 
     useEffect(() => {
-        if (display > total && total !== step) {
-            setPages(
-                getPageArray({
-                    total,
-                    length: total,
-                    current,
-                }),
-            );
+        if (total <= display && total !== step) {
+            setPages(getPageArray({ total, length: total, current }));
         }
 
         if (total === 1) setPages(getPageArray({ length: 0 }));
@@ -40,38 +36,42 @@ function Pagination({ total = 7, display = 5, step = 1, center }) {
     const handleFirst = () => {
         setCurrent(step);
         setSearchParams((prev) => ({
-            ...createObjectParams(prev, [params.page]),
+            ...createObjectParams(prev, [keys.page]),
             page: step,
         }));
     };
     const handlePrev = () => {
         setCurrent((prev) => prev - 1);
         setSearchParams((prev) => ({
-            ...createObjectParams(prev, [params.page]),
+            ...createObjectParams(prev, [keys.page]),
             page: current - 1,
         }));
     };
     const handleNext = () => {
         setCurrent((prev) => prev + 1);
         setSearchParams((prev) => ({
-            ...createObjectParams(prev, [params.page]),
+            ...createObjectParams(prev, [keys.page]),
             page: current + 1,
         }));
     };
     const handleLast = () => {
         setCurrent((prev) => ({ ...prev, current: total }));
         setSearchParams((prev) => ({
-            ...createObjectParams(prev, [params.page]),
+            ...createObjectParams(prev, [keys.page]),
             page: total,
         }));
     };
     const handleClick = (value) => {
         setCurrent(value);
         setSearchParams((prev) => ({
-            ...createObjectParams(prev, [params.page]),
+            ...createObjectParams(prev, [keys.page]),
             page: value,
         }));
     };
+
+    if (isLogger) {
+        logger({ groupName: Pagination.name, values: [total] });
+    }
 
     return (
         <div className={cx('pages', { 'pages--center': center })}>

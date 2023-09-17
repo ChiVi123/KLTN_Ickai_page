@@ -44,7 +44,7 @@ function TextField({
                     {...register(name)}
                 />
             </div>
-            <span className='text2 text-field__message invalid'>
+            <span className='text3 text-field__message invalid'>
                 {errors[name]?.message}
             </span>
         </div>

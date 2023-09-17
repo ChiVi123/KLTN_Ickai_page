@@ -1,26 +1,77 @@
+import { faMessage } from '@fortawesome/free-regular-svg-icons';
+import {
+    faAddressCard,
+    faBox,
+    faReceipt,
+    faRectangleList,
+    faTableCells,
+} from '@fortawesome/free-solid-svg-icons';
 import * as directions from './directions';
 
-export const menuAccount = [
+export const sidebar = [
     {
-        to: directions.profile,
-        context: 'Tài khoản',
+        context: 'Thống kê',
+        navTo: directions.dashboard,
+        icon: faTableCells,
     },
     {
-        to: directions.orders,
-        context: 'Đơn hàng',
+        context: 'Các sản phẩm',
+        navTo: directions.products,
+        icon: faBox,
+    },
+    {
+        context: 'Các danh mục',
+        navTo: directions.categories,
+        icon: faRectangleList,
+    },
+    {
+        context: 'Danh sách đơn hàng',
+        navTo: directions.orders,
+        icon: faReceipt,
+    },
+    {
+        context: 'Danh sách người dùng',
+        navTo: directions.users,
+        icon: faAddressCard,
+    },
+    {
+        context: 'Danh sách đánh giá',
+        navTo: directions.reviews,
+        icon: faMessage,
     },
 ];
-export const sorts = [
-    { name: 'Mới nhất', value: 'latest' },
-    { name: 'Khuyến mãi', value: 'sale' },
-    { name: 'Giá: thấp đến cao', value: 'price', order: 'asc' },
-    { name: 'Giá: cao đến thấp', value: 'price', order: 'desc' },
+export const tableProducts = [
+    'Hình ảnh',
+    'Tên sản phẩm',
+    'Giá',
+    'Tổng quan',
+    'Các hoạt động',
 ];
-export const tabs = [
-    { content: 'Tất cả', value: '' },
-    { content: 'Đã thanh toán', value: 'pendingpay' },
-    { content: 'Đang xử lý', value: 'pending' },
-    { content: 'Đang vận chuyển', value: 'delivery' },
-    { content: 'Hoàn thành', value: 'complete' },
-    { content: 'Đã hủy', value: 'cancel' },
+export const tableCate = [
+    'Hình ảnh',
+    'Tên danh mục  sản phẩm',
+    'Trạng thái',
+    'Các hoạt động',
+];
+export const tableOrders = [
+    'Mã đơn hàng',
+    'Tên người đặt',
+    'Ngày đặt',
+    'Tổng tiền',
+    'Trạng thái',
+    'Xem chi tiết',
+];
+export const tableUsers = [
+    'ID',
+    'Tên người dùng',
+    'Email',
+    'Vai trò',
+    'Các hoạt động',
+];
+export const tableReviews = [
+    'Mã đánh giá',
+    'Tên người dùng',
+    'Tên sản phẩm',
+    'Lần cuối chỉnh sửa',
+    'Các hoạt động',
 ];

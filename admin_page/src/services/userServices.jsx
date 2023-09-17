@@ -17,27 +17,6 @@ const userServices = {
             console.log(error);
         }
     },
-    uploadAvatar: async (id, data) => {
-        try {
-            const response = await request.post(`users/avatar/${id}`, data, {
-                headers: { 'Content-Type': 'multipart/form-data' },
-            });
-            return response;
-        } catch (error) {
-            console.log(error);
-        }
-    },
-    resetPassword: async (id, data) => {
-        try {
-            const response = await request.put(
-                `users/resetpassword/${id}`,
-                data,
-            );
-            return response;
-        } catch (error) {
-            console.log(error);
-        }
-    },
     adminBlockUserById: async ({ id }) => {
         try {
             const response = await request.requestDelete(
@@ -69,10 +48,10 @@ const userServices = {
             console.log(error);
         }
     },
-    getUsers: async ({ page, size = 5 }) => {
+    getUsers: async (params = { page: 1, size: 5 }) => {
         try {
             const response = await request.get('admin/manage/users', {
-                params: { page },
+                params,
             });
             return response.data;
         } catch (error) {
@@ -83,14 +62,6 @@ const userServices = {
         try {
             const response = await request.get(`/users/${id}`);
             return response.data;
-        } catch (error) {
-            console.log(error);
-        }
-    },
-    changePassword: async (id, data) => {
-        try {
-            const response = await request.put(`users/password/${id}`, data);
-            return response;
         } catch (error) {
             console.log(error);
         }
