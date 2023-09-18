@@ -1,4 +1,4 @@
 import { typeState } from '../variables';
 
-export const getAllCategory = (state = typeState) => state.categories.items;
-export const getCategoriesState = (state = typeState) => state.categories;
+export const selectAllState = (state = typeState) => state.categories.admin;
+export const selectEnable = (state = typeState) => state.categories.client;

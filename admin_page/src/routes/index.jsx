@@ -6,6 +6,8 @@ import {
     Dashboard,
     Login,
     Orders,
+    ProductCreate,
+    ProductUpdate,
     Products,
     Reviews,
     Users,
@@ -39,6 +41,22 @@ export const router = createBrowserRouter([
                 element: (
                     <AdminLayout>
                         <Products />
+                    </AdminLayout>
+                ),
+            },
+            {
+                path: paths.productAdd,
+                element: (
+                    <AdminLayout>
+                        <ProductCreate />
+                    </AdminLayout>
+                ),
+            },
+            {
+                path: paths.productEdit,
+                element: (
+                    <AdminLayout>
+                        <ProductUpdate />
                     </AdminLayout>
                 ),
             },

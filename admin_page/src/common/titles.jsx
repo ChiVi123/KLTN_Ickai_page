@@ -7,3 +7,5 @@ export const statistics = 'Các số liệu thống kê';
 export const users = 'Danh sách người dùng';
 export const reviews = 'Các đánh giá sản phẩm';
 export const contentReview = 'Nội dung đánh giá';
+export const productAdd = 'Thêm sản phẩm';
+export const productEdit = 'Sửa sản phẩm';

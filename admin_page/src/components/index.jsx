@@ -1,6 +1,9 @@
 export { default as Button } from './Button';
 export { default as ChartBar } from './ChartBar';
 export { default as Col } from './Col';
+export { default as FormGroup } from './FormGroup';
+export { default as FormQuill } from './FormQuill';
+export { default as FormSelect } from './FormSelect';
 export { default as Pagination } from './Pagination';
 export { default as ProcessBar } from './ProcessBar';
 export { default as Radio } from './Radio';

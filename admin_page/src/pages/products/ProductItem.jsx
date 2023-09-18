@@ -64,7 +64,7 @@ function ProductItem({ product }) {
     const handleClick = (product) => {
         handleSoftDelete(product, () => {
             dispatch(
-                productsAsync.getAllProductByAdmin({
+                productsAsync.getAllState({
                     page: currentPage - 1,
                     size: itemPerPage,
                 }),

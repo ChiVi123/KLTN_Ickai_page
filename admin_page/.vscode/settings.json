@@ -33,6 +33,7 @@
         "Swal",
         "sweetalert",
         "toastify",
-        "vnpay"
+        "vnpay",
+        "Xmark"
     ]
 }

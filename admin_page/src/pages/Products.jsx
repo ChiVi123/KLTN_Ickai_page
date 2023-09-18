@@ -25,7 +25,7 @@ function Products() {
 
     useEffect(() => {
         dispatch(
-            productsAsync.getAllProductByAdmin({
+            productsAsync.getAllState({
                 page: currentPage - 1,
                 size: itemPerPage,
             }),

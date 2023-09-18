@@ -27,6 +27,7 @@ import { logger } from '~/utils/logger';
 const cx = classNames.bind(styles);
 
 function Login() {
+    const isLogger = false;
     const {
         handleSubmit,
         register,
@@ -51,7 +52,9 @@ function Login() {
     const handleOnSubmit = async (data) => {
         const result = await authServices.login(data);
 
-        logger({ groupName: Login.name, values: [result] });
+        if (isLogger) {
+            logger({ groupName: Login.name, values: [result] });
+        }
 
         if (result) {
             dispatch(userActions.addUser(result));

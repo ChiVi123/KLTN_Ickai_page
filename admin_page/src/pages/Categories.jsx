@@ -8,6 +8,7 @@ import { Table, Typography } from '~/components';
 import { categoriesAsync, categoriesSelector } from '~/redux';
 import { categoryServices } from '~/services';
 
+import { logger } from '~/utils/logger';
 import CategoryItem from './categories/CategoryItem';
 
 const updateStateCategory = ({ id, name, state }, callback) => {
@@ -39,9 +40,10 @@ const updateStateCategory = ({ id, name, state }, callback) => {
 };
 
 function Categories() {
+    const isLogger = false;
     const dispatch = useDispatch();
-    const { itemsAdmin: categories, isLoadingAdmin } = useSelector(
-        categoriesSelector.getCategoriesState,
+    const { items: categories, isLoading } = useSelector(
+        categoriesSelector.selectAllState,
     );
 
     const handleState = (category) => {
@@ -64,23 +66,25 @@ function Categories() {
         }).then(async ({ isConfirmed, value }) => {
             if (isConfirmed) {
                 updateStateCategory({ ...category, state: value }, () => {
-                    dispatch(categoriesAsync.getAllCategoryByAdmin());
+                    dispatch(categoriesAsync.getAllState());
                 });
             }
         });
     };
 
     useEffect(() => {
-        dispatch(categoriesAsync.getAllCategoryByAdmin());
+        dispatch(categoriesAsync.getAllState());
+    }, [dispatch]);
 
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    if (isLogger) {
+        logger({ groupName: Categories.name, values: ['render'] });
+    }
 
     return (
         <section className='section'>
             <Typography variant='h1'>{titles.categories}</Typography>
 
-            <Table heads={lists.tableCate} isLoading={isLoadingAdmin}>
+            <Table heads={lists.tableCate} isLoading={isLoading}>
                 {!!categories.length &&
                     categories.map((category, index) => (
                         <CategoryItem

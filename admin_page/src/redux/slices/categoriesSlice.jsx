@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { getAllCategoryByAdmin } from '../async_thunks/categoriesAsync';
+import { getAllEnable, getAllState } from '../async_thunks/categoriesAsync';
 import { categories } from '../variables';
 
 const { name, initialState } = categories;
@@ -8,16 +8,32 @@ const categoriesSlice = createSlice({
     initialState,
     reducers: {},
     extraReducers: {
-        // getAllCategoryByAdmin
-        [getAllCategoryByAdmin.pending]: (state) => {
-            state.isLoadingAdmin = true;
+        // getAllEnable
+        [getAllEnable.pending]: (state = initialState) => {
+            state.client.isLoading = true;
         },
-        [getAllCategoryByAdmin.fulfilled]: (state, { payload }) => {
-            state.isLoadingAdmin = false;
-            state.itemsAdmin = payload;
+        [getAllEnable.fulfilled]: (state = initialState, { payload }) => {
+            state.client.isLoading = false;
+            state.client.items = payload;
+            state.client.totalPage = 1;
         },
-        [getAllCategoryByAdmin.rejected]: (state, { payload }) => {
-            state.message = payload;
+        [getAllEnable.rejected]: (state = initialState, { payload }) => {
+            state.client.isLoading = false;
+            state.client.message = payload;
+        },
+
+        // getAllState
+        [getAllState.pending]: (state = initialState) => {
+            state.admin.isLoading = true;
+        },
+        [getAllState.fulfilled]: (state = initialState, { payload }) => {
+            state.admin.isLoading = false;
+            state.admin.items = payload;
+            state.admin.totalPage = 1;
+        },
+        [getAllState.rejected]: (state = initialState, { payload }) => {
+            state.admin.isLoading = false;
+            state.admin.message = payload;
         },
     },
 });

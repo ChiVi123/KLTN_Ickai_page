@@ -75,3 +75,33 @@ export const tableReviews = [
     'Lần cuối chỉnh sửa',
     'Các hoạt động',
 ];
+export const formatsDescription = [
+    'header',
+    'bold',
+    'italic',
+    'underline',
+    'strike',
+    'blockquote',
+    'list',
+    'bullet',
+    'indent',
+    'link',
+    'color',
+    'align',
+];
+export const modulesDescription = {
+    toolbar: [
+        ['bold', 'italic', 'underline', 'strike'],
+        ['blockquote'],
+        [{ header: 1 }, { header: 2 }],
+        [{ list: 'ordered' }, { list: 'bullet' }],
+        [{ header: [1, 2, 3, 4, 5, 6, false] }],
+        [
+            { align: '' },
+            { align: 'center' },
+            { align: 'right' },
+            { align: 'justify' },
+        ],
+        ['link', { color: [] }],
+    ],
+};

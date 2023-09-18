@@ -6,67 +6,60 @@ import * as types from './types';
 
 const email = {
     type: types.email,
-    label: labels.email,
     inputName: inputNames.email,
+    label: labels.email,
     placeholder: placeholders.email,
     autoComplete: autoCompletes.email,
 };
 const password = {
     type: types.password,
-    label: labels.password,
     inputName: inputNames.password,
+    label: labels.password,
     placeholder: placeholders.password,
     autoComplete: autoCompletes.off,
 };
 const name = {
     type: types.text,
-    label: labels.name,
     inputName: inputNames.name,
+    label: labels.name,
     placeholder: placeholders.name,
     autoComplete: autoCompletes.name,
 };
-const phone = {
-    type: types.phone,
-    label: labels.phone,
-    inputName: inputNames.phone,
-    placeholder: placeholders.phone,
-    autoCompletes: autoCompletes.off,
+const productName = {
+    type: types.text,
+    inputName: inputNames.name,
+    label: labels.productName,
+    placeholder: placeholders.productName,
+    autoComplete: autoCompletes.name,
+    props: {},
 };
 
 export const login = [email, password];
-export const register = [
-    name,
-    email,
-    password,
+export const profile = [name];
+export const product = [
+    productName,
     {
-        type: types.password,
-        label: labels.passwordConfirm,
-        inputName: inputNames.passwordConfirm,
-        placeholder: placeholders.passwordConfirm,
+        type: types.number,
+        inputName: inputNames.price,
+        label: labels.price,
+        placeholder: placeholders.price,
         autoComplete: autoCompletes.off,
-    },
-];
-export const profile = [name, { ...email, disabled: true }, phone];
-export const checkout = [
-    {
-        type: types.text,
-        inputName: inputNames.email,
-        label: labels.email,
-        placeholder: placeholders.email,
-        isDisable: true,
+        props: { step: 1 },
     },
     {
-        type: types.text,
-        inputName: inputNames.name,
-        label: labels.name,
-        placeholder: placeholders.name,
-        isDisable: false,
+        type: types.number,
+        inputName: inputNames.sale,
+        label: labels.sale,
+        placeholder: placeholders.sale,
+        autoComplete: autoCompletes.off,
+        props: { step: 0.1 },
     },
     {
-        type: types.text,
-        inputName: inputNames.phone,
-        label: labels.phone,
-        placeholder: placeholders.phone,
-        isDisable: false,
+        type: types.number,
+        inputName: inputNames.quantity,
+        label: labels.quantity,
+        placeholder: placeholders.quantity,
+        autoComplete: autoCompletes.off,
+        props: { step: 1 },
     },
 ];

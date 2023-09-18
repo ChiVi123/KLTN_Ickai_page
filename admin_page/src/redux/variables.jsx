@@ -11,7 +11,6 @@ export const products = {
             isLoading: false,
             message: '',
             name: '',
-            options: [],
             price: 0,
             quantity: 0,
             sale: 0,
@@ -30,9 +29,8 @@ export const products = {
 export const categories = {
     name: 'categories',
     initialState: {
-        isLoadingAdmin: false,
-        itemsAdmin: [],
-        message: '',
+        admin: createObjectList(),
+        client: createObjectList(),
     },
 };
 export const user = {
