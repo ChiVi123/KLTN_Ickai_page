@@ -1,0 +1,81 @@
+@use '../abstracts/color-v' as color;
+@use '../abstracts/spacing-v' as space-v;
+@use '../abstracts/typography-v' as typo;
+
+%text {
+    color: var(--text-1-color);
+    font-size: var(--font-size, #{typo.$font-size-md});
+}
+
+%text-center {
+    display: block;
+    text-align: center;
+}
+
+%margin-bottom {
+    --margin-bottom: var(--spacer-2, #{space-v.$spacer});
+    margin-bottom: var(--margin-bottom);
+}
+
+%one-line {
+    line-height: var(--line-height-xs, #{typo.$line-height-xs});
+}
+
+%multi-line {
+    line-height: var(--line-height-base, #{typo.$line-height-base});
+}
+
+%line-clamp-base {
+    display: -webkit-box;
+    -webkit-line-clamp: var(--line-clamp);
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+$clamps: 1 2 3;
+
+@each $i in $clamps {
+    .line-clamp-#{$i} {
+        @extend %line-clamp-base;
+        --line-clamp: #{$i};
+    }
+}
+
+@each $i, $value in typo.$heading-font-sizes {
+    .h#{$i} {
+        --font-size: #{$value};
+
+        @extend %margin-bottom;
+        @extend %text;
+        @extend %one-line;
+        letter-spacing: 0.04em;
+        font-weight: 600;
+    }
+
+    .h#{$i}.center {
+        @extend %text-center;
+    }
+}
+
+@each $i, $value in typo.$text-font-sizes {
+    .text#{$i},
+    .para#{$i} {
+        --font-size: #{$value};
+    }
+
+    .text#{$i}.center,
+    .para#{$i}.center {
+        @extend %text-center;
+    }
+
+    .text#{$i} {
+        @extend %text;
+        @extend %one-line;
+    }
+
+    .para#{$i} {
+        @extend %margin-bottom;
+        @extend %text;
+        @extend %multi-line;
+    }
+}

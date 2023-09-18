@@ -1,0 +1,60 @@
+@use '../abstracts/spacing-v' as space-v;
+@use '../abstracts/color-v' as color;
+
+%btn-disable {
+    background-color: rgba(color.$white, 0.2);
+    pointer-events: none;
+}
+
+%btn-carousel {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    padding: 0 var(--spacer-2);
+    background-color: rgba(color.$white, 0.6);
+    color: var(--typography-1-color);
+    cursor: pointer;
+    transition: background-color 300ms;
+
+    &--disable {
+        @extend %btn-disable;
+    }
+
+    &:hover {
+        background-color: rgba(color.$white, 0.8);
+    }
+}
+
+.carousel {
+    position: relative;
+    width: 100%;
+    overflow-x: hidden;
+
+    .list {
+        --index: 0;
+        --width: 128px;
+
+        transform: translateX(calc(var(--width) * var(--index) * -1));
+        transition: transform 300ms;
+    }
+
+    .btn {
+        &-prev {
+            @extend %btn-carousel;
+            left: 0;
+
+            &--disable {
+                @extend %btn-disable;
+            }
+        }
+
+        &-next {
+            @extend %btn-carousel;
+            right: 0;
+
+            &--disable {
+                @extend %btn-disable;
+            }
+        }
+    }
+}

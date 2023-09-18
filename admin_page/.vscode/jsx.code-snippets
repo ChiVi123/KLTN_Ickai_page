@@ -1,0 +1,82 @@
+{
+    "Export default as": {
+        "scope": "javascript,typescript, javascriptreact",
+        "prefix": "edf",
+        "body": ["export { default as $2 } from '$1';$3"],
+        "description": "Export default as in file index"
+    },
+    "Import styles SCSS module": {
+        "scope": "javascript,typescript, javascriptreact",
+        "prefix": "stylem",
+        "body": [
+            "import classNames from 'classnames/bind';",
+            "import styles from '~/scss$1';",
+            "",
+            "const cx = classNames.bind(styles);",
+            ""
+        ],
+        "description": "Import styles SCSS classnames bind"
+    },
+    "Import styles SCSS": {
+        "scope": "javascript,typescript, javascriptreact",
+        "prefix": "style",
+        "body": ["import cx from 'classnames';", ""],
+        "description": "Import styles SCSS classnames"
+    },
+    "Import prop types": {
+        "scope": "javascript,typescript, javascriptreact",
+        "prefix": "prop",
+        "body": ["import PropTypes from 'prop-types';", "$1.propTypes = {$2};"],
+        "description": "Import prop types"
+    },
+    "Create component": {
+        "scope": "javascript,typescript, javascriptreact",
+        "prefix": "comp",
+        "body": [
+            "function $1() {",
+            "    return <div>$1</div>",
+            "}",
+            "",
+            "export default $1;"
+        ],
+        "description": "Create react component"
+    },
+    "Create component prop children": {
+        "scope": "javascript,typescript, javascriptreact",
+        "prefix": "cocc",
+        "body": [
+            "function $1({ children }) {",
+            "    return <div>{children}</div>",
+            "}",
+            "",
+            "export default $1;"
+        ],
+        "description": "Create react component prop children"
+    },
+    "Use State": {
+        "scope": "javascript,typescript, javascriptreact",
+        "prefix": "ust",
+        "body": ["const [$4$1, set$1] = useState$3($2);$5"],
+        "description": "Snippet useState"
+    },
+    "Use Effect": {
+        "scope": "javascript,typescript, javascriptreact",
+        "prefix": "uef",
+        "body": ["useEffect$1(() => {", "    return () => {};", "}, []);$2"],
+        "description": "Snippet useEffect"
+    },
+    "Use search params": {
+        "scope": "javascript,typescript, javascriptreact",
+        "prefix": "usp",
+        "body": [
+            "const [searchParams, setSearchParams] = useSearchParams$1();$2"
+        ],
+        "description": "Snippet search param"
+    },
+    "Custom log": {
+        "scope": "javascript,typescript, javascriptreact",
+        "prefix": "lg",
+        "body": ["logger$1({ groupName: $2, values: [$3] });$4"],
+        "description": "Snippet logger"
+    }
+}

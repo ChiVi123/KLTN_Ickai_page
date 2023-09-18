@@ -1,0 +1,141 @@
+@use '../abstracts/color-v' as color;
+@use '../abstracts/spacing-m' as space-m;
+@use '../abstracts/spacing-v' as space;
+@use '../abstracts/typography-v' as typo;
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Reggae+One&display=swap');
+
+* {
+    box-sizing: border-box;
+}
+
+:root {
+    // Color
+    --primary-color: #{color.$primary-color};
+    --primary-light-1-color: #{color.$primary-light-1-color};
+    --primary-light-2-color: #{color.$primary-light-2-color};
+    --second-color: #{color.$second-color};
+    --second-light-color: #{color.$second-light-color};
+    --third-color: #{color.$third-color};
+    --third-light-color: #{color.$third-light-color};
+    --fourth-color: #{color.$fourth-color};
+    --fifth-color: #{color.$fifth-color};
+
+    // Typography
+    --typography-1-color: #{color.$typography-1-color};
+    --typography-2-color: #{color.$typography-2-color};
+
+    --font-roboto: 'Roboto', sans-serif;
+    --font-reggae-one: 'Reggae One', serif;
+
+    // Background
+    --black: #{color.$black};
+    --bg-footer-color: #{color.$typography-1-color};
+    --bg-dark-color: #{color.$bg-dark-color};
+    --gray-color: #{color.$gray-color};
+    --gray-hover-color: #{color.$gray-hover-color};
+    --bg-gray-color: #{color.$bg-gray-color};
+    --bg-light-color: #{color.$bg-light-color};
+    --white: #{color.$white};
+
+    // Line height
+    --line-height-base: #{typo.$line-height-base};
+    --line-height-sm: #{typo.$line-height-sm};
+    --line-height-xs: #{typo.$line-height-xs};
+
+    // Size
+    --header-height: 62px;
+    --footer-height: 46px;
+    --total-height: calc(var(--header-height) + var(--footer-height));
+    --main-min-height: calc(100vh - var(--total-height));
+
+    // Spacing
+    @each $key, $value in space.$spacers {
+        --spacer-#{$key}: #{$value};
+    }
+    --round: #{space.$round};
+
+    // Shadow
+    --shadow-theme: #{space.$shadow-option} rgba(#{color.$shadow-color});
+}
+
+html {
+    font-size: 62.5%;
+}
+
+body {
+    --bg-color: #{color.$white};
+    --bg-theme-color: #{color.$bg-light-color};
+    --bg-contrast-1-color: #{color.$gray-hover-color};
+    --bg-contrast-2-color: #{color.$gray-hover-color};
+    --bg-contrast-3-color: #{color.$primary-light-2-color};
+    --bg-contrast-4-color: #{color.$typography-1-color};
+
+    --border-color: #{color.$gray-color};
+
+    --text-1-color: #{color.$typography-1-color};
+    --text-2-color: #{color.$typography-2-color};
+    --text-3-color: #{color.$gray-color};
+}
+
+body.dark {
+    --bg-color: #{color.$bg-dark-color};
+    --bg-theme-color: #{color.$bg-dark-color};
+    --bg-contrast-1-color: #{color.$bg-dark-color};
+    --bg-contrast-2-color: #{color.$typography-2-color};
+    --bg-contrast-3-color: #{color.$typography-2-color};
+    --bg-contrast-4-color: #{color.$white};
+
+    --border-color: #{color.$white};
+
+    --text-1-color: #{color.$white};
+    --text-2-color: #{color.$white};
+    --text-3-color: #{color.$white};
+}
+
+body {
+    font-family: var(--font-roboto);
+    font-size: 1.6rem;
+    line-height: var(--line-height-base);
+    background-color: var(--bg-theme-color);
+    text-rendering: optimizeSpeed;
+}
+
+main {
+    min-height: var(--main-min-height);
+    @include space-m.spacing-y(padding, var(--spacer-3));
+}
+
+a {
+    text-decoration: none;
+
+    &:active {
+        color: currentColor;
+    }
+}
+
+input,
+[tab-index] {
+    border: 0;
+    outline: 0;
+}
+
+input,
+textarea,
+select,
+button {
+    font-size: inherit;
+    font-family: inherit;
+}
+
+a,
+button {
+    padding: 0;
+    border: 1px solid transparent;
+    background-color: transparent;
+}
+
+button {
+    cursor: pointer;
+}

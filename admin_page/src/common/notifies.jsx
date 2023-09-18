@@ -1,0 +1,15 @@
+export const error = 'Đã xảy ra lỗi';
+export const blockReviewFail = 'Không thể khóa đánh giá này';
+export const blockReviewSuccess = 'Đánh giá đã bị xóa';
+export const blockUserFail = 'Không thể khóa người dùng này';
+export const blockUserSuccess = 'Đã khóa người dùng';
+export const changeFail = 'Thay đổi thất bại';
+export const changeSuccess = 'Thay đổi thành công';
+export const loginFail = 'Tài khoản hoặc mật khẩu không đúng';
+export const loginSuccess = 'Đăng nhập thành công';
+export const signUpFail = 'Tạo tài khoản thất bại';
+export const signUpSuccess = 'Tạo tài khoản thành công';
+export const unblockReviewFail = 'Không thể mở khóa đánh giá này';
+export const unblockReviewSuccess = 'Đã mở khóa đánh giá này';
+export const unblockUserFail = 'Không thể mở khóa';
+export const unblockUserSuccess = 'Người dùng đã được mở';

@@ -1,0 +1,36 @@
+{
+    "Use patial": {
+        "scope": "scss",
+        "prefix": "use",
+        "body": ["@use '$1';"],
+        "description": "Use patial"
+    },
+    "Interpolation expression": {
+        "scope": "scss",
+        "prefix": "#{",
+        "body": ["#{$1.$$2}"],
+        "description": "Interpolation expression"
+    },
+    "Flex center item": {
+        "scope": "scss",
+        "prefix": "dfc",
+        "body": [
+            "display: flex;",
+            "align-items: center;",
+            "justify-content: center;"
+        ],
+        "description": "Flex center one item"
+    },
+    "Row gap": {
+        "scope": "scss",
+        "prefix": "rg",
+        "body": ["row-gap: $1;"],
+        "description": "Row gap"
+    },
+    "Column gap": {
+        "scope": "scss",
+        "prefix": "colg",
+        "body": ["column-gap: $1;"],
+        "description": "Column gap"
+    }
+}

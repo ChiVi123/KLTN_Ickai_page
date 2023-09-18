@@ -1,0 +1,10 @@
+export const dashboard = '/';
+export const categories = '/categories';
+export const orders = '/orders';
+export const products = '/products';
+export const addProduct = '/product-form';
+export const reviews = '/reviews';
+export const signIn = '/login';
+export const users = '/users';
+export const orderDetail = (id) => `/order/${id}`;
+export const editProduct = (id) => `/product-form/${id}/edit`;

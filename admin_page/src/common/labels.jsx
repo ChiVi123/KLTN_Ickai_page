@@ -1,0 +1,12 @@
+export const address = 'Địa chỉ:';
+export const category = 'Danh mục:';
+export const description = 'Mô tả:';
+export const email = 'Email:';
+export const name = 'Họ và tên:';
+export const productName = 'Tên sản phẩm:';
+export const password = 'Mật khẩu:';
+export const phone = 'Số điện thoại:';
+export const price = 'Giá sản phẩm:';
+export const productImages = 'Chọn hình ảnh:';
+export const quantity = 'Số lượng:';
+export const sale = 'Giảm giá:';
