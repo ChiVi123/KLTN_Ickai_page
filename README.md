@@ -1,16 +1,20 @@
 # KLTN_Ickai_page
 
-## Repo Front End Create React Apps
+**Repo Front End Create React Apps**
 
 node 20.5.1
 npm 10.0.0
 docker 24.0.6, build ed223c
 
-## Direct To Folder user_page
+## Direct To Folder user_page/admin_page
+
+### `npm i`
 
 ### `npm start`
 
-open [http://localhost:3000](http://localhost:3000)
+user_page open [http://localhost:3000](http://localhost:3000)
+
+admin_page open [http://localhost:3001](http://localhost:3001)
 
 ### `npm run build`
 
@@ -25,3 +29,7 @@ See the section about [deployment](https://facebook.github.io/create-react-app/d
 ## Or Download Docker And Direct To Folder Docker
 
 ### `docker compose up -d`
+
+user page use port 3000
+
+admin page use port 3001
