@@ -1,6 +1,15 @@
+@use 'sass:list';
 @use '../abstracts/color-v' as color;
 @use '../abstracts/button-v' as button;
 @use '../abstracts/spacing-m' as spacing;
+
+%btn-base {
+    border-color: var(--btn-bd-color, transparent);
+    border-radius: button.$border-radius;
+    background-color: var(--btn-bg-color, transparent);
+    color: var(--btn-color, #{color.$gray-color});
+    transition: background-color 600ms, color 300ms, border-color;
+}
 
 .btn {
     --btn-min-width: #{button.$width-md};
@@ -10,13 +19,9 @@
     min-width: var(--btn-min-width);
     height: var(--btn-height);
     @include spacing.spacing-x(padding, button.$padding-x);
-    border-color: var(--btn-bd-color, transparent);
-    border-radius: button.$border-radius;
-    background-color: var(--btn-bg-color, transparent);
-    color: var(--btn-color, #{color.$gray-color});
+    @extend %btn-base;
     font-size: var(--btn-font-size);
     font-weight: 500;
-    transition: background-color 600ms, color 300ms, border-color;
 
     &.full {
         width: 100%;
@@ -63,6 +68,31 @@
                 @if not $is-contained {
                     --btn-color: #{color.$white};
                 }
+                --btn-bg-color: #{map-get(button.$hover-colors, $color-name)};
+            }
+        }
+    }
+}
+
+.btn-icon {
+    @extend %btn-base;
+
+    & + & {
+        margin-left: 8px;
+    }
+
+    @each $key, $value in button.$icon-buttons {
+        &--#{$key} {
+            padding: $value;
+        }
+    }
+
+    @each $color-name, $color in button.$colors {
+        &--#{$color-name} {
+            --btn-bg-color: #{$color};
+            --btn-color: #{color.$white};
+
+            &:hover {
                 --btn-bg-color: #{map-get(button.$hover-colors, $color-name)};
             }
         }

@@ -1,5 +1,3 @@
-import { faStar } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Link } from 'react-router-dom';
 
 import { contextPage, directions } from '~/common';
@@ -28,7 +26,7 @@ function ProductCard({ product }) {
 
             <section className='body'>
                 <Link to={directions.product(product.id)} className='link'>
-                    <Typography variant='para1' component='h3' clamp={2}>
+                    <Typography variant='para2' component='h3' clamp={2}>
                         {product.name}
                     </Typography>
                 </Link>
@@ -46,21 +44,6 @@ function ProductCard({ product }) {
                             {currencyVN(product.price)}
                         </span>
                     )}
-                </div>
-
-                <div className='stat'>
-                    <Typography variant='text2' classes='text-color'>
-                        {product?.rate}
-                    </Typography>
-
-                    <FontAwesomeIcon icon={faStar} className='stat-icon' />
-
-                    <Typography
-                        variant='text2'
-                        classes='text-color text-color--sub'
-                    >
-                        ({product?.starStat})
-                    </Typography>
                 </div>
 
                 <Button

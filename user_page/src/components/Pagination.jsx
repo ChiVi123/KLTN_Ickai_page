@@ -11,12 +11,9 @@ import {
 } from '~/icons';
 import { createObjectParams, getPageArray } from '~/utils/funcs';
 
-function Pagination({ total = 7, display = 5, step = 1, center }) {
-    const [searchParams, setSearchParams] = useSearchParams();
+function Pagination({ total = 7, display = 5, current = 1, step = 1, center }) {
+    const [, setSearchParams] = useSearchParams();
     const [pages, setPages] = useState([]);
-    const [current, setCurrent] = useState(
-        parseInt(searchParams.get(keys.page)) || 1,
-    );
     const [isFirst, setIsFirst] = useState(current === step);
     const [isLast, setIsLast] = useState(current === total);
 
@@ -38,35 +35,30 @@ function Pagination({ total = 7, display = 5, step = 1, center }) {
     }, [current, display, step, total]);
 
     const handleFirst = () => {
-        setCurrent(step);
         setSearchParams((prev) => ({
             ...createObjectParams(prev, [keys.page]),
             page: step,
         }));
     };
     const handlePrev = () => {
-        setCurrent((prev) => prev - 1);
         setSearchParams((prev) => ({
             ...createObjectParams(prev, [keys.page]),
             page: current - 1,
         }));
     };
     const handleNext = () => {
-        setCurrent((prev) => prev + 1);
         setSearchParams((prev) => ({
             ...createObjectParams(prev, [keys.page]),
             page: current + 1,
         }));
     };
     const handleLast = () => {
-        setCurrent((prev) => ({ ...prev, current: total }));
         setSearchParams((prev) => ({
             ...createObjectParams(prev, [keys.page]),
             page: total,
         }));
     };
     const handleClick = (value) => {
-        setCurrent(value);
         setSearchParams((prev) => ({
             ...createObjectParams(prev, [keys.page]),
             page: value,
@@ -74,12 +66,17 @@ function Pagination({ total = 7, display = 5, step = 1, center }) {
     };
 
     return (
-        <div className={cx('pages', { 'pages--center': center })}>
+        <div
+            className={cx('pages', {
+                'pages--center': center,
+                'pages--hidden': total <= 1,
+            })}
+        >
             <button
                 type={types.button}
                 onClick={handleFirst}
                 className={cx('pages-btn', 'pages-btn--border', {
-                    'pages-btn--hidden': isFirst,
+                    'pages-btn--disabled': isFirst,
                 })}
             >
                 <DoubleChevronLeft />
@@ -88,7 +85,7 @@ function Pagination({ total = 7, display = 5, step = 1, center }) {
                 type={types.button}
                 onClick={handlePrev}
                 className={cx('pages-btn', 'pages-btn--border', {
-                    'pages-btn--hidden': isFirst,
+                    'pages-btn--disabled': isFirst,
                 })}
             >
                 <ChevronLeft classes={cx('chevron')} />
@@ -112,7 +109,7 @@ function Pagination({ total = 7, display = 5, step = 1, center }) {
                 type={types.button}
                 onClick={handleNext}
                 className={cx('pages-btn', 'pages-btn--border', {
-                    'pages-btn--hidden': isLast,
+                    'pages-btn--disabled': isLast,
                 })}
             >
                 <ChevronRight classes={cx('chevron')} />
@@ -121,7 +118,7 @@ function Pagination({ total = 7, display = 5, step = 1, center }) {
                 type={types.button}
                 onClick={handleLast}
                 className={cx('pages-btn', 'pages-btn--border', {
-                    'pages-btn--hidden': isLast,
+                    'pages-btn--disabled': isLast,
                 })}
             >
                 <DoubleChevronRight />

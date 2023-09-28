@@ -7,13 +7,15 @@ import { useSearchParams } from 'react-router-dom';
 import styles from '~/scss/pages/orders.module.scss';
 
 import { directions, enums, keys, lists, titles } from '~/common';
-import { Button, Pagination, Table, Typography } from '~/components';
+import { ButtonIcon, Pagination, Table, Typography } from '~/components';
 import { orderHistorySelector, ordersAsync } from '~/redux';
 import { currencyVN } from '~/utils/funcs';
+import { logger } from '~/utils/logger';
 
 const cx = classNames.bind(styles);
 
 function Orders() {
+    const isLogger = false;
     const [searchParams] = useSearchParams();
     const dispatch = useDispatch();
     const {
@@ -22,13 +24,16 @@ function Orders() {
         isLoading,
     } = useSelector(orderHistorySelector.getOrdersAdmin);
 
-    const displayPages = 5;
+    if (isLogger) {
+        logger({ groupName: Orders.name, values: [totalPage] });
+    }
+
     const firstPage = 1;
+    const currentPage = parseInt(searchParams.get(keys.page)) || firstPage;
 
     useEffect(() => {
-        const currentPage = searchParams.get(keys.page) || firstPage;
         dispatch(ordersAsync.getAllOrderEnableByAdmin(currentPage - 1));
-    }, [dispatch, searchParams]);
+    }, [currentPage, dispatch]);
 
     return (
         <section className='section'>
@@ -46,20 +51,20 @@ function Orders() {
                             {currencyVN(order.totalPrice)}
                         </td>
                         <td>
-                            <span className={cx(order.state)}>
+                            <span className={cx('state', order.state)}>
                                 {enums.orderState[order.state].state}
                             </span>
                         </td>
                         <td>
-                            <Button to={directions.orderDetail(order.id)}>
+                            <ButtonIcon to={directions.orderDetail(order.id)}>
                                 <FontAwesomeIcon icon={faEye} />
-                            </Button>
+                            </ButtonIcon>
                         </td>
                     </tr>
                 ))}
             </Table>
 
-            <Pagination display={displayPages} total={totalPage} center />
+            <Pagination total={totalPage} current={currentPage} center />
         </section>
     );
 }

@@ -21,7 +21,7 @@ function Products() {
 
     const itemPerPage = 5;
     const firstPage = 1;
-    const currentPage = searchParams.get(keys.page) || firstPage;
+    const currentPage = parseInt(searchParams.get(keys.page)) || firstPage;
 
     useEffect(() => {
         dispatch(
@@ -51,7 +51,7 @@ function Products() {
                 ))}
             </Table>
 
-            <Pagination total={totalPage} center />
+            <Pagination total={totalPage} current={currentPage} center />
         </section>
     );
 }

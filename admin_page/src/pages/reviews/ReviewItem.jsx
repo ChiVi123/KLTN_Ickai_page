@@ -9,7 +9,7 @@ import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
 import { notifies, titles } from '~/common';
 
-import { Button } from '~/components';
+import { ButtonIcon } from '~/components';
 import styles from '~/scss/pages/reviews/review-item.module.scss';
 import { reviewServices } from '~/services';
 
@@ -71,23 +71,22 @@ function ReviewItem({ review, callback }) {
             </td>
             <td>{review.lastupdateDate || review.createdDate}</td>
             <td>
-                <Button
-                    color={review.state === 'block' ? 'primary' : 'second'}
+                <ButtonIcon
+                    color={review.state === 'block' ? 'third' : 'second'}
                     size='sm'
                     onClick={() => handleToggleBlock(review)}
                 >
                     <FontAwesomeIcon
                         icon={review.state === 'enable' ? faLockOpen : faLock}
                     />
-                </Button>
-                <Button
+                </ButtonIcon>
+                <ButtonIcon
                     color='primary'
-                    variant='outlined'
                     size='sm'
                     onClick={() => handleReadContent(review.content)}
                 >
                     <FontAwesomeIcon icon={faEye} />
-                </Button>
+                </ButtonIcon>
             </td>
         </tr>
     );

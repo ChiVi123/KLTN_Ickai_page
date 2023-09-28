@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { toast } from 'react-toastify';
 
 import { notifies } from '~/common';
-import { Button } from '~/components';
+import { ButtonIcon } from '~/components';
 import { userServices } from '~/services';
 
 import styles from '~/scss/pages/users/user-item.module.scss';
@@ -69,14 +69,14 @@ function UserItem({ user, callback }) {
             <td>{user.role.split('_')[1]}</td>
             <td>
                 {isDisplay && (
-                    <Button
+                    <ButtonIcon
                         color={isActive ? 'primary' : 'second'}
                         onClick={() => handleIsActivate(user)}
                     >
                         <FontAwesomeIcon
                             icon={isActive ? faLockOpen : faLock}
                         />
-                    </Button>
+                    </ButtonIcon>
                 )}
             </td>
         </tr>

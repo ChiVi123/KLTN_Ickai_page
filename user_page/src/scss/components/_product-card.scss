@@ -16,7 +16,7 @@
         }
 
         & > h3 {
-            min-height: 48px;
+            min-height: 42px;
         }
 
         &:hover h3 {
@@ -68,6 +68,7 @@
         display: flex;
         align-items: center;
         column-gap: var(--spacer-3);
+        margin-bottom: var(--spacer-2);
     }
 
     .new-price {
@@ -102,18 +103,6 @@
         color: var(--text-3-color);
         font-size: #{typo.$font-size-xs};
         text-decoration: line-through;
-    }
-
-    .stat {
-        display: flex;
-        align-items: center;
-        margin: var(--spacer-2) 0;
-        column-gap: var(--spacer-1);
-        color: var(--third-color);
-
-        &-icon {
-            height: 14px;
-        }
     }
 
     &:hover {

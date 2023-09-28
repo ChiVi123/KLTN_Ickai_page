@@ -1,4 +1,5 @@
 export { default as Button } from './Button';
+export { default as ButtonIcon } from './ButtonIcon';
 export { default as ChartBar } from './ChartBar';
 export { default as Col } from './Col';
 export { default as FormGroup } from './FormGroup';

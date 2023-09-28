@@ -1,7 +1,7 @@
 import { faCircleCheck, faPen } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames/bind';
-import { Button } from '~/components';
+import { ButtonIcon } from '~/components';
 import styles from '~/scss/pages/categories/category-item.module.scss';
 
 const cx = classNames.bind(styles);
@@ -15,32 +15,19 @@ function CategoryItem({ category, onSetState }) {
 
     return (
         <tr>
-            <td>
-                {category?.categoryimage && (
-                    <img
-                        className={cx('image-category')}
-                        src={category?.categoryimage}
-                        alt={category.name}
-                    />
-                )}
-            </td>
             <td>{category.name}</td>
             <td>{category.state}</td>
             <td>
-                <Button
-                    color='primary'
-                    variant='outlined'
-                    classes={cx('btn', 'btn--edit')}
-                >
+                <ButtonIcon classes={cx('btn--edit')}>
                     <FontAwesomeIcon icon={faPen} />
-                </Button>
-                <Button
+                </ButtonIcon>
+                <ButtonIcon
                     color='second'
-                    classes={cx('btn', 'btn--check')}
+                    classes={cx('btn--check')}
                     onClick={() => handleSetState(category)}
                 >
                     <FontAwesomeIcon icon={faCircleCheck} />
-                </Button>
+                </ButtonIcon>
             </td>
         </tr>
     );

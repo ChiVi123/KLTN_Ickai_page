@@ -32,7 +32,7 @@ import CarouselProduct from './CarouselProduct';
 const cx = classNames.bind(styles);
 
 function IntroProduct({
-    producId,
+    productId,
     name,
     images,
     price,
@@ -55,7 +55,10 @@ function IntroProduct({
     });
 
     const handleOnSubmit = async ({ quantity }) => {
-        if (!userId) navigate(directions.signIn);
+        if (!userId) {
+            navigate(directions.signIn);
+            return;
+        }
 
         if (quantity > stock) {
             toast.error(notifies.overStock);
@@ -63,7 +66,7 @@ function IntroProduct({
         }
 
         const data = {
-            producId,
+            productId,
             productOptionId: undefined,
             value: undefined,
             quantity,
@@ -105,14 +108,11 @@ function IntroProduct({
 
                             <FontAwesomeIcon icon={faStar} />
 
-                            <Typography variant='text1'>
+                            {/* <Typography variant='text1'>
                                 ({starStat} {contextPage.review})
-                            </Typography>
+                            </Typography> */}
                         </div>
-                        <div className={cx('separate')}></div>
-                        <Typography variant='text1'>
-                            {stockSale} {contextPage.sold}
-                        </Typography>
+
                         <div className={cx('separate')}></div>
                         <Typography variant='text1'>
                             {stock} {contextPage.stockAlready}

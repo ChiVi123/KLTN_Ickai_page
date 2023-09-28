@@ -1,17 +1,5 @@
-.td {
-    &-name {
-        width: 32rem;
-    }
-
-    &-summary {
-        width: 28rem;
-        padding: 0.8rem 0;
-    }
-}
-
 .product-name {
     display: -webkit-box;
-    max-width: 32rem;
     min-height: 3.6rem;
 
     color: var(--text-color);

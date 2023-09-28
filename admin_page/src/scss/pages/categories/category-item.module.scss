@@ -1,18 +1,4 @@
-.image-category {
-    height: 3.2rem;
-    width: 3.2rem;
-}
-
 .btn {
-    display: inline;
-    padding: 0.4rem 0.8rem;
-    font-size: 1.2rem;
-    text-transform: none;
-
-    & ~ & {
-        margin-left: 0.8rem;
-    }
-
     &--edit {
         --edit-color: #22c55e;
 

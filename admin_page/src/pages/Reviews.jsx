@@ -20,7 +20,7 @@ function Reviews() {
     const itemPerPage = 5;
     const displayPages = 4;
     const firstPage = 1;
-    const currentPage = searchParams.get(keys.page) || firstPage;
+    const currentPage = parseInt(searchParams.get(keys.page)) || firstPage;
 
     useEffect(() => {
         dispatch(
@@ -47,7 +47,12 @@ function Reviews() {
                 ))}
             </Table>
 
-            <Pagination display={displayPages} total={totalPage} center />
+            <Pagination
+                display={displayPages}
+                total={totalPage}
+                current={currentPage}
+                center
+            />
         </section>
     );
 }

@@ -20,10 +20,12 @@ $heights: (
 $colors: (
     primary: color.$primary-color,
     second: color.$second-color,
+    third: color.$third-color,
 );
 $hover-colors: (
     primary: color.$primary-light-1-color,
     second: color.$second-light-color,
+    third: #caa0df,
 );
 
 $texts: (
@@ -34,3 +36,10 @@ $texts: (
 $padding-x: map-get(spacing.$spacers, 3);
 
 $border-radius: map-get(spacing.$spacers, 1);
+
+// Icon
+$icon-buttons: (
+    sm: 4px,
+    md: 6px,
+    lg: 12px,
+);

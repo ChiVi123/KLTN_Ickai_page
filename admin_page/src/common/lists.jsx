@@ -15,27 +15,27 @@ export const sidebar = [
         icon: faTableCells,
     },
     {
-        context: 'Các sản phẩm',
+        context: 'Quản lý sản phẩm',
         navTo: directions.products,
         icon: faBox,
     },
     {
-        context: 'Các danh mục',
+        context: 'Quản lý  danh mục',
         navTo: directions.categories,
         icon: faRectangleList,
     },
     {
-        context: 'Danh sách đơn hàng',
+        context: 'Quản lý đơn hàng',
         navTo: directions.orders,
         icon: faReceipt,
     },
     {
-        context: 'Danh sách người dùng',
+        context: 'Quản lý người dùng',
         navTo: directions.users,
         icon: faAddressCard,
     },
     {
-        context: 'Danh sách đánh giá',
+        context: 'Quản lý đánh giá',
         navTo: directions.reviews,
         icon: faMessage,
     },
@@ -44,11 +44,9 @@ export const tableProducts = [
     'Hình ảnh',
     'Tên sản phẩm',
     'Giá',
-    'Tổng quan',
     'Các hoạt động',
 ];
 export const tableCate = [
-    'Hình ảnh',
     'Tên danh mục  sản phẩm',
     'Trạng thái',
     'Các hoạt động',

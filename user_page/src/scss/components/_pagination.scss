@@ -8,6 +8,10 @@
         justify-content: center;
     }
 
+    &--hidden {
+        display: none;
+    }
+
     &-btn {
         --size: 34px;
 
@@ -33,7 +37,7 @@
             border: 1px solid var(--border-color);
         }
 
-        &--hidden {
+        &--disabled {
             opacity: 0.4;
             pointer-events: none;
         }

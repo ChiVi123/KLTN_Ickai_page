@@ -51,6 +51,7 @@ function Search() {
             maxPrice: parseInt(searchParams.get(keys.maxPrice)) || '',
         },
     });
+    const currentPage = parseInt(searchParams.get(keys.page)) || 1;
 
     useEffect(() => {
         const fetchApi = async ({ q, category, page, size }) => {
@@ -106,10 +107,10 @@ function Search() {
         fetchApi({
             q: searchParams.get(keys.query),
             category: searchParams.get(keys.cate),
-            page: parseInt(searchParams.get(keys.page)) - 1 || 0,
+            page: currentPage - 1,
             size: sizeSearch,
         });
-    }, [searchParams]);
+    }, [currentPage, searchParams]);
 
     const handleOnSubmit = (data) => {
         setSearchParams((prev) => ({
@@ -221,7 +222,11 @@ function Search() {
                             ))}
                         </Row>
 
-                        <Pagination total={searchResult.totalPage} center />
+                        <Pagination
+                            total={searchResult.totalPage}
+                            current={currentPage}
+                            center
+                        />
                     </section>
                 </Col>
             </Row>

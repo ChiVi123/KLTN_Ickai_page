@@ -19,8 +19,7 @@ function Users() {
     const dispatch = useDispatch();
 
     const isLogger = false;
-    const page = searchParams.get(keys.page) || 1;
-    const displayPages = 5;
+    const page = parseInt(searchParams.get(keys.page)) || 1;
 
     useEffect(() => {
         dispatch(usersAsync.getUsers({ page: page - 1 }));
@@ -46,7 +45,7 @@ function Users() {
                 ))}
             </Table>
 
-            <Pagination display={displayPages} total={totalPage} />
+            <Pagination current={page} total={totalPage} center />
         </section>
     );
 }

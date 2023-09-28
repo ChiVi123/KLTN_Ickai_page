@@ -102,11 +102,6 @@ body {
     text-rendering: optimizeSpeed;
 }
 
-main {
-    min-height: var(--main-min-height);
-    @include space-m.spacing-y(padding, var(--spacer-3));
-}
-
 a {
     text-decoration: none;
 

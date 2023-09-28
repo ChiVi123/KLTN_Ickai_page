@@ -1,25 +1,20 @@
-import { faStar } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames/bind';
 import { useEffect, useMemo, useState } from 'react';
 import ReactModal from 'react-modal';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { useParams, useSearchParams } from 'react-router-dom';
 
-import { contextPage, others } from '~/common';
+import { contextPage, keys } from '~/common';
 import {
     Button,
     Col,
     Pagination,
-    ProcessBar,
     ProductWatched,
     Row,
-    StarRating,
     Typography,
 } from '~/components';
 import {
     Description,
-    FilterReview,
     FormReview,
     IntroProduct,
     Reviews,
@@ -51,7 +46,9 @@ function Product() {
     const watched = useSelector(watchedSelector.selectListWatched);
     const product = useSelector(productsSelector.getProduct);
     const review = useSelector(reviewsSelector.getReviewByProductId);
+    const [searchParams] = useSearchParams();
     const { id } = useParams();
+    const currentPage = parseInt(searchParams.get(keys.page)) || 1;
 
     useEffect(() => {
         dispatch(productsAsync.getProductById(id));
@@ -125,7 +122,7 @@ function Product() {
                 {/* Intro */}
                 <Col>
                     <IntroProduct
-                        producId={id}
+                        productId={id}
                         name={product.name}
                         images={product.images}
                         stars={averageRating(rating.totalStar, rating.quantity)}
@@ -148,122 +145,43 @@ function Product() {
                         <Typography variant='h2'>
                             {contextPage.review}
                         </Typography>
-                        {/* Stat */}
-                        <Row cols={3} gx={3} classes={cx('stat-wrap')}>
-                            <Col>
-                                <div
-                                    className={cx(
-                                        'stat-section',
-                                        'stat-section--center',
-                                    )}
+                        {/* Send Review */}
+                        <div className={cx('stat')}>
+                            <Typography variant='text2'>
+                                {contextPage.messageReview}
+                            </Typography>
+
+                            {isReview && (
+                                <Button
+                                    color='primary'
+                                    size='sm'
+                                    onClick={handleOpen}
                                 >
-                                    <Typography
-                                        variant='h1'
-                                        classes={cx('stat-text-strong')}
-                                    >
-                                        {averageRating(
-                                            rating.totalStar,
-                                            rating.quantity,
-                                        )}
-                                        {contextPage.rateStar}
-                                    </Typography>
+                                    {contextPage.sendReview}
+                                </Button>
+                            )}
 
-                                    <StarRating
-                                        initialValue={averageRating(
-                                            rating.totalStar,
-                                            rating.quantity,
-                                        )}
-                                        allowFraction
-                                        readonly
-                                        classes={cx('stat-rating')}
-                                    />
+                            <ReactModal
+                                isOpen={isOpen}
+                                overlayClassName={'overlay'}
+                                className={'modal'}
+                                preventScroll={true}
+                                ariaHideApp={false}
+                                onRequestClose={closeModal}
+                            >
+                                <FormReview onClose={closeModal} />
+                            </ReactModal>
+                        </div>
 
-                                    <Typography variant='text1'>
-                                        ({rating.quantity} {contextPage.review})
-                                    </Typography>
-                                </div>
-                            </Col>
+                        {/* List Review */}
+                        {review.isLoading || <Reviews reviews={review.list} />}
 
-                            {/* Process Bars */}
-                            <Col>
-                                <div className={cx('stat-section')}>
-                                    {product.starMembers.map((item) => {
-                                        const percentWidth =
-                                            (item.members * 100) /
-                                            product.starStat;
-
-                                        return (
-                                            <div
-                                                key={item.star}
-                                                className={cx('stat-process')}
-                                            >
-                                                <Typography variant='text1'>
-                                                    {item.star}
-                                                </Typography>
-
-                                                <FontAwesomeIcon
-                                                    icon={faStar}
-                                                    color={others.starColor}
-                                                />
-
-                                                <ProcessBar
-                                                    width={percentWidth}
-                                                />
-                                                <Typography variant='text1'>
-                                                    {item.members}
-                                                </Typography>
-                                            </div>
-                                        );
-                                    })}
-                                </div>
-                            </Col>
-
-                            {/* Send Review */}
-                            <Col>
-                                <div
-                                    className={cx(
-                                        'stat-section',
-                                        'stat-section--center',
-                                    )}
-                                >
-                                    <Typography variant='text3'>
-                                        {contextPage.messageReview}
-                                    </Typography>
-
-                                    {isReview && (
-                                        <Button
-                                            color='primary'
-                                            onClick={handleOpen}
-                                        >
-                                            {contextPage.sendReview}
-                                        </Button>
-                                    )}
-
-                                    <ReactModal
-                                        isOpen={isOpen}
-                                        overlayClassName={'overlay'}
-                                        className={'modal'}
-                                        preventScroll={true}
-                                        ariaHideApp={false}
-                                        onRequestClose={closeModal}
-                                    >
-                                        <FormReview onClose={closeModal} />
-                                    </ReactModal>
-                                </div>
-                            </Col>
-                        </Row>
-
-                        {/* Filter */}
                         {review.isLoading || (
-                            <FilterReview
-                                filters={product.starMembers}
-                                reviews={review.list}
-                                component={Reviews}
+                            <Pagination
+                                total={review.totalPage}
+                                current={currentPage}
+                                center
                             />
-                        )}
-
-                        {review.isLoading && (
-                            <Pagination total={review.totalPage} center />
                         )}
                     </section>
                 </Col>

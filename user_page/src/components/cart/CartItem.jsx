@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
 import Swal from 'sweetalert2';
 
-import { contextPage, contextParams, inputNames, notifies } from '~/common';
+import { contextPage, inputNames, notifies, titles } from '~/common';
 import { Col, InputQuantity, Row, Typography } from '~/components';
 import { TrashIcon } from '~/icons';
 import { cartAsync } from '~/redux';
@@ -43,7 +43,7 @@ function CartItem({ product, isLoading = false }) {
     };
     const handleRemove = () => {
         Swal.fire({
-            title: contextParams.confirmRemoveItemCart(product.name),
+            title: titles.confirmRemove,
             confirmButtonText: contextPage.confirm,
             showCancelButton: true,
             cancelButtonText: contextPage.cancel,
