@@ -32,7 +32,7 @@ function Reviews() {
     }, [currentPage, dispatch, searchParams]);
 
     return (
-        <section className='section'>
+        <section className='section section--full-screen'>
             <Typography variant='h1'>{titles.reviews}</Typography>
 
             <Table heads={lists.tableReviews} isLoading={isLoading}>

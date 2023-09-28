@@ -3,3 +3,5 @@ export const cancel = 'Hủy';
 export const confirm = 'Xác nhận';
 export const login = 'Đăng nhập';
 export const backPage = 'Trở về trang quản lý';
+export const add = 'Thêm';
+export const edit = 'Chỉnh sửa';

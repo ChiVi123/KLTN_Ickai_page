@@ -87,7 +87,7 @@ function Dashboard() {
     };
 
     return (
-        <section className='section'>
+        <section className='section section--full-screen'>
             <Typography variant='h2'>{titles.statistics}</Typography>
             <Row cols={3} gy={2}>
                 <Col>

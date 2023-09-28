@@ -8,7 +8,7 @@ function Button({
     navTo,
     href,
     variant,
-    color,
+    color = 'primary',
     size,
     full,
     disabled = false,

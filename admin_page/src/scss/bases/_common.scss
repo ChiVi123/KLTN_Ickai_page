@@ -4,9 +4,12 @@
 .section {
     padding: var(--spacer-3);
     height: 100%;
-    min-height: 100vh;
     background-color: var(--bg-color);
     box-shadow: var(--shadow-theme);
+
+    &--full-screen {
+        min-height: 100vh;
+    }
 }
 
 .inner {
@@ -16,7 +19,6 @@
 
 %base-width {
     width: 100%;
-    max-width: 684px;
     @include space-m.spacing-x(padding, space-v.$spacer * 3);
     @include space-m.spacing-x(margin);
 }

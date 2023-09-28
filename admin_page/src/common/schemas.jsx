@@ -11,6 +11,7 @@ import {
     notRatherOne,
     passwordRequired,
     priceRequired,
+    required,
     saleRequired,
 } from './errorMessages';
 
@@ -44,4 +45,7 @@ export const product = yup.object({
             message: saleRequired,
             test: (value) => value > 0,
         }),
+});
+export const category = yup.object({
+    name: yup.string().trim().required(required),
 });

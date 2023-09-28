@@ -10,3 +10,5 @@ export const price = 'Giá sản phẩm:';
 export const productImages = 'Chọn hình ảnh:';
 export const quantity = 'Số lượng:';
 export const sale = 'Giảm giá:';
+export const enable = 'Enable';
+export const disable = 'Disable';

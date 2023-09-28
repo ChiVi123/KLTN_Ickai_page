@@ -57,7 +57,7 @@
     }
 
     tbody tr:nth-child(even) {
-        background-color: #f5f5f5;
+        background-color: var(--primary-light-2-color);
     }
 
     tbody tr {

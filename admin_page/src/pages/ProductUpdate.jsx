@@ -153,7 +153,7 @@ function ProductUpdate() {
     }
 
     return (
-        <div className='section'>
+        <div className='section section--full-screen'>
             <section className='width-md' style={{ marginBottom: '24px' }}>
                 <Typography variant='h1'>{titles.productAdd}</Typography>
                 <Button to={directions.products} color='primary'>

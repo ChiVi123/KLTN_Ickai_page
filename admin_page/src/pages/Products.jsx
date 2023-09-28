@@ -37,7 +37,7 @@ function Products() {
     }
 
     return (
-        <section className='section'>
+        <section className='section section--full-screen'>
             <Row sb>
                 <Typography variant='h2'>{titles.listProduct}</Typography>
                 <Button to={directions.addProduct} color='primary'>

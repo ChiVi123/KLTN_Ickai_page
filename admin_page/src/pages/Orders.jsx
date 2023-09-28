@@ -36,7 +36,7 @@ function Orders() {
     }, [currentPage, dispatch]);
 
     return (
-        <section className='section'>
+        <section className='section section--full-screen'>
             <Typography variant='h1'>{titles.orders}</Typography>
 
             <Table heads={lists.tableOrders} isLoading={isLoading}>

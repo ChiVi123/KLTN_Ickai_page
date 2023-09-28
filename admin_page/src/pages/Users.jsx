@@ -30,7 +30,7 @@ function Users() {
     }
 
     return (
-        <section className='section'>
+        <section className='section section--full-screen'>
             <Typography variant='h1'>{titles.users}</Typography>
 
             <Table heads={lists.tableUsers} isLoading={isLoading}>
