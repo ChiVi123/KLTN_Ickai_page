@@ -1,8 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { getUsers } from '../async_thunks/usersAsync';
-import { products } from '../variables';
+import { user } from '../variables';
 
-const { name, initialState } = products;
+const { name, initialState } = user;
 const userSlice = createSlice({
     name: name,
     initialState,
