@@ -73,7 +73,7 @@ const orderServices = {
             throw error;
         }
     },
-    adminCompletelOrderById: async ({ id }) => {
+    adminCompleteOrderById: async ({ id }) => {
         try {
             const response = await request.put(
                 `admin/manage/orders/setcomplete/${id}`,

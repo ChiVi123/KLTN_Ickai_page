@@ -1,7 +1,11 @@
-export const addProduct = '+ Thêm sản phẩm';
-export const cancel = 'Hủy';
-export const confirm = 'Xác nhận';
-export const login = 'Đăng nhập';
-export const backPage = 'Trở về trang quản lý';
 export const add = 'Thêm';
+export const addCategory = '+ Thêm danh mục';
+export const addProduct = '+ Thêm sản phẩm';
+export const backPage = 'Trở về trang quản lý';
+export const cancel = 'Hủy';
+export const cancelOrder = 'Hủy đơn hàng';
+export const completeOrder = 'Đã nhận được hàng';
+export const confirm = 'Xác nhận';
+export const confirmOrder = 'Xác nhận đơn hàng';
 export const edit = 'Chỉnh sửa';
+export const login = 'Đăng nhập';

@@ -2,6 +2,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useEffect } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
 import slugify from 'slugify';
 import Swal from 'sweetalert2';
 
@@ -12,6 +13,7 @@ import {
     inputNames,
     labels,
     lists,
+    notifies,
     placeholders,
     schemas,
     titles,
@@ -31,37 +33,6 @@ import { UploadImage } from '~/components/upload_image';
 import { categoriesAsync, categoriesSelector } from '~/redux';
 import { productServices } from '~/services';
 import { logger } from '~/utils/logger';
-
-const addProduct = ({ data, formData }) => {
-    let isSuccess = false;
-
-    Swal.fire({
-        title: 'Thêm sản phẩm',
-        didOpen: async () => {
-            Swal.showLoading();
-            const result = await productServices.addProduct(data);
-            const {
-                data: { id },
-            } = result;
-
-            if (result.isSuccess === 'true') {
-                await productServices.addImagesProduct({ id, data: formData });
-                isSuccess = true;
-            }
-
-            Swal.close();
-        },
-    }).then(() => {
-        Swal.fire({
-            title: `Thêm sản phẩm ${isSuccess ? 'thành công' : 'thất bại'}`,
-            confirmButtonText: 'Xác nhận',
-        }).then(({ isConfirmed }) => {
-            if (isConfirmed) {
-                window.location.reload();
-            }
-        });
-    });
-};
 
 // Component
 function ProductCreate() {
@@ -109,15 +80,39 @@ function ProductCreate() {
             slugify: newSlugify,
             price: data.price,
             sale: newSale,
-            category: data.category,
-            // category_id: product.category_id,
+            category: data.category.value,
             quantity: data.quantity,
             tags: [],
-            summary: '',
+            summary: 'summary',
             description: data.description,
         };
 
-        addProduct({ data: newData, formData });
+        logger({ groupName: ProductCreate.name, values: [data, newData] });
+
+        Swal.fire({
+            title: 'Thêm sản phẩm',
+            didOpen: async () => {
+                Swal.showLoading();
+
+                const {
+                    data: { id },
+                    isSuccess,
+                } = await productServices.addProduct(newData);
+
+                if (isSuccess === 'true') {
+                    await productServices.addImagesProduct({
+                        id,
+                        data: formData,
+                    });
+
+                    toast.success(notifies.success);
+                } else {
+                    toast.error(notifies.error);
+                }
+
+                Swal.close();
+            },
+        });
     };
 
     if (isLogger) {

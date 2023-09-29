@@ -37,30 +37,58 @@ function CategoryForm({
     });
     const dispatch = useDispatch();
     const handleOnSubmit = (data) => {
-        Swal.fire({
-            title: 'Thay đổi trạng thái',
-            didOpen: async () => {
-                Swal.showLoading();
-                const result = await categoryServices.updateCategory(
-                    data.id,
-                    data,
-                );
-                const expectMessage = 'update category success ';
-                const toastMessage = 'Thay đổi thành công';
-                const toastError = 'Thay đổi thất bại';
+        if (edit) {
+            // Update
+            Swal.fire({
+                title: 'Chỉnh sửa',
+                didOpen: async () => {
+                    Swal.showLoading();
+                    const result = await categoryServices.updateCategory(
+                        data.id,
+                        data,
+                    );
+                    const expectMessage = 'update category success ';
+                    const toastMessage = 'Thay đổi thành công';
+                    const toastError = 'Thay đổi thất bại';
 
-                if (result.message === expectMessage) {
-                    toast.success(toastMessage);
-                } else {
-                    toast.error(toastError);
-                }
+                    if (result.message === expectMessage) {
+                        toast.success(toastMessage);
+                    } else {
+                        toast.error(toastError);
+                    }
 
-                dispatch(categoriesAsync.getAllState());
-                onClose();
+                    dispatch(categoriesAsync.getAllState());
 
-                Swal.close();
-            },
-        });
+                    Swal.close();
+                },
+            });
+        } else {
+            // Create
+            Swal.fire({
+                title: 'Thêm danh mục',
+                didOpen: async () => {
+                    Swal.showLoading();
+
+                    try {
+                        const result = await categoryServices.addCategory(data);
+
+                        if (result.isSuccess === 'true') {
+                            toast.success('Thêm danh mục thành công');
+                        } else {
+                            toast.error('Thêm danh mục thất bại');
+                        }
+                    } catch (error) {
+                        toast.error('Thêm danh mục thất bại');
+                    }
+
+                    dispatch(categoriesAsync.getAllState());
+
+                    Swal.close();
+                },
+            });
+        }
+
+        onClose();
     };
     const isLogger = false;
 

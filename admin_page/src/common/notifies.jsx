@@ -1,4 +1,6 @@
 export const error = 'Đã xảy ra lỗi';
+export const success = 'Thành công';
+export const fail = 'Thất bại';
 export const blockReviewFail = 'Không thể khóa đánh giá này';
 export const blockReviewSuccess = 'Đánh giá đã bị xóa';
 export const blockUserFail = 'Không thể khóa người dùng này';

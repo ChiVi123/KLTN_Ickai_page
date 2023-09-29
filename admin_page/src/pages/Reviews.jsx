@@ -35,7 +35,7 @@ function Reviews() {
         <section className='section section--full-screen'>
             <Typography variant='h1'>{titles.reviews}</Typography>
 
-            <Table heads={lists.tableReviews} isLoading={isLoading}>
+            <Table heads={lists.tableReviews} loading={isLoading}>
                 {reviews.map((item, index) => (
                     <ReviewItem
                         key={index}

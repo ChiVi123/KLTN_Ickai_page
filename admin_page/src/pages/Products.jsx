@@ -45,7 +45,7 @@ function Products() {
                 </Button>
             </Row>
 
-            <Table heads={lists.tableProducts} isLoading={isLoading}>
+            <Table heads={lists.tableProducts} loading={isLoading}>
                 {products.map((item, index) => (
                     <ProductItem key={index} product={item} />
                 ))}

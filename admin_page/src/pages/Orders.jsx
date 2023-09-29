@@ -7,7 +7,13 @@ import { useSearchParams } from 'react-router-dom';
 import styles from '~/scss/pages/orders.module.scss';
 
 import { directions, enums, keys, lists, titles } from '~/common';
-import { ButtonIcon, Pagination, Table, Typography } from '~/components';
+import {
+    ButtonIcon,
+    Pagination,
+    Skeleton,
+    Table,
+    Typography,
+} from '~/components';
 import { orderHistorySelector, ordersAsync } from '~/redux';
 import { currencyVN } from '~/utils/funcs';
 import { logger } from '~/utils/logger';
@@ -16,6 +22,7 @@ const cx = classNames.bind(styles);
 
 function Orders() {
     const isLogger = false;
+    const skeleton = Array.from({ length: 10 }, (_, index) => index);
     const [searchParams] = useSearchParams();
     const dispatch = useDispatch();
     const {
@@ -39,7 +46,36 @@ function Orders() {
         <section className='section section--full-screen'>
             <Typography variant='h1'>{titles.orders}</Typography>
 
-            <Table heads={lists.tableOrders} isLoading={isLoading}>
+            <Table heads={lists.tableOrders} loading={isLoading}>
+                {isLoading &&
+                    skeleton.map((item) => (
+                        <tr key={item}>
+                            <td
+                                style={{ padding: '10px' }}
+                                className={cx('td-id')}
+                            >
+                                <Skeleton variant='text' height='26px' />
+                            </td>
+                            <td
+                                style={{ padding: '10px' }}
+                                className={cx('td-name')}
+                            >
+                                <Skeleton variant='text' height='26px' />
+                            </td>
+                            <td style={{ padding: '10px' }}>
+                                <Skeleton variant='text' height='26px' />
+                            </td>
+                            <td style={{ padding: '10px' }}>
+                                <Skeleton variant='text' height='26px' />
+                            </td>
+                            <td style={{ padding: '10px' }}>
+                                <Skeleton variant='text' height='26px' />
+                            </td>
+                            <td style={{ padding: '10px' }}>
+                                <Skeleton variant='text' height='26px' />
+                            </td>
+                        </tr>
+                    ))}
                 {orders.map((order, index) => (
                     <tr key={index}>
                         <td className={cx('td-id')} title={order.id}>

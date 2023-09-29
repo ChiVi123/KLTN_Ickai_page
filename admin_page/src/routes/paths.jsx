@@ -1,7 +1,7 @@
 export const root = '/';
 export const categories = 'categories';
 export const login = 'login';
-export const order = 'orders:id';
+export const order = 'order/:id';
 export const orders = 'orders';
 export const productAdd = 'product-form';
 export const productEdit = 'product-form/:id/edit';

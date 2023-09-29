@@ -3,6 +3,7 @@ import { useEffect } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import slugify from 'slugify';
 import Swal from 'sweetalert2';
 
@@ -14,6 +15,7 @@ import {
     keys,
     labels,
     lists,
+    notifies,
     placeholders,
     schemas,
     titles,
@@ -26,6 +28,7 @@ import {
     FormQuill,
     FormSelect,
     Row,
+    Skeleton,
     TextField,
     Typography,
 } from '~/components';
@@ -39,41 +42,10 @@ import {
 import { productServices } from '~/services';
 import { logger } from '~/utils/logger';
 
-const addProduct = ({ data, formData }) => {
-    let isSuccess = false;
-
-    Swal.fire({
-        title: 'Thêm sản phẩm',
-        didOpen: async () => {
-            Swal.showLoading();
-            const result = await productServices.addProduct(data);
-            const {
-                data: { id },
-            } = result;
-
-            if (result.isSuccess === 'true') {
-                await productServices.addImagesProduct({ id, data: formData });
-                isSuccess = true;
-            }
-
-            Swal.close();
-        },
-    }).then(() => {
-        Swal.fire({
-            title: `Thêm sản phẩm ${isSuccess ? 'thành công' : 'thất bại'}`,
-            confirmButtonText: 'Xác nhận',
-        }).then(({ isConfirmed }) => {
-            if (isConfirmed) {
-                window.location.reload();
-            }
-        });
-    });
-};
-
 // Component
 function ProductUpdate() {
-    const isLogger = true;
-    // Hooks
+    const isLogger = false;
+
     const { items: categories } = useSelector(categoriesSelector.selectEnable);
     const product = useSelector(productsSelector.getProduct);
     const dispatch = useDispatch();
@@ -89,30 +61,40 @@ function ProductUpdate() {
             name: product.name,
             price: product.price,
             sale: product.sale,
-            category: null,
-            summary: '',
+            category: { label: '', value: '' },
+            tags: product.tags,
+            summary: product.summary,
             description: product.description,
             quantity: product.quantity,
         },
     });
     const { id } = useParams();
 
+    // Call api
     useEffect(() => {
         dispatch(categoriesAsync.getAllEnable());
         dispatch(productsAsync.getById(id));
         return () => {};
     }, [dispatch, id]);
+    // Set value form
     useEffect(() => {
         setValue(keys.name, product.name);
         setValue(keys.price, product.price);
         setValue(keys.sale, product.sale);
+        setValue(keys.category, {
+            label: product.category,
+            value: product.category_id,
+        });
         setValue(keys.quantity, product.quantity);
         setValue(keys.description, product.description);
+        setValue(keys.images, product.images);
 
         return () => {};
     }, [
+        product.category,
+        product.category_id,
         product.description,
-        product.isLoading,
+        product.images,
         product.name,
         product.price,
         product.quantity,
@@ -124,28 +106,35 @@ function ProductUpdate() {
     const handleOnSubmit = async (data) => {
         const newSale = parseFloat(data.sale);
         const newSlugify = slugify(data.name);
-        const formData = new FormData();
 
-        data.images.forEach((image) => {
-            if (image.preview) {
-                formData.append('url', image);
-            }
-        });
+        delete data.images;
 
         const newData = {
-            name: data.name,
+            ...data,
             slugify: newSlugify,
-            price: data.price,
             sale: newSale,
-            category: data.category,
-            // category_id: product.category_id,
-            quantity: data.quantity,
-            tags: [],
-            summary: '',
-            description: data.description,
+            category: data.category.value,
+            state: product.state,
         };
 
-        addProduct({ data: newData, formData });
+        Swal.fire({
+            title: 'Chỉnh sửa sản phẩm',
+            didOpen: async () => {
+                Swal.showLoading();
+                const result = await productServices.editProduct({
+                    id: product.id,
+                    data: newData,
+                });
+
+                if (result.isSuccess === 'true') {
+                    toast.success(notifies.success);
+                } else {
+                    toast.error(notifies.fail);
+                }
+
+                Swal.close();
+            },
+        });
     };
 
     if (isLogger) {
@@ -155,7 +144,7 @@ function ProductUpdate() {
     return (
         <div className='section section--full-screen'>
             <section className='width-md' style={{ marginBottom: '24px' }}>
-                <Typography variant='h1'>{titles.productAdd}</Typography>
+                <Typography variant='h1'>{titles.productEdit}</Typography>
                 <Button to={directions.products} color='primary'>
                     {contextButton.backPage}
                 </Button>
@@ -187,14 +176,20 @@ function ProductUpdate() {
                             errors={errors}
                             isRequired
                         >
-                            <FormSelect
-                                name={inputNames.category}
-                                options={categories}
-                                label='name'
-                                value='id'
-                                placeholder={placeholders.category}
-                                control={control}
-                            />
+                            <Skeleton ready={product.category} height='38px'>
+                                <FormSelect
+                                    name={inputNames.category}
+                                    options={categories}
+                                    label='name'
+                                    value='id'
+                                    placeholder={placeholders.category}
+                                    defaultValue={{
+                                        name: product.category,
+                                        id: product.category_id,
+                                    }}
+                                    control={control}
+                                />
+                            </Skeleton>
                         </FormGroup>
                     </Col>
 
@@ -222,23 +217,31 @@ function ProductUpdate() {
                             label={labels.productImages}
                             errors={errors}
                         >
-                            <Controller
-                                name={inputNames.productImages}
-                                control={control}
-                                render={({ field: { onChange } }) => (
-                                    <UploadImage
-                                        onChange={(files) => onChange(files)}
-                                        isMultiple
-                                        cols={4}
-                                    />
-                                )}
-                            />
+                            <Skeleton
+                                ready={product.images.length}
+                                height='156px'
+                            >
+                                <Controller
+                                    name={inputNames.productImages}
+                                    control={control}
+                                    render={({ field: { onChange } }) => (
+                                        <UploadImage
+                                            id={product.id}
+                                            value={product.images}
+                                            onChange={(files) =>
+                                                onChange(files)
+                                            }
+                                            cols={4}
+                                        />
+                                    )}
+                                />
+                            </Skeleton>
                         </FormGroup>
                     </Col>
 
                     <Col style={{ marginTop: '14px' }}>
                         <Button type={types.submit} color='primary'>
-                            {contextButton.addProduct}
+                            {contextButton.edit}
                         </Button>
                     </Col>
                 </Row>

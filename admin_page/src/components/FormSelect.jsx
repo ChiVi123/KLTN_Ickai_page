@@ -10,6 +10,7 @@ function FormSelect({
     isDisable,
     control,
     placeholder,
+    defaultValue,
 }) {
     const Option = ({ children, ...props }) => {
         const { data } = props;
@@ -31,6 +32,7 @@ function FormSelect({
                         Option: Option,
                     }}
                     getOptionLabel={(option) => option[label]}
+                    defaultValue={defaultValue}
                     onChange={(option) =>
                         onChange({ value: option[value], label: option[label] })
                     }
@@ -48,6 +50,7 @@ function FormSelect({
                         menu: (baseStyle) => ({
                             ...baseStyle,
                             background: 'var(--bg-color)',
+                            zIndex: '2',
                         }),
                         control: (baseStyle) => ({
                             ...baseStyle,

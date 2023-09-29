@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 const cx = classNames.bind();
 
-function Table({ children, classes, heads, isLoading }) {
+function Table({ children, classes, heads, loading = false }) {
     return (
         <table className={cx('table', { [classes]: classes })}>
             <thead>
@@ -13,7 +13,7 @@ function Table({ children, classes, heads, isLoading }) {
                     ))}
                 </tr>
             </thead>
-            <tbody>{children}</tbody>
+            <tbody className={cx({ loading })}>{children}</tbody>
         </table>
     );
 }

@@ -1,6 +1,7 @@
 export { default as Categories } from './Categories';
 export { default as Dashboard } from './Dashboard';
 export { default as Login } from './Login';
+export { default as Order } from './Order';
 export { default as Orders } from './Orders';
 export { default as ProductCreate } from './ProductCreate';
 export { default as ProductUpdate } from './ProductUpdate';

@@ -5,6 +5,7 @@ import {
     Categories,
     Dashboard,
     Login,
+    Order,
     Orders,
     ProductCreate,
     ProductUpdate,
@@ -73,6 +74,14 @@ export const router = createBrowserRouter([
                 element: (
                     <AdminLayout>
                         <Orders />
+                    </AdminLayout>
+                ),
+            },
+            {
+                path: paths.order,
+                element: (
+                    <AdminLayout>
+                        <Order />
                     </AdminLayout>
                 ),
             },

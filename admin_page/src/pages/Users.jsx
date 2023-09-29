@@ -33,7 +33,7 @@ function Users() {
         <section className='section section--full-screen'>
             <Typography variant='h1'>{titles.users}</Typography>
 
-            <Table heads={lists.tableUsers} isLoading={isLoading}>
+            <Table heads={lists.tableUsers} loading={isLoading}>
                 {users.map((item, index) => (
                     <UserItem
                         key={index}

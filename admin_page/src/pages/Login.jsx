@@ -58,6 +58,7 @@ function Login() {
 
         if (result) {
             dispatch(userActions.addUser(result));
+            toast.success(notifies.loginSuccess);
             navigate(directions.dashboard);
         } else {
             toast.error(notifies.loginFail);

@@ -21,11 +21,14 @@ const productsSlice = createSlice({
             state.item.sale = payload.sale;
             state.item.tags = payload.tags;
             state.item.price = payload.price;
+            state.item.category = payload.category;
+            state.item.category_id = payload.category_id;
             state.item.images = payload.images;
             state.item.summary = payload.summary;
             state.item.options = payload.options;
             state.item.quantity = payload.quantity;
             state.item.description = payload.description;
+            state.item.state = payload.state;
         },
         [getById.rejected]: (state, { payload }) => {
             state.item.message = 'error';

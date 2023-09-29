@@ -144,7 +144,7 @@ function UploadImage({ id, onChange, value = [], cols }) {
                                         />
                                     </div>
                                     <Button
-                                        color='primary'
+                                        color='second'
                                         size='sm'
                                         full
                                         onClick={(event) => {
