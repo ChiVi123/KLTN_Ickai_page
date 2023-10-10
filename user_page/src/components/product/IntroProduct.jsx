@@ -26,6 +26,7 @@ import {
 import { cartActions, userSelector } from '~/redux';
 import { cartServices } from '~/services';
 import { currencyVN, priceSaleVN } from '~/utils/funcs';
+import { logger } from '~/utils/logger';
 import styles from '~product/intro-product.module.scss';
 import CarouselProduct from './CarouselProduct';
 
@@ -38,11 +39,10 @@ function IntroProduct({
     price,
     sale,
     stars,
-    starStat,
-    stockSale,
     stock,
     isLoading = false,
 }) {
+    const isLogger = false;
     const newPrice = priceSaleVN(price, sale);
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -54,7 +54,10 @@ function IntroProduct({
         },
     });
 
-    const handleOnSubmit = async ({ quantity }) => {
+    const handleOnSubmit = async (
+        { quantity },
+        { nativeEvent: { submitter } },
+    ) => {
         if (!userId) {
             navigate(directions.signIn);
             return;
@@ -65,12 +68,14 @@ function IntroProduct({
             return;
         }
 
+        const isBuyNow = !!submitter.attributes['buy-now'];
         const data = {
             productId,
             productOptionId: undefined,
             value: undefined,
-            quantity,
+            quantity: isBuyNow ? 1 : quantity,
         };
+
         const result = await cartServices.addCart(data);
 
         if (result.isSuccess === 'true') {
@@ -79,9 +84,15 @@ function IntroProduct({
         } else {
             toast.error(notifies.addedItemCartFail);
         }
+
+        if (isBuyNow && result.isSuccess === 'true') {
+            navigate(directions.cart);
+        }
     };
 
-    // logger({ groupName: IntroProduct.name, values: ['re-render'] });
+    if (isLogger) {
+        logger({ groupName: IntroProduct.name, values: ['re-render'] });
+    }
 
     return (
         <section className='section'>
@@ -107,10 +118,6 @@ function IntroProduct({
                             </Typography>
 
                             <FontAwesomeIcon icon={faStar} />
-
-                            {/* <Typography variant='text1'>
-                                ({starStat} {contextPage.review})
-                            </Typography> */}
                         </div>
 
                         <div className={cx('separate')}></div>
@@ -159,14 +166,20 @@ function IntroProduct({
                             />
                         </div>
                         <div className={cx('form-group')}>
-                            <Button disabled={!stock} color='primary' size='lg'>
+                            <Button
+                                type={types.submit}
+                                color='primary'
+                                size='lg'
+                                disabled={!stock}
+                                buy-now='true'
+                            >
                                 {contextPage.buyNow}
                             </Button>
                             <Button
                                 type={types.submit}
-                                disabled={!stock}
                                 variant='outlined'
                                 color='primary'
+                                disabled={!stock}
                                 size='lg'
                             >
                                 {contextPage.addCart}

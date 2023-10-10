@@ -1,32 +1,82 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Controller, useForm } from 'react-hook-form';
+import { useDispatch } from 'react-redux';
+import { toast } from 'react-toastify';
 import {
     contextPage,
     inputNames,
+    notifies,
     placeholders,
     schemas,
     types,
 } from '~/common';
-import { Button, Col, Row, StarRating, Typography } from '~/components';
+import {
+    Button,
+    Col,
+    FormQuill,
+    Row,
+    StarRating,
+    Typography,
+} from '~/components';
+import { reviewsAsync } from '~/redux';
+import { reviewServices } from '~/services';
 import { logger } from '~/utils/logger';
 
-function FormReview({ rate = 1, content = '', onClose }) {
-    const oneStar = 1;
+function FormReview({
+    productId = '',
+    review = { id: '', rate: 1, content: '' },
+    edit = false,
+    onClose,
+}) {
+    const isLogger = false;
     const {
-        register,
         control,
         formState: { errors },
         handleSubmit,
     } = useForm({
         resolver: yupResolver(schemas.review),
         defaultValues: {
-            rate,
-            content,
+            id: review.id,
+            rate: review.rate,
+            content: review.content,
         },
     });
-    const handleOnSubmit = (data) => {
-        logger({ groupName: FormReview.name, values: [data] });
+    const dispatch = useDispatch();
+
+    const handleOnSubmit = async (data) => {
+        if (edit) {
+            const expectMessage = 'Update comment successfully';
+            const result = await reviewServices.editReview({
+                id: review.id,
+                data,
+            });
+
+            if (result?.message === expectMessage) {
+                toast.success(notifies.success);
+            } else {
+                toast.error(notifies.fail);
+            }
+        } else {
+            const result = await reviewServices.addReview({
+                productId,
+                ...data,
+            });
+            const expectMessage = 'Add comment success ';
+
+            if (result?.message === expectMessage) {
+                toast.success(notifies.success);
+            } else {
+                toast.error(notifies.fail);
+            }
+        }
+
+        dispatch(reviewsAsync.getReviewByProductId(productId));
+        onClose();
     };
+
+    if (isLogger) {
+        logger({ groupName: FormReview.name, values: ['re-render'] });
+    }
 
     return (
         <form onSubmit={handleSubmit(handleOnSubmit)}>
@@ -43,7 +93,7 @@ function FormReview({ rate = 1, content = '', onClose }) {
                         control={control}
                         render={({ field: { onChange } }) => (
                             <StarRating
-                                initialValue={oneStar}
+                                initialValue={review.rate}
                                 transition
                                 size='xl'
                                 onClick={onChange}
@@ -53,14 +103,11 @@ function FormReview({ rate = 1, content = '', onClose }) {
                     <div className='invalid'>{errors.rate?.message}</div>
                 </Col>
                 <Col>
-                    <textarea
-                        id={inputNames.content}
-                        cols='60'
-                        rows='6'
+                    <FormQuill
+                        name={inputNames.content}
                         placeholder={placeholders.content}
-                        style={{ padding: '8px', marginLeft: '6px' }}
-                        {...register(inputNames.content)}
-                    ></textarea>
+                        control={control}
+                    />
                     <div style={{ marginLeft: '6px' }} className='invalid'>
                         {errors.content?.message}
                     </div>

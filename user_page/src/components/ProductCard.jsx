@@ -1,15 +1,49 @@
-import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
-import { contextPage, directions } from '~/common';
+import { useState } from 'react';
+import { contextPage, directions, notifies } from '~/common';
+import { cartActions } from '~/redux';
+import { cartServices } from '~/services';
 import { currencyVN, priceSaleVN } from '~/utils/funcs';
+import { logger } from '~/utils/logger';
 import { Button, Skeleton, Typography } from '.';
 
 function ProductCard({ product }) {
+    const isLogger = false;
     const percent = 100;
     const priceSale = priceSaleVN(product.price, product.sale);
     const width = Math.floor((1 - product.sale) * percent);
+    const [isLoading, setIsLoading] = useState(false);
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
 
-    // logger({ groupName: ProductCard.name, values: [product] });
+    const handleBuyNow = async () => {
+        setIsLoading(true);
+        const data = {
+            productId: product.id,
+            productOptionId: undefined,
+            value: undefined,
+            quantity: 1,
+        };
+
+        const result = await cartServices.addCart(data);
+
+        if (result.isSuccess === 'true') {
+            toast.success(notifies.addedItemCartSuccess);
+            dispatch(cartActions.increaseQuantity());
+            navigate(directions.cart);
+        } else {
+            toast.error(notifies.addedItemCartFail);
+        }
+
+        setIsLoading(false);
+    };
+
+    if (isLogger) {
+        logger({ groupName: ProductCard.name, values: [product] });
+    }
 
     return (
         <article className='product-card'>
@@ -47,9 +81,9 @@ function ProductCard({ product }) {
                 </div>
 
                 <Button
-                    to={directions.cart}
-                    disabled={!product?.quantity}
                     color='primary'
+                    disabled={!product?.quantity && !isLoading}
+                    onClick={handleBuyNow}
                     classes='btn-link'
                 >
                     {product?.quantity

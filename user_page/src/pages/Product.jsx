@@ -71,9 +71,7 @@ function Product() {
     useEffect(() => {
         (async () => {
             if (userId) {
-                const orders = await orderServices.userGetOrdersComplete({
-                    id: userId,
-                });
+                const orders = await orderServices.userGetOrdersComplete();
 
                 const existOrder = orders.list.some((order) =>
                     order.items.some((item) => item.productid === id),
@@ -146,12 +144,12 @@ function Product() {
                             {contextPage.review}
                         </Typography>
                         {/* Send Review */}
-                        <div className={cx('stat')}>
-                            <Typography variant='text2'>
-                                {contextPage.messageReview}
-                            </Typography>
+                        {isReview && (
+                            <div className={cx('stat')}>
+                                <Typography variant='text2'>
+                                    {contextPage.messageReview}
+                                </Typography>
 
-                            {isReview && (
                                 <Button
                                     color='primary'
                                     size='sm'
@@ -159,19 +157,22 @@ function Product() {
                                 >
                                     {contextPage.sendReview}
                                 </Button>
-                            )}
 
-                            <ReactModal
-                                isOpen={isOpen}
-                                overlayClassName={'overlay'}
-                                className={'modal'}
-                                preventScroll={true}
-                                ariaHideApp={false}
-                                onRequestClose={closeModal}
-                            >
-                                <FormReview onClose={closeModal} />
-                            </ReactModal>
-                        </div>
+                                <ReactModal
+                                    isOpen={isOpen}
+                                    overlayClassName={'overlay'}
+                                    className={'modal'}
+                                    preventScroll={true}
+                                    ariaHideApp={false}
+                                    onRequestClose={closeModal}
+                                >
+                                    <FormReview
+                                        productId={id}
+                                        onClose={closeModal}
+                                    />
+                                </ReactModal>
+                            </div>
+                        )}
 
                         {/* List Review */}
                         {review.isLoading || <Reviews reviews={review.list} />}

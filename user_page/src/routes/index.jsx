@@ -3,6 +3,7 @@ import { PrivateRoutes, PublicRoutes } from '~/hocs';
 import { DefaultLayout } from '~/layouts';
 import {
     Cart,
+    ChangePassword,
     Checkout,
     Home,
     Login,
@@ -113,6 +114,14 @@ export const router = createBrowserRouter([
                 element: (
                     <DefaultLayout>
                         <Profile />
+                    </DefaultLayout>
+                ),
+            },
+            {
+                path: paths.changePassword,
+                element: (
+                    <DefaultLayout>
+                        <ChangePassword />
                     </DefaultLayout>
                 ),
             },

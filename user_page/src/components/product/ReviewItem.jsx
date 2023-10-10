@@ -2,13 +2,14 @@ import classNames from 'classnames/bind';
 import parser from 'html-react-parser';
 import { useState } from 'react';
 import ReactModal from 'react-modal';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Swal from 'sweetalert2';
 
+import { useParams } from 'react-router-dom';
 import { avatarDefault } from '~/assets/images';
 import { contextPage } from '~/common';
 import { StarRating, Typography } from '~/components';
-import { userSelector } from '~/redux';
+import { reviewsAsync, userSelector } from '~/redux';
 import { reviewServices } from '~/services';
 import { logger } from '~/utils/logger';
 import styles from '~product/review.module.scss';
@@ -22,6 +23,8 @@ function ReviewItem({ review }) {
     const level1 = 1;
     const [isOpen, setIsOpen] = useState(false);
     const userId = useSelector(userSelector.getUserId);
+    const { id } = useParams();
+    const dispatch = useDispatch();
 
     const handleOpen = () => {
         setIsOpen(true);
@@ -39,9 +42,15 @@ function ReviewItem({ review }) {
             cancelButtonText: contextPage.cancel,
         }).then(async (result) => {
             if (result.isConfirmed) {
-                await reviewServices.deleteReviewByUser({
+                const result = await reviewServices.deleteReviewByUser({
                     id: review.id,
                 });
+
+                if (result.isSuccess === 'true') {
+                    dispatch(
+                        reviewsAsync.getReviewByProductId(review.productid),
+                    );
+                }
             }
         });
     };
@@ -49,7 +58,7 @@ function ReviewItem({ review }) {
     if (isLogger) {
         logger({
             groupName: ReviewItem.name,
-            values: [new Date()],
+            values: [review],
         });
     }
 
@@ -70,7 +79,7 @@ function ReviewItem({ review }) {
                     <StarRating initialValue={review.rate} size='xs' readonly />
 
                     <Typography variant='para1' component='div'>
-                        {parser(review.content)}
+                        {parser(review.content || '')}
                     </Typography>
 
                     <div className={cx('wrap-info')}>
@@ -100,8 +109,9 @@ function ReviewItem({ review }) {
                             onRequestClose={closeModal}
                         >
                             <FormReview
-                                rate={review.rate}
-                                content={parser(review.content)}
+                                productId={id}
+                                review={review}
+                                edit
                                 onClose={closeModal}
                             />
                         </ReactModal>

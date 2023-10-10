@@ -99,3 +99,8 @@ export const review = yup.object({
     rate: yup.number().min(1, starRequired),
     content: yup.string().required(contentRequired),
 });
+
+export const changePassword = yup.object({
+    oldpass: yup.string().required(passwordRequired),
+    newpass: yup.string().min(8, leastCharacter).required(passwordRequired),
+});

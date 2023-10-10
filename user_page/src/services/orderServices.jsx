@@ -50,7 +50,7 @@ const orderServices = {
             const response = await request.get(`orders/getallordercomplete`);
             return response.data;
         } catch (error) {
-            throw error;
+            return { list: [] };
         }
     },
     adminCancelOrderById: async ({ id }) => {
@@ -73,14 +73,14 @@ const orderServices = {
             throw error;
         }
     },
-    adminCompleteOrderById: async ({ id }) => {
+    adminCompleteOrderById: async (id) => {
         try {
             const response = await request.put(
                 `admin/manage/orders/setcomplete/${id}`,
             );
             return response;
         } catch (error) {
-            throw error;
+            console.log(error);
         }
     },
     userCancelOrderById: async ({ id }) => {
