@@ -21,10 +21,11 @@ const cx = classNames.bind(styles);
 function ReviewItem({ review }) {
     const isLogger = false;
     const level1 = 1;
-    const [isOpen, setIsOpen] = useState(false);
-    const userId = useSelector(userSelector.getUserId);
-    const { id } = useParams();
+
     const dispatch = useDispatch();
+    const { id } = useParams();
+    const [isOpen, setIsOpen] = useState(false);
+    const userId = useSelector(userSelector.selectId);
 
     const handleOpen = () => {
         setIsOpen(true);

@@ -39,7 +39,7 @@ function Search() {
         totalQuantity: 0,
         totalPage: 0,
     });
-    const categories = useSelector(categoriesSelector.getAllCategory);
+    const categories = useSelector(categoriesSelector.selectItems);
     const {
         register,
         handleSubmit,

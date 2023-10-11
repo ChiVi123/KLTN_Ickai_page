@@ -1,10 +1,8 @@
-import { useDispatch } from 'react-redux';
+import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
-import { useState } from 'react';
 import { contextPage, directions, notifies } from '~/common';
-import { cartActions } from '~/redux';
 import { cartServices } from '~/services';
 import { currencyVN, priceSaleVN } from '~/utils/funcs';
 import { logger } from '~/utils/logger';
@@ -16,7 +14,6 @@ function ProductCard({ product }) {
     const priceSale = priceSaleVN(product.price, product.sale);
     const width = Math.floor((1 - product.sale) * percent);
     const [isLoading, setIsLoading] = useState(false);
-    const dispatch = useDispatch();
     const navigate = useNavigate();
 
     const handleBuyNow = async () => {
@@ -32,7 +29,6 @@ function ProductCard({ product }) {
 
         if (result.isSuccess === 'true') {
             toast.success(notifies.addedItemCartSuccess);
-            dispatch(cartActions.increaseQuantity());
             navigate(directions.cart);
         } else {
             toast.error(notifies.addedItemCartFail);

@@ -45,7 +45,7 @@ function Checkout() {
     // Hooks
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const user = useSelector(userSelector.getUser);
+    const user = useSelector(userSelector.selectInfo);
 
     // - useState
     const [provinces, setProvinces] = useState([]);
@@ -183,7 +183,7 @@ function Checkout() {
                                 navigate(directions.cart);
                                 break;
                         }
-                        dispatch(cartAsync.getCartByToken());
+                        dispatch(cartAsync.getByToken());
                         Swal.close();
                     },
                 });

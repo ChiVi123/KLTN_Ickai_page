@@ -20,6 +20,7 @@ import {
     Reviews,
 } from '~/components/product';
 import {
+    productsActions,
     productsAsync,
     productsSelector,
     reviewsActions,
@@ -37,17 +38,19 @@ import { logger } from '~/utils/logger';
 const cx = classNames.bind(styles);
 
 function Product() {
-    const isLogger = false;
     const [isOpen, setIsOpen] = useState(false);
     const [isReview, setIsReview] = useState(false);
 
-    const dispatch = useDispatch();
-    const userId = useSelector(userSelector.getUserId);
-    const watched = useSelector(watchedSelector.selectListWatched);
-    const product = useSelector(productsSelector.getProduct);
-    const review = useSelector(reviewsSelector.getReviewByProductId);
-    const [searchParams] = useSearchParams();
+    const userId = useSelector(userSelector.selectId);
+    const watched = useSelector(watchedSelector.selectList);
+    const product = useSelector(productsSelector.selectItem);
+    const review = useSelector(reviewsSelector.selectItem);
+
     const { id } = useParams();
+    const dispatch = useDispatch();
+    const [searchParams] = useSearchParams();
+
+    const isLogger = false;
     const currentPage = parseInt(searchParams.get(keys.page)) || 1;
 
     useEffect(() => {
@@ -57,14 +60,14 @@ function Product() {
 
         return () => {
             dispatch(reviewsActions.resetItem());
+            dispatch(productsActions.reset());
         };
     }, [dispatch, id]);
 
     useEffect(() => {
         if (product.name) {
             const { name, images, price, sale } = product;
-            const newProduct = { id, name, images, price, sale };
-            dispatch(watchedActions.addItem(newProduct));
+            dispatch(watchedActions.addItem({ id, name, images, price, sale }));
         }
     }, [dispatch, id, product]);
 
@@ -114,6 +117,7 @@ function Product() {
     if (isLogger) {
         logger({ groupName: Product.name, values: [userId] });
     }
+
     return (
         <div className='container'>
             <Row cols={1} gy={3}>

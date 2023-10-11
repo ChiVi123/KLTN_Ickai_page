@@ -29,7 +29,7 @@ function CheckOtp() {
     });
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const user = useSelector(userSelector.getUser);
+    const user = useSelector(userSelector.selectInfo);
 
     const handleOnSubmit = async (data) => {
         const email = user.email;

@@ -6,9 +6,10 @@ import { contextPage, directions } from '~/common';
 import { Button, Col, Row, Typography } from '~/components';
 import { CartList } from '~/components/cart';
 import { cartAsync } from '~/redux';
-import styles from '~/scss/pages/cart.module.scss';
 import { currencyVN } from '~/utils/funcs';
 import { logger } from '~/utils/logger';
+
+import styles from '~/scss/pages/cart.module.scss';
 
 const cx = classNames.bind(styles);
 
@@ -17,7 +18,7 @@ function Cart() {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch(cartAsync.getCartByToken());
+        dispatch(cartAsync.getByToken());
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 

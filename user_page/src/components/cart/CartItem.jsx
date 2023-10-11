@@ -34,7 +34,7 @@ function CartItem({ product, isLoading = false }) {
         const expectMessage = 'Update product null in cart success';
 
         if (result?.message === expectMessage) {
-            dispatch(cartAsync.getCartByToken());
+            dispatch(cartAsync.getByToken());
         } else {
             toast.error(notifies.error);
         }
@@ -53,7 +53,7 @@ function CartItem({ product, isLoading = false }) {
                 const expectMessage = `Delete item ${product.itemId} in cart success`;
 
                 if (result?.message === expectMessage) {
-                    dispatch(cartAsync.getCartByToken());
+                    dispatch(cartAsync.getByToken());
                 } else {
                     toast.error(notifies.removeItemCartFail);
                 }

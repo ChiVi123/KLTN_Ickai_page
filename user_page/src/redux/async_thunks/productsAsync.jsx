@@ -27,18 +27,3 @@ export const getAllProductByClient = createAsyncThunk(
         }
     },
 );
-
-export const getAllProductByAdmin = createAsyncThunk(
-    'products/getAllProductByAdmin',
-    async ({ page, size }, { rejectWithValue }) => {
-        try {
-            const result = await productServices.getProducts({
-                page,
-                size,
-            });
-            return result;
-        } catch (error) {
-            return rejectWithValue(error);
-        }
-    },
-);

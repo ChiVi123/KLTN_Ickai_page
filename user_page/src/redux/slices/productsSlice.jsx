@@ -1,6 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
 import {
-    getAllProductByAdmin,
     getAllProductByClient,
     getProductById,
 } from '../async_thunks/productsAsync';
@@ -10,7 +9,11 @@ const { name, initialState } = products;
 const productsSlice = createSlice({
     name,
     initialState,
-    reducers: {},
+    reducers: {
+        reset(state) {
+            state.item = initialState.item;
+        },
+    },
     extraReducers: {
         // getProductById
         [getProductById.pending]: (state) => {
@@ -21,16 +24,22 @@ const productsSlice = createSlice({
             state.item.id = payload.id;
             state.item.name = payload.name;
             state.item.sale = payload.sale;
-            state.item.tags = payload.tags;
             state.item.price = payload.price;
             state.item.images = payload.images;
-            state.item.summary = payload.summary;
-            state.item.options = payload.options;
             state.item.quantity = payload.quantity;
             state.item.description = payload.description;
         },
         [getProductById.rejected]: (state, { payload }) => {
             state.item.message = 'error';
+            state.item.isLoading = false;
+
+            state.item.id = initialState.item.id;
+            state.item.name = initialState.item.name;
+            state.item.sale = initialState.item.sale;
+            state.item.price = initialState.item.price;
+            state.item.images = initialState.item.images;
+            state.item.quantity = initialState.item.quantity;
+            state.item.description = initialState.item.description;
         },
 
         // getAllProductByClient
@@ -44,19 +53,9 @@ const productsSlice = createSlice({
         },
         [getAllProductByClient.rejected]: (state, { payload }) => {
             state.client.message = 'error';
-        },
+            state.client.isLoading = false;
 
-        // getAllProductByAdmin
-        [getAllProductByAdmin.pending]: (state) => {
-            state.admin.isLoading = true;
-        },
-        [getAllProductByAdmin.fulfilled]: (state, { payload }) => {
-            state.admin.isLoading = false;
-            state.admin.items = payload.list;
-            state.admin.totalPage = payload.totalPage;
-        },
-        [getAllProductByAdmin.rejected]: (state, { payload }) => {
-            state.admin.message = 'error';
+            state.client = initialState.client;
         },
     },
 });

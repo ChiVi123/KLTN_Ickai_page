@@ -46,7 +46,7 @@ function IntroProduct({
     const newPrice = priceSaleVN(price, sale);
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const userId = useSelector(userSelector.getUserId);
+    const userId = useSelector(userSelector.selectId);
     const { control, handleSubmit } = useForm({
         resolver: yupResolver(schemas.productDetailQuantity),
         defaultValues: {
@@ -80,7 +80,7 @@ function IntroProduct({
 
         if (result.isSuccess === 'true') {
             toast.success(notifies.addedItemCartSuccess);
-            dispatch(cartActions.increaseQuantity());
+            dispatch(cartActions.increased());
         } else {
             toast.error(notifies.addedItemCartFail);
         }

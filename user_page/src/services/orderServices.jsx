@@ -1,34 +1,6 @@
 import { request } from '~/utils';
 
 const orderServices = {
-    adminGetAllOrder: async (page) => {
-        try {
-            const response = await request.get('admin/manage/orders', {
-                params: { page, size: 10 },
-            });
-            return response.data;
-        } catch (error) {
-            throw error;
-        }
-    },
-    adminGetAllOrderEnable: async (page) => {
-        try {
-            const response = await request.get('admin/manage/ordersEnable', {
-                params: { page, size: 10 },
-            });
-            return response.data;
-        } catch (error) {
-            throw error;
-        }
-    },
-    adminGetOrderById: async ({ id }) => {
-        try {
-            const response = await request.get(`admin/manage/orders/${id}`);
-            return response.data;
-        } catch (error) {
-            throw error;
-        }
-    },
     userGetAllOrder: async () => {
         try {
             const response = await request.get(`orders/getallorder`);
@@ -37,7 +9,7 @@ const orderServices = {
             throw error;
         }
     },
-    userGetOrderById: async ({ id }) => {
+    userGetOrderById: async (id) => {
         try {
             const response = await request.get(`orders/${id}`);
             return response.data;
@@ -51,36 +23,6 @@ const orderServices = {
             return response.data;
         } catch (error) {
             return { list: [] };
-        }
-    },
-    adminCancelOrderById: async ({ id }) => {
-        try {
-            const response = await request.put(
-                `admin/manage/orders/setcancel/${id}`,
-            );
-            return response;
-        } catch (error) {
-            throw error;
-        }
-    },
-    adminDeliveryOrderById: async ({ id }) => {
-        try {
-            const response = await request.put(
-                `admin/manage/orders/setdelivery/${id}`,
-            );
-            return response;
-        } catch (error) {
-            throw error;
-        }
-    },
-    adminCompleteOrderById: async (id) => {
-        try {
-            const response = await request.put(
-                `admin/manage/orders/setcomplete/${id}`,
-            );
-            return response;
-        } catch (error) {
-            console.log(error);
         }
     },
     userCancelOrderById: async ({ id }) => {

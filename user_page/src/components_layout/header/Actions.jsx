@@ -37,9 +37,11 @@ const buttons = [
 
 function Actions() {
     const initDark = JSON.parse(localStorage.getItem('isDark'));
+
     const [isDark, setIsDark] = useState(initDark);
-    const { avatar, name } = useSelector(userSelector.getUser);
-    const totalProduct = useSelector(cartSelector.getTotalProduct);
+    const { avatar, name } = useSelector(userSelector.selectInfo);
+    const totalProduct = useSelector(cartSelector.selectTotal);
+
     const handleLogOut = useLogout();
     const handleToggle = () => setIsDark((prev) => !prev);
 

@@ -20,7 +20,7 @@ import { logger } from '~/utils/logger';
 
 function ChangePassword() {
     const isLogger = true;
-    const userId = useSelector(userSelector.getUserId);
+    const userId = useSelector(userSelector.selectId);
     const navigate = useNavigate();
     const {
         register,

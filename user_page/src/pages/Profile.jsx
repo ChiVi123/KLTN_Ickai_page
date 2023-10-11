@@ -6,7 +6,7 @@ import { FormProfile, FormProfileImage } from '~/components/profile';
 import { userSelector } from '~/redux';
 
 function Profile() {
-    const user = useSelector(userSelector.getUser);
+    const user = useSelector(userSelector.selectInfo);
 
     return (
         <article className='width-sm'>

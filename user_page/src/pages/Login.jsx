@@ -41,7 +41,7 @@ function Login() {
     const dispatch = useDispatch();
     const [user, setUser] = useState();
     const [profile, setProfile] = useState();
-    const userId = useSelector(userSelector.getUserId);
+    const userId = useSelector(userSelector.selectId);
     const login = useGoogleLogin({
         onSuccess: (response) => setUser(response),
         onError: (error) => {
