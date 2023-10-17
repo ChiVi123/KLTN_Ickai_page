@@ -34,18 +34,21 @@ import {
 } from '~/components';
 import { PayMethods } from '~/components/checkout';
 import { cartAsync, userSelector } from '~/redux';
-import styles from '~/scss/pages/checkout.module.scss';
 import { cartServices, paymentServices, servicesGHN } from '~/services';
 import { currencyVN } from '~/utils/funcs';
 import { logger } from '~/utils/logger';
 
+import styles from '~/scss/pages/checkout.module.scss';
+
 const cx = classNames.bind(styles);
 
 function Checkout() {
+    const isLogger = false;
+
     // Hooks
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const user = useSelector(userSelector.getUser);
+    const user = useSelector(userSelector.selectInfo);
 
     // - useState
     const [provinces, setProvinces] = useState([]);
@@ -143,6 +146,7 @@ function Checkout() {
             province: province.label,
             district: district.label,
             ward: ward.label,
+            shippingFee: feeShip,
             payment,
         };
         const isLogger = false;
@@ -171,7 +175,6 @@ function Checkout() {
                         switch (result?.message) {
                             case 'Payment init complete':
                             case 'Payment Complete':
-                                // window.location.href = result.data;
                                 window.open(result.data);
                                 break;
                             case ' Pay by COD successfully':
@@ -183,13 +186,17 @@ function Checkout() {
                                 navigate(directions.cart);
                                 break;
                         }
-                        dispatch(cartAsync.getCartByToken());
+                        dispatch(cartAsync.getByToken());
                         Swal.close();
                     },
                 });
             }
         });
     };
+
+    if (isLogger) {
+        logger({ groupName: Checkout, values: ['re-render'] });
+    }
 
     return (
         <div className='container'>

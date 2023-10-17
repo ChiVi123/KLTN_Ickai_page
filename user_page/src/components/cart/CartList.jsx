@@ -7,7 +7,7 @@ import CartItem from './CartItem';
 
 function CartList() {
     const isLogger = false;
-    const cart = useSelector(cartSelector.getCart);
+    const cart = useSelector(cartSelector.selectCart);
 
     if (isLogger) {
         logger({ groupName: CartList.name, values: [cart] });

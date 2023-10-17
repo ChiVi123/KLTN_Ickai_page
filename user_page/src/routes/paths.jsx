@@ -8,6 +8,7 @@ export const verify = 'check-otp';
 export const verifyRegister = 'check-otp-register';
 
 export const cart = 'cart';
+export const changePassword = 'change-password';
 export const checkout = 'checkout';
 export const notifyOrder = 'redirect/payment';
 export const order = 'order/:id';

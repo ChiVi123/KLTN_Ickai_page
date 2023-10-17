@@ -5,5 +5,7 @@ export const name = 'Họ và tên:';
 export const otp = 'OTP:';
 export const password = 'Mật khẩu:';
 export const passwordConfirm = 'Xác nhận mật khẩu:';
+export const oldPassword = 'Mật khẩu cũ:';
+export const newPassword = 'Mật khẩu mới:';
 export const phone = 'Số điện thoại:';
 export const quantity = 'Số lượng:';

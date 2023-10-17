@@ -25,7 +25,8 @@ import {
 } from '~/components';
 import { cartActions, userSelector } from '~/redux';
 import { cartServices } from '~/services';
-import { currencyVN, priceSaleVN } from '~/utils/funcs';
+import { currencyVN } from '~/utils/funcs';
+import { logger } from '~/utils/logger';
 import styles from '~product/intro-product.module.scss';
 import CarouselProduct from './CarouselProduct';
 
@@ -34,19 +35,17 @@ const cx = classNames.bind(styles);
 function IntroProduct({
     productId,
     name,
-    images,
     price,
-    sale,
+    discount,
+    images,
     stars,
-    starStat,
-    stockSale,
     stock,
     isLoading = false,
 }) {
-    const newPrice = priceSaleVN(price, sale);
+    const isLogger = true;
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const userId = useSelector(userSelector.getUserId);
+    const userId = useSelector(userSelector.selectId);
     const { control, handleSubmit } = useForm({
         resolver: yupResolver(schemas.productDetailQuantity),
         defaultValues: {
@@ -54,7 +53,10 @@ function IntroProduct({
         },
     });
 
-    const handleOnSubmit = async ({ quantity }) => {
+    const handleOnSubmit = async (
+        { quantity },
+        { nativeEvent: { submitter } },
+    ) => {
         if (!userId) {
             navigate(directions.signIn);
             return;
@@ -65,23 +67,25 @@ function IntroProduct({
             return;
         }
 
-        const data = {
-            productId,
-            productOptionId: undefined,
-            value: undefined,
-            quantity,
-        };
+        const isBuyNow = !!submitter.attributes['buy-now'];
+        const data = { productId, quantity: isBuyNow ? 1 : quantity };
         const result = await cartServices.addCart(data);
 
-        if (result.isSuccess === 'true') {
+        if (result.isSuccess) {
             toast.success(notifies.addedItemCartSuccess);
-            dispatch(cartActions.increaseQuantity());
+            dispatch(cartActions.increased());
         } else {
             toast.error(notifies.addedItemCartFail);
         }
+
+        if (isBuyNow && result.isSuccess) {
+            navigate(directions.cart);
+        }
     };
 
-    // logger({ groupName: IntroProduct.name, values: ['re-render'] });
+    if (isLogger) {
+        logger({ groupName: IntroProduct.name, values: [discount] });
+    }
 
     return (
         <section className='section'>
@@ -107,10 +111,6 @@ function IntroProduct({
                             </Typography>
 
                             <FontAwesomeIcon icon={faStar} />
-
-                            {/* <Typography variant='text1'>
-                                ({starStat} {contextPage.review})
-                            </Typography> */}
                         </div>
 
                         <div className={cx('separate')}></div>
@@ -121,14 +121,14 @@ function IntroProduct({
 
                     <Skeleton
                         animation='wave'
-                        ready={newPrice}
+                        ready={discount}
                         height='46px'
                         width='262px'
                         marginTop='48px'
                     >
                         <div className={cx('wrap-price')}>
                             <Typography variant='h2' component='span'>
-                                {currencyVN(newPrice)}
+                                {currencyVN(discount)}
                             </Typography>
 
                             <Typography variant='text1'>
@@ -159,14 +159,20 @@ function IntroProduct({
                             />
                         </div>
                         <div className={cx('form-group')}>
-                            <Button disabled={!stock} color='primary' size='lg'>
+                            <Button
+                                type={types.submit}
+                                color='primary'
+                                size='lg'
+                                disabled={!stock}
+                                buy-now='true'
+                            >
                                 {contextPage.buyNow}
                             </Button>
                             <Button
                                 type={types.submit}
-                                disabled={!stock}
                                 variant='outlined'
                                 color='primary'
+                                disabled={!stock}
                                 size='lg'
                             >
                                 {contextPage.addCart}

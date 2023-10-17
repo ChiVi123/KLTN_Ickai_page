@@ -10,6 +10,7 @@ import { cartAsync, categoriesSelector, userSelector } from '~/redux';
 import styles from '~/scss/pages/home.module.scss';
 import { productServices } from '~/services';
 import { toArray } from '~/utils/funcs';
+import { logger } from '~/utils/logger';
 
 const cx = classNames.bind(styles);
 
@@ -18,10 +19,12 @@ const size = 8;
 
 function Home() {
     const productsSkeleton = toArray(size);
-    const dispatch = useDispatch();
-    const categories = useSelector(categoriesSelector.getAllCategory);
-    const { accessToken } = useSelector(userSelector.getUser);
+    const isLogger = false;
+
     const [products, setProducts] = useState([]);
+    const dispatch = useDispatch();
+    const categories = useSelector(categoriesSelector.selectItems);
+    const { accessToken } = useSelector(userSelector.selectInfo);
 
     useEffect(() => {
         const fetchApi = async (data) => {
@@ -34,11 +37,14 @@ function Home() {
 
     useEffect(() => {
         if (accessToken) {
-            // logger({ groupName: Home.name, values: ['Call api'] });
-            dispatch(cartAsync.getCartByToken());
+            dispatch(cartAsync.getByToken());
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [accessToken]);
+
+    if (isLogger) {
+        logger({ groupName: Home.name, values: ['re-render'] });
+    }
 
     return (
         <div className='container'>

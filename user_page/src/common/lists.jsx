@@ -6,6 +6,10 @@ export const menuAccount = [
         context: 'Tài khoản',
     },
     {
+        to: directions.changePassword,
+        context: 'Thay đổi mật khẩu',
+    },
+    {
         to: directions.orders,
         context: 'Đơn hàng',
     },

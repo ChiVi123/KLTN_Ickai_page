@@ -10,31 +10,27 @@ import { TrashIcon } from '~/icons';
 import { cartAsync } from '~/redux';
 import { cartServices } from '~/services';
 import { currencyVN, priceSaleVN } from '~/utils/funcs';
+import { logger } from '~/utils/logger';
+
 import styles from '~cart/item.module.scss';
 
 const cx = classNames.bind(styles);
 
 function CartItem({ product, isLoading = false }) {
-    const [loading, setLoading] = useState(isLoading);
-    const [quantity, setQuantity] = useState(product?.quantity || 1);
-    const dispatch = useDispatch();
+    const isLogger = false;
     const newPrice = priceSaleVN(product.price, product.sale);
+    const [loading, setLoading] = useState(isLoading);
+    const dispatch = useDispatch();
+
     const handleChange = async (value) => {
-        setQuantity(value);
         setLoading(true);
 
         const { productid: productId } = product;
-        const data = {
-            productId,
-            quantity: value - quantity,
-            productOptionId: null,
-            value: null,
-        };
+        const data = { productId, quantity: value - product?.quantity };
         const result = await cartServices.addCart(data);
-        const expectMessage = 'Update product null in cart success';
 
-        if (result?.message === expectMessage) {
-            dispatch(cartAsync.getCartByToken());
+        if (result?.isSuccess) {
+            dispatch(cartAsync.getByToken());
         } else {
             toast.error(notifies.error);
         }
@@ -50,16 +46,19 @@ function CartItem({ product, isLoading = false }) {
         }).then(async ({ isConfirmed }) => {
             if (isConfirmed) {
                 const result = await cartServices.deleteCart(product.itemId);
-                const expectMessage = `Delete item ${product.itemId} in cart success`;
 
-                if (result?.message === expectMessage) {
-                    dispatch(cartAsync.getCartByToken());
+                if (result?.isSuccess) {
+                    dispatch(cartAsync.getByToken());
                 } else {
                     toast.error(notifies.removeItemCartFail);
                 }
             }
         });
     };
+
+    if (isLogger) {
+        logger({ groupName: CartItem.name, values: [product] });
+    }
 
     return (
         <Row classes={cx('wrap')}>
@@ -91,7 +90,7 @@ function CartItem({ product, isLoading = false }) {
                     <InputQuantity
                         id={product.itemId}
                         name={inputNames.quantity}
-                        initValue={quantity}
+                        initValue={product?.quantity || 1}
                         onChange={handleChange}
                     />
                 </div>
@@ -102,7 +101,7 @@ function CartItem({ product, isLoading = false }) {
                     center
                     classes={cx('text', 'price-new')}
                 >
-                    {currencyVN(newPrice * product.quantity)}
+                    {currencyVN(product.subPrice)}
                 </Typography>
             </Col>
             <Col baseCols={1}>

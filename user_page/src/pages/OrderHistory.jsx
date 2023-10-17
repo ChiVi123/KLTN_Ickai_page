@@ -13,14 +13,12 @@ import {
 import { toArray } from '~/utils/funcs';
 
 function OrderHistory() {
+    const skeleton = toArray(10);
     const [tab, setTab] = useState({ content: 'Tất cả', value: '' });
     const dispatch = useDispatch();
     const { items: orders, isLoading } = useSelector(
-        orderHistorySelector.getOrdersClient,
+        orderHistorySelector.selectFilter,
     );
-    const skeleton = toArray(10);
-
-    const handleClickTab = (tab) => setTab(tab);
 
     useEffect(() => {
         dispatch(ordersAsync.getAllOrder());
@@ -29,8 +27,9 @@ function OrderHistory() {
 
     useEffect(() => {
         dispatch(orderHistoryActions.filter(tab.value));
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [tab]);
+    }, [dispatch, tab]);
+
+    const handleClickTab = (tab) => setTab(tab);
 
     return (
         <div className='width-md'>
@@ -56,19 +55,17 @@ function OrderHistory() {
                 <Col>
                     <div className='width-sm'>
                         <Row cols={1}>
-                            {isLoading &&
-                                skeleton.map((_, index) => (
-                                    <Col key={index}>
-                                        <OrderItemSkeleton />
-                                    </Col>
-                                ))}
-
-                            {isLoading ||
-                                orders.map((order, index) => (
-                                    <Col key={index}>
-                                        <OrderItem order={order} />
-                                    </Col>
-                                ))}
+                            {isLoading
+                                ? skeleton.map((_, index) => (
+                                      <Col key={index}>
+                                          <OrderItemSkeleton />
+                                      </Col>
+                                  ))
+                                : orders.map((order, index) => (
+                                      <Col key={index}>
+                                          <OrderItem order={order} />
+                                      </Col>
+                                  ))}
                         </Row>
                     </div>
                 </Col>

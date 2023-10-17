@@ -1,7 +1,6 @@
 import {
     cart,
     categories,
-    modal,
     orderHistory,
     products,
     reviews,
@@ -10,7 +9,6 @@ import {
 } from '../variables';
 import cartReducer from './cartSlice';
 import categoriesReducer from './categoriesSlice';
-import modalReducer from './modalSlice';
 import orderHistoryReducer from './orderHistorySlice';
 import productsReducer from './productsSlice';
 import reviewsReducer from './reviewsSlice';
@@ -20,7 +18,6 @@ import watchedReducer from './watchedSlice';
 export const allReducer = {
     [cart.name]: cartReducer,
     [categories.name]: categoriesReducer,
-    [modal.name]: modalReducer,
     [orderHistory.name]: orderHistoryReducer,
     [products.name]: productsReducer,
     [reviews.name]: reviewsReducer,

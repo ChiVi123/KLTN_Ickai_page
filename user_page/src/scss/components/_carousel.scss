@@ -1,36 +1,13 @@
 @use '../abstracts/spacing-v' as space-v;
 @use '../abstracts/color-v' as color;
 
-%btn-disable {
-    background-color: rgba(color.$white, 0.2);
-    pointer-events: none;
-}
-
-%btn-carousel {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    padding: 0 var(--spacer-2);
-    background-color: rgba(color.$white, 0.6);
-    color: var(--typography-1-color);
-    cursor: pointer;
-    transition: background-color 300ms;
-
-    &--disable {
-        @extend %btn-disable;
-    }
-
-    &:hover {
-        background-color: rgba(color.$white, 0.8);
-    }
-}
-
 .carousel {
     position: relative;
     width: 100%;
+    border-radius: var(--spacer-1);
     overflow-x: hidden;
 
-    .list {
+    &__list {
         --index: 0;
         --width: 128px;
 
@@ -38,23 +15,32 @@
         transition: transform 300ms;
     }
 
-    .btn {
-        &-prev {
-            @extend %btn-carousel;
-            left: 0;
+    &__btn {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        padding: 0 var(--spacer-2);
+        background-color: rgba(color.$black, 0.4);
+        color: color.$white;
+        cursor: pointer;
+        transition: background-color 300ms;
+        z-index: 1;
 
-            &--disable {
-                @extend %btn-disable;
-            }
+        &--prev {
+            left: 0;
         }
 
-        &-next {
-            @extend %btn-carousel;
+        &--next {
             right: 0;
+        }
 
-            &--disable {
-                @extend %btn-disable;
-            }
+        &--disable {
+            background-color: rgba(color.$black, 0.1);
+            pointer-events: none;
+        }
+
+        &:hover {
+            background-color: rgba(color.$black, 0.6);
         }
     }
 }

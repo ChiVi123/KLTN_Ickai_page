@@ -40,7 +40,7 @@
     }
 
     &--process {
-        background-color: var(--primary);
+        background-color: var(--primary-color);
     }
 
     &--pendingpay,
@@ -61,7 +61,6 @@
 }
 
 // Responsive
-
 /* Mobile, Tablet */
 @media screen and (max-width: 1023px) {
 }

@@ -24,13 +24,16 @@ import {
 import { FilterField, Sorts } from '~/components/search';
 import { ProductCardSkeleton } from '~/components/skeletons';
 import { categoriesSelector } from '~/redux';
-import styles from '~/scss/pages/search.module.scss';
-import { productServices, searchServices } from '~/services';
+import { searchServices } from '~/services';
 import { createObjectParams, toArray } from '~/utils/funcs';
+import { logger } from '~/utils/logger';
+
+import styles from '~/scss/pages/search.module.scss';
 
 const cx = classNames.bind(styles);
 
 function Search() {
+    const isLogger = true;
     const sizeSearch = 6;
     const skeleton = toArray(sizeSearch);
     const [searchParams, setSearchParams] = useSearchParams();
@@ -39,7 +42,7 @@ function Search() {
         totalQuantity: 0,
         totalPage: 0,
     });
-    const categories = useSelector(categoriesSelector.getAllCategory);
+    const categories = useSelector(categoriesSelector.selectItems);
     const {
         register,
         handleSubmit,
@@ -54,58 +57,24 @@ function Search() {
     const currentPage = parseInt(searchParams.get(keys.page)) || 1;
 
     useEffect(() => {
-        const fetchApi = async ({ q, category, page, size }) => {
-            if (category) {
-                const errorMessage = `Can not found any product with category or brand id: ${category}`;
+        const fetchApi = async ({ query, category, page, size }) => {
+            try {
+                const result = await searchServices.getProducts({ query });
 
-                try {
-                    const result = await productServices.getProductsByCategory({
-                        id: category,
-                        page,
-                        size,
-                    });
+                logger({ groupName: Search.name, values: [result] });
 
-                    setSearchResult(result);
-                } catch (error) {
-                    if (error === errorMessage) {
-                        setSearchResult((prev) => ({
-                            ...prev,
-                            list: [],
-                            totalQuantity: 0,
-                        }));
-                    }
-                }
-
-                return;
-            }
-
-            if (q) {
-                try {
-                    const result = await searchServices.searchProducts({
-                        q,
-                        page,
-                        size,
-                    });
-
-                    if (result?.totalQuantity) {
-                        setSearchResult(result);
-                    }
-                } catch (error) {
-                    setSearchResult({});
-                }
-            } else {
-                const result = await productServices.getProductsByState({
-                    page,
-                    size,
-                });
                 if (result?.totalQuantity) {
                     setSearchResult(result);
                 }
+            } catch (error) {
+                logger({ groupName: Search.name, values: [error] });
+
+                setSearchResult({});
             }
         };
 
         fetchApi({
-            q: searchParams.get(keys.query),
+            query: searchParams.get(keys.query) || '',
             category: searchParams.get(keys.cate),
             page: currentPage - 1,
             size: sizeSearch,
@@ -119,10 +88,12 @@ function Search() {
         }));
     };
 
-    // logger({
-    //     groupName: Search.name,
-    //     values: [searchResult],
-    // });
+    if (isLogger) {
+        logger({
+            groupName: Search.name,
+            values: ['re-render'],
+        });
+    }
 
     return (
         <div className='container'>

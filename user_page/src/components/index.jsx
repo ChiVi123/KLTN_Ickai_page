@@ -3,6 +3,7 @@ export { default as Carousel } from './Carousel';
 export { default as Checkbox } from './Checkbox';
 export { default as Col } from './Col';
 export { default as FormGroup } from './FormGroup';
+export { default as FormQuill } from './FormQuill';
 export { default as FormSelect } from './FormSelect';
 export { default as InputQuantity } from './InputQuantity';
 export { default as Pagination } from './Pagination';

@@ -1,28 +1,30 @@
 import classNames from 'classnames/bind';
 import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { contextPage, directions } from '~/common';
-import { Button, Col, Row, Typography } from '~/components';
+import { Button, Col, Row, TextLink, Typography } from '~/components';
 import { CartList } from '~/components/cart';
-import { cartAsync } from '~/redux';
-import styles from '~/scss/pages/cart.module.scss';
+import { cartAsync, cartSelector } from '~/redux';
 import { currencyVN } from '~/utils/funcs';
 import { logger } from '~/utils/logger';
+
+import { emptyCart } from '~/assets/images';
+import styles from '~/scss/pages/cart.module.scss';
 
 const cx = classNames.bind(styles);
 
 function Cart() {
     const isLogger = false;
     const dispatch = useDispatch();
+    const totalPrice = useSelector(cartSelector.selectTotalPrice);
 
     useEffect(() => {
-        dispatch(cartAsync.getCartByToken());
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+        dispatch(cartAsync.getByToken());
+    }, [dispatch]);
 
     if (isLogger) {
-        logger({ groupName: 'Cart', values: ['re-render'] });
+        logger({ groupName: Cart.name, values: [totalPrice] });
     }
 
     return (
@@ -35,53 +37,69 @@ function Cart() {
                             {contextPage.cart}
                         </Typography>
 
-                        <CartList />
+                        {!!totalPrice && <CartList />}
                     </Col>
 
                     {/* Sub Total */}
-                    <Col>
-                        <Row classes={cx('line-bottom')}>
-                            <Col offset={8}>
-                                <Typography variant='text1' component='h3'>
-                                    {contextPage.subTotal}
-                                </Typography>
-                            </Col>
-                            <Col>
-                                <Typography
-                                    variant='text1'
-                                    component='h3'
-                                    center
-                                >
-                                    {currencyVN(100000)}
-                                </Typography>
-                            </Col>
-                            <Col></Col>
-                        </Row>
-                    </Col>
+                    {!!totalPrice && (
+                        <Col>
+                            <Row classes={cx('line-bottom')}>
+                                <Col offset={8}>
+                                    <Typography variant='text1' component='h3'>
+                                        {contextPage.subTotal}
+                                    </Typography>
+                                </Col>
+                                <Col>
+                                    <Typography
+                                        variant='text1'
+                                        component='h3'
+                                        center
+                                    >
+                                        {currencyVN(totalPrice)}
+                                    </Typography>
+                                </Col>
+                                <Col></Col>
+                            </Row>
+                        </Col>
+                    )}
+
+                    {!totalPrice && (
+                        <Col>
+                            <div className='df-center'>
+                                <img src={emptyCart} alt='empty cart' />
+                            </div>
+                        </Col>
+                    )}
 
                     {/* Actions */}
                     <Col>
-                        <Row>
-                            <Col offset={8}>
-                                <Button
-                                    to={directions.checkout}
-                                    color='primary'
-                                    size='sm'
-                                >
-                                    {contextPage.makePay}
-                                </Button>
-                            </Col>
-                            <Col>
-                                <Button
-                                    to={directions.home}
-                                    variant='outlined'
-                                    color='primary'
-                                    size='sm'
-                                >
-                                    {contextPage.backHome}
-                                </Button>
-                            </Col>
-                        </Row>
+                        {!!totalPrice && (
+                            <Row>
+                                <Col offset={8}>
+                                    <Button
+                                        to={directions.checkout}
+                                        color='primary'
+                                        size='sm'
+                                    >
+                                        {contextPage.makePay}
+                                    </Button>
+                                </Col>
+                                <Col>
+                                    <Button
+                                        to={directions.home}
+                                        variant='outlined'
+                                        color='primary'
+                                        size='sm'
+                                    >
+                                        {contextPage.backHome}
+                                    </Button>
+                                </Col>
+                            </Row>
+                        )}
+
+                        {!totalPrice && (
+                            <TextLink center>{contextPage.backHome}</TextLink>
+                        )}
                     </Col>
                 </Row>
             </div>

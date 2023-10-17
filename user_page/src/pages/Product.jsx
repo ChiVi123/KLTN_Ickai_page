@@ -20,6 +20,7 @@ import {
     Reviews,
 } from '~/components/product';
 import {
+    productsActions,
     productsAsync,
     productsSelector,
     reviewsActions,
@@ -29,25 +30,28 @@ import {
     watchedActions,
     watchedSelector,
 } from '~/redux';
-import styles from '~/scss/pages/product.module.scss';
 import { orderServices } from '~/services';
 import { averageRating } from '~/utils/funcs';
 import { logger } from '~/utils/logger';
 
+import styles from '~/scss/pages/product.module.scss';
+
 const cx = classNames.bind(styles);
 
 function Product() {
-    const isLogger = false;
     const [isOpen, setIsOpen] = useState(false);
     const [isReview, setIsReview] = useState(false);
 
-    const dispatch = useDispatch();
-    const userId = useSelector(userSelector.getUserId);
-    const watched = useSelector(watchedSelector.selectListWatched);
-    const product = useSelector(productsSelector.getProduct);
-    const review = useSelector(reviewsSelector.getReviewByProductId);
-    const [searchParams] = useSearchParams();
+    const userId = useSelector(userSelector.selectId);
+    const watched = useSelector(watchedSelector.selectList);
+    const product = useSelector(productsSelector.selectItem);
+    const review = useSelector(reviewsSelector.selectItem);
+
     const { id } = useParams();
+    const dispatch = useDispatch();
+    const [searchParams] = useSearchParams();
+
+    const isLogger = false;
     const currentPage = parseInt(searchParams.get(keys.page)) || 1;
 
     useEffect(() => {
@@ -57,23 +61,30 @@ function Product() {
 
         return () => {
             dispatch(reviewsActions.resetItem());
+            dispatch(productsActions.reset());
         };
     }, [dispatch, id]);
 
     useEffect(() => {
-        if (product.name) {
-            const { name, images, price, sale } = product;
-            const newProduct = { id, name, images, price, sale };
-            dispatch(watchedActions.addItem(newProduct));
+        if (product.discount) {
+            const { name, images, price, sale, discount } = product;
+            dispatch(
+                watchedActions.addItem({
+                    id,
+                    name,
+                    images,
+                    price,
+                    sale,
+                    discount,
+                }),
+            );
         }
     }, [dispatch, id, product]);
 
     useEffect(() => {
         (async () => {
             if (userId) {
-                const orders = await orderServices.userGetOrdersComplete({
-                    id: userId,
-                });
+                const orders = await orderServices.userGetOrdersComplete();
 
                 const existOrder = orders.list.some((order) =>
                     order.items.some((item) => item.productid === id),
@@ -116,6 +127,7 @@ function Product() {
     if (isLogger) {
         logger({ groupName: Product.name, values: [userId] });
     }
+
     return (
         <div className='container'>
             <Row cols={1} gy={3}>
@@ -124,13 +136,11 @@ function Product() {
                     <IntroProduct
                         productId={id}
                         name={product.name}
+                        discount={product.discount}
+                        price={product.price}
                         images={product.images}
                         stars={averageRating(rating.totalStar, rating.quantity)}
-                        starStat={product.starStat}
                         stock={product.quantity}
-                        stockSale={product.stockSale}
-                        price={product.price}
-                        sale={product.sale}
                     />
                 </Col>
 
@@ -146,12 +156,12 @@ function Product() {
                             {contextPage.review}
                         </Typography>
                         {/* Send Review */}
-                        <div className={cx('stat')}>
-                            <Typography variant='text2'>
-                                {contextPage.messageReview}
-                            </Typography>
+                        {isReview && (
+                            <div className={cx('stat')}>
+                                <Typography variant='text2'>
+                                    {contextPage.messageReview}
+                                </Typography>
 
-                            {isReview && (
                                 <Button
                                     color='primary'
                                     size='sm'
@@ -159,19 +169,22 @@ function Product() {
                                 >
                                     {contextPage.sendReview}
                                 </Button>
-                            )}
 
-                            <ReactModal
-                                isOpen={isOpen}
-                                overlayClassName={'overlay'}
-                                className={'modal'}
-                                preventScroll={true}
-                                ariaHideApp={false}
-                                onRequestClose={closeModal}
-                            >
-                                <FormReview onClose={closeModal} />
-                            </ReactModal>
-                        </div>
+                                <ReactModal
+                                    isOpen={isOpen}
+                                    overlayClassName={'overlay'}
+                                    className={'modal'}
+                                    preventScroll={true}
+                                    ariaHideApp={false}
+                                    onRequestClose={closeModal}
+                                >
+                                    <FormReview
+                                        productId={id}
+                                        onClose={closeModal}
+                                    />
+                                </ReactModal>
+                            </div>
+                        )}
 
                         {/* List Review */}
                         {review.isLoading || <Reviews reviews={review.list} />}

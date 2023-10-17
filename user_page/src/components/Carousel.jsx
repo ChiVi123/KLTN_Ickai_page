@@ -2,8 +2,10 @@ import cx from 'classnames';
 import PropTypes from 'prop-types';
 import { useEffect, useRef, useState } from 'react';
 import { ArrowLeft, ArrowRight } from '~/icons';
+import { logger } from '~/utils/logger';
 
 function Carousel({ children, cols, g, gx, gy, classes }) {
+    const isLogger = false;
     const [params, setParams] = useState({
         index: 0,
         width: 0,
@@ -23,7 +25,7 @@ function Carousel({ children, cols, g, gx, gy, classes }) {
                 }));
             }
         }
-    }, [element, cols]);
+    }, [cols]);
 
     const handlePrev = () => {
         if (params.index === 0) return;
@@ -34,7 +36,7 @@ function Carousel({ children, cols, g, gx, gy, classes }) {
         });
     };
     const handleNext = () => {
-        if (params.index === params.limit) return;
+        if (params.index >= params.limit) return;
 
         setParams((prev) => {
             const index = ++prev.index;
@@ -42,15 +44,30 @@ function Carousel({ children, cols, g, gx, gy, classes }) {
         });
     };
 
+    if (isLogger) {
+        logger({ groupName: Carousel.name, values: [params] });
+    }
+
     return (
         <div className='carousel'>
+            <button
+                type='button'
+                title='prev'
+                className={cx('carousel__btn', 'carousel__btn--prev', {
+                    'carousel__btn--disable': params.index === 0,
+                })}
+                onClick={handlePrev}
+            >
+                <ArrowLeft />
+            </button>
+
             <div
                 ref={element}
                 style={{
                     '--index': params.index,
                     '--width': `${params.width}px`,
                 }}
-                className={cx('list', 'row', 'no-wrap', {
+                className={cx('carousel__list', 'row', 'no-wrap', {
                     [`row-cols-${cols}`]: cols,
                     [`g-${g}`]: g,
                     [`gx-${gx}`]: gx,
@@ -60,21 +77,12 @@ function Carousel({ children, cols, g, gx, gy, classes }) {
             >
                 {children}
             </div>
-            <button
-                type='button'
-                title='prev'
-                className={cx('btn-prev', {
-                    'btn-prev--disable': params.index === 0,
-                })}
-                onClick={handlePrev}
-            >
-                <ArrowLeft />
-            </button>
+
             <button
                 type='button'
                 title='next'
-                className={cx('btn-next', {
-                    'btn-next--disable': params.index === params.limit,
+                className={cx('carousel__btn', 'carousel__btn--next', {
+                    'carousel__btn--disable': params.index >= params.limit,
                 })}
                 onClick={handleNext}
             >

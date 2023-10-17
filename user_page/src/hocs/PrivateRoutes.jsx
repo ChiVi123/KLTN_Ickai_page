@@ -4,7 +4,7 @@ import { directions } from '~/common';
 import { userSelector } from '~/redux';
 
 function PrivateRoutes() {
-    const userId = useSelector(userSelector.getUserId);
+    const userId = useSelector(userSelector.selectId);
 
     return userId ? <Outlet /> : <Navigate to={directions.signIn} />;
 }

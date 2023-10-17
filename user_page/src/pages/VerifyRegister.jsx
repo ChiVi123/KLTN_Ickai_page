@@ -21,7 +21,7 @@ import { authServices } from '~/services';
 
 function CheckOtpRegister() {
     const dispatch = useDispatch();
-    const user = useSelector(userSelector.getUser);
+    const user = useSelector(userSelector.selectInfo);
     const [searchParams] = useSearchParams();
 
     const {

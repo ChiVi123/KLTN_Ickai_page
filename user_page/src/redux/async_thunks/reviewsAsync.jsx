@@ -12,15 +12,3 @@ export const getReviewByProductId = createAsyncThunk(
         }
     },
 );
-
-export const getReviewsByAdmin = createAsyncThunk(
-    'reviews/getReviewsByAdmin',
-    async ({ page, size }, { rejectWithValue }) => {
-        try {
-            const result = await reviewServices.adminGetReviews({ page, size });
-            return result;
-        } catch (error) {
-            return rejectWithValue(error);
-        }
-    },
-);

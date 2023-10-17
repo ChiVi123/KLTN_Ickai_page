@@ -72,7 +72,7 @@ function CategoryForm({
                     try {
                         const result = await categoryServices.addCategory(data);
 
-                        if (result.isSuccess === 'true') {
+                        if (result.isSuccess) {
                             toast.success('Thêm danh mục thành công');
                         } else {
                             toast.error('Thêm danh mục thất bại');

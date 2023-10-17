@@ -13,14 +13,7 @@ import storage from 'redux-persist/lib/storage';
 
 import { keys } from '~/common';
 import { allReducer } from './slices';
-import {
-    cart,
-    categories,
-    modal,
-    orderHistory,
-    products,
-    reviews,
-} from './variables';
+import { cart, categories, orderHistory, products, reviews } from './variables';
 
 const persistConfig = {
     key: keys.persist,
@@ -28,7 +21,6 @@ const persistConfig = {
     blacklist: [
         cart.name,
         categories.name,
-        modal.name,
         orderHistory.name,
         products.name,
         reviews.name,

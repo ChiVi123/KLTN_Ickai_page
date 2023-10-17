@@ -5,9 +5,10 @@ import Swal from 'sweetalert2';
 
 import { contextPage, contextParams, enums } from '~/common';
 import { Button, Col, Row, Typography } from '~/components';
-import styles from '~/scss/pages/order.module.scss';
 import { orderServices } from '~/services';
-import { currencyVN, priceSaleVN } from '~/utils/funcs';
+import { currencyVN } from '~/utils/funcs';
+
+import styles from '~/scss/pages/order.module.scss';
 
 const cx = classNames.bind(styles);
 
@@ -18,16 +19,15 @@ function Order() {
     const navigate = useNavigate();
 
     useEffect(() => {
-        const fetchApi = async ({ id }) => {
-            const result = await orderServices.userGetOrderById({ id });
-            setOrder(result);
-
+        const fetchApi = async (id) => {
+            const result = await orderServices.userGetOrderById(id);
             const state = enums.orderState[result.state];
+
+            setOrder(result);
             setOrderState(state[result.paymentType]);
-            console.log(result);
         };
 
-        fetchApi({ id });
+        fetchApi(id);
     }, [id]);
 
     const handleCancel = () => {
@@ -196,12 +196,7 @@ function Order() {
                                 </div>
                                 {item?.price && (
                                     <span className={cx('text')}>
-                                        {currencyVN(
-                                            priceSaleVN(
-                                                item?.price,
-                                                item?.sale,
-                                            ),
-                                        )}
+                                        {currencyVN(item?.subPrice)}
                                     </span>
                                 )}
                             </li>

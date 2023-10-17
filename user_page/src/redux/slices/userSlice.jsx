@@ -1,5 +1,4 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { getUsers } from '../async_thunks/usersAsync';
 import { user } from '../variables';
 
 const { name, initialState } = user;
@@ -24,7 +23,7 @@ const userSlice = createSlice({
         updateAvatar(state, { payload }) {
             state.avatar = payload.avatar;
         },
-        resetUser(state) {
+        reset(state) {
             state.id = '';
             state.email = '';
             state.name = '';
@@ -33,19 +32,6 @@ const userSlice = createSlice({
             state.phone = '';
             state.role = '';
             state.accessToken = '';
-        },
-    },
-    extraReducers: {
-        [getUsers.pending]: (state) => {
-            state.admin.isLoading = true;
-        },
-        [getUsers.fulfilled]: (state, { payload }) => {
-            state.admin.isLoading = false;
-            state.admin.items = payload.list;
-            state.admin.totalPage = payload.totalPage;
-        },
-        [getUsers.rejected]: (state, { payload }) => {
-            state.admin.message = '';
         },
     },
 });

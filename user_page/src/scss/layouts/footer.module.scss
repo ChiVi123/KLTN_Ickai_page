@@ -5,13 +5,65 @@
 
 .footer {
     height: var(--footer-height);
-    @include space-m.spacing-y(padding, var(--spacer-3));
-    background-color: var(--bg-footer-color);
+
+    &-top {
+        height: 84px;
+        @include space-m.spacing-y(padding, var(--spacer-3));
+        background-color: var(--bg-footer-top-color);
+    }
+
+    &-bottom {
+        @include space-m.spacing-y(padding, var(--spacer-3));
+        background-color: var(--bg-footer-bottom-color);
+    }
 }
 
 .text {
     color: #{color.$white};
     line-height: var(--line-height-xs);
     font-size: #{typo.$font-size-sm};
-    text-align: center;
+
+    &--center {
+        text-align: center;
+    }
+
+    &--middle {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+    }
+
+    & + * {
+        margin-top: 8px;
+    }
+}
+
+.btn {
+    --footer-btn-size: 28px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--footer-btn-size);
+    height: var(--footer-btn-size);
+    border: 1px solid var(--white);
+    border-radius: 50%;
+    color: var(--white);
+    font-size: 1.6rem;
+
+    svg {
+        width: 1em;
+        height: 1em;
+    }
+
+    & + & {
+        margin-left: 8px;
+    }
+
+    &:active,
+    &:hover {
+        border-color: var(--primary-color);
+        color: var(--primary-color);
+    }
 }

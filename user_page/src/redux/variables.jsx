@@ -7,28 +7,18 @@ export const watched = {
 export const products = {
     name: 'products',
     initialState: {
-        admin: createObjectList(),
         client: createObjectList(),
         item: {
             description: '',
+            discount: 0,
             id: '',
             images: [{ id_image: '', url: '' }],
             isLoading: false,
             message: '',
             name: '',
-            options: [],
             price: 0,
             quantity: 0,
             sale: 0,
-            summary: '',
-            tags: [],
-            starMembers: [
-                { star: 5, members: 0 },
-                { star: 4, members: 0 },
-                { star: 3, members: 0 },
-                { star: 2, members: 0 },
-                { star: 1, members: 0 },
-            ],
         },
     },
 };
@@ -36,9 +26,7 @@ export const categories = {
     name: 'categories',
     initialState: {
         isLoading: false,
-        isLoadingAdmin: false,
         items: [],
-        itemsAdmin: [],
         message: '',
     },
 };
@@ -58,16 +46,13 @@ export const user = {
 export const orderHistory = {
     name: 'orderHistory',
     initialState: {
-        admin: createObjectList(),
-        client: createObjectList(),
-        clientFilter: createObjectList(),
+        list: [],
+        ...createObjectList(),
     },
 };
 export const reviews = {
     name: 'reviews',
     initialState: {
-        admin: createObjectList(),
-        client: createObjectList(),
         item: {
             isLoading: false,
             list: [],
@@ -87,15 +72,10 @@ export const cart = {
         totalProduct: 0,
     },
 };
-export const modal = {
-    name: 'modal',
-    initialState: { isOpen: false },
-};
 
 export const typeState = {
     cart: cart.initialState,
     categories: categories.initialState,
-    modal: modal.initialState,
     orderHistory: orderHistory.initialState,
     products: products.initialState,
     reviews: reviews.initialState,
