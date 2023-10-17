@@ -19,6 +19,6 @@ export const phone = 'phone';
 export const province = 'province';
 export const quantity = 'quantity';
 export const rate = 'rate';
-export const search = 'search';
+export const search = 'query';
 export const vnpay = 'vnpay';
 export const ward = 'ward';

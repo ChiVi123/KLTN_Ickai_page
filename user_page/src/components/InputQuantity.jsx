@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { useReducer } from 'react';
 import { types } from '~/common';
 import { MinusIcon, PlusIcon } from '~/icons';
+import { logger } from '~/utils/logger';
 
 function reducer(state, action) {
     switch (action.type) {
@@ -34,6 +35,7 @@ function InputQuantity({
     initValue = 1,
     onChange = () => {},
 }) {
+    const isLogger = false;
     const [state, dispatch] = useReducer(reducer, { quantity: initValue });
 
     const handleMinus = () => {
@@ -51,10 +53,9 @@ function InputQuantity({
         onChange(nextState?.quantity || 1);
     };
 
-    // logger({
-    //     groupName: InputQuantity.name,
-    //     values: [initValue],
-    // });
+    if (isLogger) {
+        logger({ groupName: InputQuantity.name, values: [initValue] });
+    }
 
     return (
         <div className='quantity'>

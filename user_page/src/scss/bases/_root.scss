@@ -31,7 +31,8 @@
 
     // Background
     --black: #{color.$black};
-    --bg-footer-color: #{color.$typography-1-color};
+    --bg-footer-top-color: #{color.$typography-2-color};
+    --bg-footer-bottom-color: #{color.$typography-1-color};
     --bg-dark-color: #{color.$bg-dark-color};
     --gray-color: #{color.$gray-color};
     --gray-hover-color: #{color.$gray-hover-color};
@@ -46,7 +47,7 @@
 
     // Size
     --header-height: 62px;
-    --footer-height: 46px;
+    --footer-height: 130px;
     --total-height: calc(var(--header-height) + var(--footer-height));
     --main-min-height: calc(100vh - var(--total-height));
 

@@ -47,7 +47,7 @@ function ReviewItem({ review }) {
                     id: review.id,
                 });
 
-                if (result.isSuccess === 'true') {
+                if (result.isSuccess) {
                     dispatch(
                         reviewsAsync.getReviewByProductId(review.productid),
                     );

@@ -25,7 +25,7 @@ import {
 } from '~/components';
 import { cartActions, userSelector } from '~/redux';
 import { cartServices } from '~/services';
-import { currencyVN, priceSaleVN } from '~/utils/funcs';
+import { currencyVN } from '~/utils/funcs';
 import { logger } from '~/utils/logger';
 import styles from '~product/intro-product.module.scss';
 import CarouselProduct from './CarouselProduct';
@@ -35,15 +35,14 @@ const cx = classNames.bind(styles);
 function IntroProduct({
     productId,
     name,
-    images,
     price,
-    sale,
+    discount,
+    images,
     stars,
     stock,
     isLoading = false,
 }) {
-    const isLogger = false;
-    const newPrice = priceSaleVN(price, sale);
+    const isLogger = true;
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const userId = useSelector(userSelector.selectId);
@@ -69,29 +68,23 @@ function IntroProduct({
         }
 
         const isBuyNow = !!submitter.attributes['buy-now'];
-        const data = {
-            productId,
-            productOptionId: undefined,
-            value: undefined,
-            quantity: isBuyNow ? 1 : quantity,
-        };
-
+        const data = { productId, quantity: isBuyNow ? 1 : quantity };
         const result = await cartServices.addCart(data);
 
-        if (result.isSuccess === 'true') {
+        if (result.isSuccess) {
             toast.success(notifies.addedItemCartSuccess);
             dispatch(cartActions.increased());
         } else {
             toast.error(notifies.addedItemCartFail);
         }
 
-        if (isBuyNow && result.isSuccess === 'true') {
+        if (isBuyNow && result.isSuccess) {
             navigate(directions.cart);
         }
     };
 
     if (isLogger) {
-        logger({ groupName: IntroProduct.name, values: ['re-render'] });
+        logger({ groupName: IntroProduct.name, values: [discount] });
     }
 
     return (
@@ -128,14 +121,14 @@ function IntroProduct({
 
                     <Skeleton
                         animation='wave'
-                        ready={newPrice}
+                        ready={discount}
                         height='46px'
                         width='262px'
                         marginTop='48px'
                     >
                         <div className={cx('wrap-price')}>
                             <Typography variant='h2' component='span'>
-                                {currencyVN(newPrice)}
+                                {currencyVN(discount)}
                             </Typography>
 
                             <Typography variant='text1'>

@@ -11,6 +11,17 @@ const searchServices = {
             throw error;
         }
     },
+    getProducts: async ({ query = '', sortBy = '', order = '' }) => {
+        try {
+            const response = await request.get('products/search', {
+                params: { query, sortBy, order },
+            });
+
+            return response.data;
+        } catch (error) {
+            return { error, isSuccess: false };
+        }
+    },
 };
 
 export default searchServices;

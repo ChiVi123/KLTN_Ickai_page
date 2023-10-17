@@ -4,9 +4,15 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames/bind';
-import { Link } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 
-import { contextPage, directions, inputNames, placeholders } from '~/common';
+import {
+    contextPage,
+    directions,
+    inputNames,
+    keys,
+    placeholders,
+} from '~/common';
 import { Col, Row } from '~/components';
 import styles from '~/scss/layouts/header.module.scss';
 
@@ -15,6 +21,8 @@ import Actions from './header/Actions';
 const cx = classNames.bind(styles);
 
 function Header() {
+    const [searchParams] = useSearchParams();
+    const query = searchParams.get(keys.query) || '';
     // const dispatch = useDispatch();
 
     // Handle event
@@ -43,7 +51,7 @@ function Header() {
                     <Col baseCols={6} offset={1}>
                         <div className={cx('form')}>
                             <form
-                                action=''
+                                action='search'
                                 method='get'
                                 className={cx('form-inner')}
                             >
@@ -52,6 +60,7 @@ function Header() {
                                     name={inputNames.search}
                                     type='text'
                                     placeholder={placeholders.search}
+                                    defaultValue={query}
                                     className={cx('input')}
                                 />
                                 <div className={cx('separate')}></div>

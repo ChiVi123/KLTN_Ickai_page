@@ -1,13 +1,18 @@
 import { Link } from 'react-router-dom';
 import { directions } from '~/common';
-import { currencyVN, priceSaleVN } from '~/utils/funcs';
+import { currencyVN } from '~/utils/funcs';
+import { logger } from '~/utils/logger';
 import Skeleton from './Skeleton';
 import Typography from './Typography';
 
 function ProductWatched({ product }) {
+    const isLogger = false;
     const percent = 100;
-    const priceSale = priceSaleVN(product.price, product.sale);
     const width = Math.floor((1 - product.sale) * percent);
+
+    if (isLogger) {
+        logger({ groupName: ProductWatched.name, values: [product] });
+    }
 
     return (
         <article className='product-card'>
@@ -28,7 +33,7 @@ function ProductWatched({ product }) {
                         style={{ '--width': `${width}%` }}
                         className='new-price'
                     >
-                        {currencyVN(priceSale)}
+                        {currencyVN(product.discount)}
                     </span>
                     <span className='text-price'>
                         {!!product.sale && currencyVN(product.price)}

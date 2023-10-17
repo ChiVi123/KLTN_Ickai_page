@@ -10,6 +10,7 @@ export const products = {
         client: createObjectList(),
         item: {
             description: '',
+            discount: 0,
             id: '',
             images: [{ id_image: '', url: '' }],
             isLoading: false,

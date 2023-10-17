@@ -9,6 +9,8 @@ export { default as DoubleChevronLeft } from './DoubleChevronLeft';
 export { default as DoubleChevronRight } from './DoubleChevronRight';
 export { default as HalfMoon } from './HalfMoon';
 export { default as MinusIcon } from './MinusIcon';
+export { default as PayPal } from './PayPal';
 export { default as PlusIcon } from './PlusIcon';
 export { default as SunShine } from './SunShine';
 export { default as TrashIcon } from './Trash';
+export { default as VNPay } from './VNPay';

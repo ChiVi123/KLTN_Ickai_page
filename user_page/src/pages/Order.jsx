@@ -6,7 +6,7 @@ import Swal from 'sweetalert2';
 import { contextPage, contextParams, enums } from '~/common';
 import { Button, Col, Row, Typography } from '~/components';
 import { orderServices } from '~/services';
-import { currencyVN, priceSaleVN } from '~/utils/funcs';
+import { currencyVN } from '~/utils/funcs';
 
 import styles from '~/scss/pages/order.module.scss';
 
@@ -196,12 +196,7 @@ function Order() {
                                 </div>
                                 {item?.price && (
                                     <span className={cx('text')}>
-                                        {currencyVN(
-                                            priceSaleVN(
-                                                item?.price,
-                                                item?.sale,
-                                            ),
-                                        )}
+                                        {currencyVN(item?.subPrice)}
                                     </span>
                                 )}
                             </li>

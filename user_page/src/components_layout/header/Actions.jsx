@@ -40,7 +40,7 @@ function Actions() {
 
     const [isDark, setIsDark] = useState(initDark);
     const { avatar, name } = useSelector(userSelector.selectInfo);
-    const totalProduct = useSelector(cartSelector.selectTotal);
+    const totalProduct = useSelector(cartSelector.selectTotalProduct);
 
     const handleLogOut = useLogout();
     const handleToggle = () => setIsDark((prev) => !prev);

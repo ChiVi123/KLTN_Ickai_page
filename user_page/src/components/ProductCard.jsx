@@ -4,30 +4,23 @@ import { toast } from 'react-toastify';
 
 import { contextPage, directions, notifies } from '~/common';
 import { cartServices } from '~/services';
-import { currencyVN, priceSaleVN } from '~/utils/funcs';
+import { currencyVN } from '~/utils/funcs';
 import { logger } from '~/utils/logger';
 import { Button, Skeleton, Typography } from '.';
 
 function ProductCard({ product }) {
     const isLogger = false;
     const percent = 100;
-    const priceSale = priceSaleVN(product.price, product.sale);
     const width = Math.floor((1 - product.sale) * percent);
     const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
 
     const handleBuyNow = async () => {
         setIsLoading(true);
-        const data = {
-            productId: product.id,
-            productOptionId: undefined,
-            value: undefined,
-            quantity: 1,
-        };
-
+        const data = { productId: product.id, quantity: 1 };
         const result = await cartServices.addCart(data);
 
-        if (result.isSuccess === 'true') {
+        if (result.isSuccess) {
             toast.success(notifies.addedItemCartSuccess);
             navigate(directions.cart);
         } else {
@@ -66,7 +59,7 @@ function ProductCard({ product }) {
                         style={{ '--width': `${width}%` }}
                         className='new-price'
                     >
-                        {currencyVN(priceSale)}
+                        {currencyVN(product.discount)}
                     </span>
 
                     {!!product.sale && (

@@ -1,0 +1,38 @@
+.icon {
+    width: 1em;
+    height: 1em;
+}
+
+.vnpay {
+    &-1 {
+        fill: #005baa;
+    }
+
+    &-2 {
+        fill: #ed1c24;
+    }
+
+    &-3 {
+        fill: #009edb;
+    }
+}
+
+.paypal {
+    &-1 {
+        fill: #009ee3;
+    }
+
+    &-1,
+    &-2,
+    &-3 {
+        fill-rule: evenodd;
+    }
+
+    &-2 {
+        fill: #113984;
+    }
+
+    &-3 {
+        fill: #172c70;
+    }
+}

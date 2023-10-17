@@ -26,6 +26,7 @@ const productsSlice = createSlice({
             state.item.sale = payload.sale;
             state.item.price = payload.price;
             state.item.images = payload.images;
+            state.item.discount = payload.discount;
             state.item.quantity = payload.quantity;
             state.item.description = payload.description;
         },

@@ -126,7 +126,7 @@ function ProductUpdate() {
                     data: newData,
                 });
 
-                if (result.isSuccess === 'true') {
+                if (result.isSuccess) {
                     toast.success(notifies.success);
                 } else {
                     toast.error(notifies.fail);

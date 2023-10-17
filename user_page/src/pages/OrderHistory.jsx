@@ -55,19 +55,17 @@ function OrderHistory() {
                 <Col>
                     <div className='width-sm'>
                         <Row cols={1}>
-                            {isLoading &&
-                                skeleton.map((_, index) => (
-                                    <Col key={index}>
-                                        <OrderItemSkeleton />
-                                    </Col>
-                                ))}
-
-                            {isLoading ||
-                                orders.map((order, index) => (
-                                    <Col key={index}>
-                                        <OrderItem order={order} />
-                                    </Col>
-                                ))}
+                            {isLoading
+                                ? skeleton.map((_, index) => (
+                                      <Col key={index}>
+                                          <OrderItemSkeleton />
+                                      </Col>
+                                  ))
+                                : orders.map((order, index) => (
+                                      <Col key={index}>
+                                          <OrderItem order={order} />
+                                      </Col>
+                                  ))}
                         </Row>
                     </div>
                 </Col>

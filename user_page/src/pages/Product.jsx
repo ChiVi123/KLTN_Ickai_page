@@ -30,10 +30,11 @@ import {
     watchedActions,
     watchedSelector,
 } from '~/redux';
-import styles from '~/scss/pages/product.module.scss';
 import { orderServices } from '~/services';
 import { averageRating } from '~/utils/funcs';
 import { logger } from '~/utils/logger';
+
+import styles from '~/scss/pages/product.module.scss';
 
 const cx = classNames.bind(styles);
 
@@ -65,9 +66,18 @@ function Product() {
     }, [dispatch, id]);
 
     useEffect(() => {
-        if (product.name) {
-            const { name, images, price, sale } = product;
-            dispatch(watchedActions.addItem({ id, name, images, price, sale }));
+        if (product.discount) {
+            const { name, images, price, sale, discount } = product;
+            dispatch(
+                watchedActions.addItem({
+                    id,
+                    name,
+                    images,
+                    price,
+                    sale,
+                    discount,
+                }),
+            );
         }
     }, [dispatch, id, product]);
 
@@ -126,13 +136,11 @@ function Product() {
                     <IntroProduct
                         productId={id}
                         name={product.name}
+                        discount={product.discount}
+                        price={product.price}
                         images={product.images}
                         stars={averageRating(rating.totalStar, rating.quantity)}
-                        starStat={product.starStat}
                         stock={product.quantity}
-                        stockSale={product.stockSale}
-                        price={product.price}
-                        sale={product.sale}
                     />
                 </Col>
 
