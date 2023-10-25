@@ -1,7 +1,7 @@
 // includes search params
 export const persist = 'ickai_user_page';
 export const page = 'page';
-export const cate = 'cate';
+export const cate = 'category';
 export const query = 'query';
 export const sortBy = 'sortBy';
 export const order = 'order';

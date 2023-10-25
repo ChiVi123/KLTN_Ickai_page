@@ -1,24 +1,20 @@
 import { request } from '~/utils';
+import { logger } from '~/utils/logger';
 
+const isLogger = false;
 const searchServices = {
-    searchProducts: async ({ q, page, size }) => {
+    getProducts: async (query) => {
         try {
             const response = await request.get('products/search', {
-                params: { q, page, size },
-            });
-            return response.data;
-        } catch (error) {
-            throw error;
-        }
-    },
-    getProducts: async ({ query = '', sortBy = '', order = '' }) => {
-        try {
-            const response = await request.get('products/search', {
-                params: { query, sortBy, order },
+                params: { query },
             });
 
             return response.data;
         } catch (error) {
+            if (isLogger) {
+                logger({ groupName: 'search api', values: [error] });
+            }
+
             return { error, isSuccess: false };
         }
     },

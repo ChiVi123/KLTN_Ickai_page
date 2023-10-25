@@ -42,7 +42,7 @@ function IntroProduct({
     stock,
     isLoading = false,
 }) {
-    const isLogger = true;
+    const isLogger = false;
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const userId = useSelector(userSelector.selectId);
@@ -63,7 +63,7 @@ function IntroProduct({
         }
 
         if (quantity > stock) {
-            toast.error(notifies.overStock);
+            toast.error(notifies.outStock);
             return;
         }
 

@@ -8,26 +8,44 @@
     &--open {
         height: var(--scroll-height);
     }
+}
 
-    .heading {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        width: 100%;
-        height: var(--height);
-        color: var(--text-1-color);
-        cursor: pointer;
+.heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    height: var(--height);
+    color: var(--text-1-color);
+    cursor: pointer;
 
-        &:hover > * {
-            color: var(--primary-color);
-        }
+    span {
+        font-weight: 600;
     }
 
-    .icon {
-        transition: rotate 600ms;
+    &:hover > * {
+        color: var(--primary-color);
+    }
+}
 
-        &--open {
-            rotate: 180deg;
-        }
+.icon {
+    transition: rotate 600ms;
+
+    &--open {
+        rotate: 180deg;
+    }
+}
+
+.link {
+    display: block;
+    margin-top: 8px;
+
+    &:last-child {
+        margin-bottom: 8px;
+    }
+
+    &--active,
+    &:hover {
+        color: var(--primary-color);
     }
 }

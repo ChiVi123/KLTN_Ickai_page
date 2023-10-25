@@ -1,8 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import {
-    getAllProductByClient,
-    getProductById,
-} from '../async_thunks/productsAsync';
+import { getProductById } from '../async_thunks/productsAsync';
 import { products } from '../variables';
 
 const { name, initialState } = products;
@@ -41,22 +38,6 @@ const productsSlice = createSlice({
             state.item.images = initialState.item.images;
             state.item.quantity = initialState.item.quantity;
             state.item.description = initialState.item.description;
-        },
-
-        // getAllProductByClient
-        [getAllProductByClient.pending]: (state) => {
-            state.client.isLoading = true;
-        },
-        [getAllProductByClient.fulfilled]: (state, { payload }) => {
-            state.client.isLoading = false;
-            state.client.items = payload.list;
-            state.client.totalPage = payload.totalPage;
-        },
-        [getAllProductByClient.rejected]: (state, { payload }) => {
-            state.client.message = 'error';
-            state.client.isLoading = false;
-
-            state.client = initialState.client;
         },
     },
 });

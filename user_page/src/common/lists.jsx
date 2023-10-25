@@ -16,9 +16,9 @@ export const menuAccount = [
 ];
 export const sorts = [
     { name: 'Mới nhất', value: 'latest' },
-    { name: 'Khuyến mãi', value: 'sale' },
-    { name: 'Giá: thấp đến cao', value: 'price', order: 'asc' },
-    { name: 'Giá: cao đến thấp', value: 'price', order: 'desc' },
+    { name: 'Bán chạy', value: 'sold' },
+    { name: 'Giá: thấp đến cao', value: 'priceAsc', order: 'asc' },
+    { name: 'Giá: cao đến thấp', value: 'priceDesc', order: 'desc' },
 ];
 export const tabs = [
     { content: 'Tất cả', value: '' },

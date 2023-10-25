@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { Carousel, Col, Skeleton } from '~/components';
 import { toArray } from '~/utils/funcs';
 import { logger } from '~/utils/logger';
+
 import styles from '~product/carousel-product.module.scss';
 
 const cx = classNames.bind(styles);
@@ -15,7 +16,7 @@ function CarouselProduct({ images = [] }) {
     const handleClick = (value) => setIndexImage(value);
 
     if (isLogger) {
-        logger({ groupName: CarouselProduct.name, values: [images] });
+        logger({ groupName: CarouselProduct.name, values: [...images] });
     }
 
     return (
@@ -36,7 +37,7 @@ function CarouselProduct({ images = [] }) {
                 />
             </div>
 
-            {!!images[0].url || (
+            {!!images[0]?.url || (
                 <Carousel cols={3} gx={2}>
                     {skeleton.map((_, index) => (
                         <Col key={index} classes={cx('center')}>
@@ -50,7 +51,7 @@ function CarouselProduct({ images = [] }) {
                 </Carousel>
             )}
 
-            {!!images[0].url && (
+            {!!images[0]?.url && (
                 <Carousel cols={3} gx={2}>
                     {images.map((image, index) => (
                         <Col key={index} classes={cx('center')}>

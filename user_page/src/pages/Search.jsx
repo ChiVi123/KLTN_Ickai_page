@@ -1,8 +1,8 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import classNames from 'classnames/bind';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
 
 import {
@@ -23,8 +23,12 @@ import {
 } from '~/components';
 import { FilterField, Sorts } from '~/components/search';
 import { ProductCardSkeleton } from '~/components/skeletons';
-import { categoriesSelector } from '~/redux';
-import { searchServices } from '~/services';
+import {
+    categoriesSelector,
+    searchActions,
+    searchAsync,
+    searchSelector,
+} from '~/redux';
 import { createObjectParams, toArray } from '~/utils/funcs';
 import { logger } from '~/utils/logger';
 
@@ -33,16 +37,13 @@ import styles from '~/scss/pages/search.module.scss';
 const cx = classNames.bind(styles);
 
 function Search() {
-    const isLogger = true;
+    const isLogger = false;
     const sizeSearch = 6;
     const skeleton = toArray(sizeSearch);
+    const dispatch = useDispatch();
     const [searchParams, setSearchParams] = useSearchParams();
-    const [searchResult, setSearchResult] = useState({
-        list: [],
-        totalQuantity: 0,
-        totalPage: 0,
-    });
     const categories = useSelector(categoriesSelector.selectItems);
+    const search = useSelector(searchSelector.selectList);
     const {
         register,
         handleSubmit,
@@ -54,32 +55,30 @@ function Search() {
             maxPrice: parseInt(searchParams.get(keys.maxPrice)) || '',
         },
     });
+    const query = searchParams.get(keys.query) || '';
+    const sortBy = searchParams.get(keys.sortBy) || 'latest';
+    const category = searchParams.get(keys.cate);
+    const minPrice = parseInt(searchParams.get(keys.minPrice)) || 0;
+    const maxPrice = parseInt(searchParams.get(keys.maxPrice)) || 0;
     const currentPage = parseInt(searchParams.get(keys.page)) || 1;
 
     useEffect(() => {
-        const fetchApi = async ({ query, category, page, size }) => {
-            try {
-                const result = await searchServices.getProducts({ query });
+        const params = { sortBy, minPrice, maxPrice };
 
-                logger({ groupName: Search.name, values: [result] });
+        if (query) {
+            params.query = query;
+            dispatch(searchAsync.getAllProductByQuery(params));
+        }
 
-                if (result?.totalQuantity) {
-                    setSearchResult(result);
-                }
-            } catch (error) {
-                logger({ groupName: Search.name, values: [error] });
+        if (category) {
+            params.categoryId = category;
+            dispatch(searchAsync.getAllProductByCategory(params));
+        }
 
-                setSearchResult({});
-            }
+        return () => {
+            dispatch(searchActions.reset());
         };
-
-        fetchApi({
-            query: searchParams.get(keys.query) || '',
-            category: searchParams.get(keys.cate),
-            page: currentPage - 1,
-            size: sizeSearch,
-        });
-    }, [currentPage, searchParams]);
+    }, [category, dispatch, maxPrice, minPrice, query, sortBy]);
 
     const handleOnSubmit = (data) => {
         setSearchParams((prev) => ({
@@ -89,10 +88,7 @@ function Search() {
     };
 
     if (isLogger) {
-        logger({
-            groupName: Search.name,
-            values: ['re-render'],
-        });
+        logger({ groupName: Search.name, values: [search] });
     }
 
     return (
@@ -169,7 +165,7 @@ function Search() {
                         <Sorts classes={cx('sorts')} />
 
                         {/* Skeleton */}
-                        {!searchResult.totalPage && (
+                        {search.status === 'pending' && (
                             <Row
                                 colsMd={2}
                                 colsLg={3}
@@ -186,7 +182,7 @@ function Search() {
 
                         {/* List */}
                         <Row colsMd={2} colsLg={3} gy={3} classes={cx('list')}>
-                            {searchResult?.list.map((item) => (
+                            {search.items.map((item) => (
                                 <Col key={item.id}>
                                     <ProductCard product={item} />
                                 </Col>
@@ -194,7 +190,7 @@ function Search() {
                         </Row>
 
                         <Pagination
-                            total={searchResult.totalPage}
+                            total={search.totalPage}
                             current={currentPage}
                             center
                         />

@@ -1,33 +1,9 @@
 import cx from 'classnames';
 import PropTypes from 'prop-types';
-import { useReducer } from 'react';
+import { useRef } from 'react';
 import { types } from '~/common';
 import { MinusIcon, PlusIcon } from '~/icons';
 import { logger } from '~/utils/logger';
-
-function reducer(state, action) {
-    switch (action.type) {
-        case 'plus':
-            return {
-                ...state,
-                quantity: state.quantity + 1,
-            };
-
-        case 'minus':
-            return {
-                ...state,
-                quantity: state.quantity - 1,
-            };
-
-        case 'reset':
-            return {
-                ...state,
-                quantity: 1,
-            };
-        default:
-            return { ...state };
-    }
-}
 
 function InputQuantity({
     id = 'quantity',
@@ -36,25 +12,28 @@ function InputQuantity({
     onChange = () => {},
 }) {
     const isLogger = false;
-    const [state, dispatch] = useReducer(reducer, { quantity: initValue });
+    const inputRef = useRef({ value: initValue });
 
     const handleMinus = () => {
-        if (state.quantity === 1) return;
+        let value = parseInt(inputRef.current.value);
 
-        const action = { type: 'minus' };
-        const nextState = reducer(state, action);
-        dispatch(action);
-        onChange(nextState?.quantity || 1);
+        if (value === 1) return;
+
+        inputRef.current.value = --value;
+        onChange(value);
     };
     const handlePlus = () => {
-        const action = { type: 'plus' };
-        const nextState = reducer(state, action);
-        dispatch(action);
-        onChange(nextState?.quantity || 1);
+        let value = parseInt(inputRef.current.value);
+
+        inputRef.current.value = ++value;
+        onChange(value);
     };
 
     if (isLogger) {
-        logger({ groupName: InputQuantity.name, values: [initValue] });
+        logger({
+            groupName: InputQuantity.name,
+            values: [inputRef.current.value],
+        });
     }
 
     return (
@@ -65,19 +44,19 @@ function InputQuantity({
                 onClick={handleMinus}
                 className={cx('quantity__btn', {
                     'quantity__btn--disable':
-                        state?.quantity && state.quantity === 1,
+                        parseInt(inputRef.current.value) === 1,
                 })}
             >
                 <MinusIcon />
             </button>
             <input
+                ref={inputRef}
                 type={types.number}
                 id={id}
                 name={name}
-                value={state?.quantity || 1}
+                defaultValue={initValue}
                 disabled
                 className='quantity__input'
-                onChange={() => {}}
             />
             <button
                 type='button'

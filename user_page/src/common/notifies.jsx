@@ -10,7 +10,7 @@ export const loginFail = 'Tài khoản hoặc mật khẩu không đúng';
 export const loginGoogleFail = 'Đã xảy ra lỗi khi đăng nhập google';
 export const loginGoogleSuccess = 'Đăng nhập google thành công';
 export const loginSuccess = 'Đăng nhập thành công';
-export const overStock = 'Không còn đủ số lượng để đặt hàng';
+export const outStock = 'Số lượng hàng không đủ';
 export const payFail = 'Thanh toán thất bại';
 export const paySuccess = 'Thanh toán thành công';
 export const removeItemCartFail = 'Xóa sản phẩm khỏi giỏ hàng thất bại';
@@ -25,4 +25,5 @@ export const updateAvatarFail = 'Cập nhật ảnh thất bại';
 export const updateAvatarSuccess = 'Cập nhật ảnh thành công';
 export const updateUserFail = 'Cập nhật thất bại';
 export const updateUserSuccess = 'Cập nhật thành công';
+
 export const emailNotExist = (email) => `${email} không tồn tại`;
