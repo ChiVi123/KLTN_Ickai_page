@@ -15,3 +15,13 @@ export const useLogout = () => {
         navigate(directions.signIn);
     };
 };
+
+export const useLogoutNoDirect = () => {
+    const dispatch = useDispatch();
+
+    return () => {
+        googleLogout();
+        dispatch(userActions.reset());
+        dispatch(cartActions.reset());
+    };
+};

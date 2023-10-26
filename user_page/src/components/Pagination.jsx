@@ -10,15 +10,17 @@ import {
     DoubleChevronRight,
 } from '~/icons';
 import { createObjectParams, getPageArray } from '~/utils/funcs';
+import { logger } from '~/utils/logger';
 
 function Pagination({ total = 7, display = 5, current = 1, step = 1, center }) {
+    const isLogger = false;
     const [, setSearchParams] = useSearchParams();
     const [pages, setPages] = useState([]);
     const [isFirst, setIsFirst] = useState(current === step);
     const [isLast, setIsLast] = useState(current === total);
 
     useEffect(() => {
-        if (display > total && total !== step) {
+        if (display >= total && total !== step) {
             setPages(
                 getPageArray({
                     total,
@@ -64,6 +66,10 @@ function Pagination({ total = 7, display = 5, current = 1, step = 1, center }) {
             page: value,
         }));
     };
+
+    if (isLogger) {
+        logger({ groupName: Pagination.name, values: [pages] });
+    }
 
     return (
         <div

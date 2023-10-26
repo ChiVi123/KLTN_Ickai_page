@@ -2,7 +2,9 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
+import { useSelector } from 'react-redux';
 import { contextPage, directions, notifies } from '~/common';
+import { userSelector } from '~/redux';
 import { cartServices } from '~/services';
 import { currencyVN } from '~/utils/funcs';
 import { logger } from '~/utils/logger';
@@ -13,9 +15,15 @@ function ProductCard({ product }) {
     const percent = 100;
     const width = Math.floor((1 - product.sale) * percent);
     const [isLoading, setIsLoading] = useState(false);
+    const userId = useSelector(userSelector.selectId);
     const navigate = useNavigate();
 
     const handleBuyNow = async () => {
+        if (!userId) {
+            navigate(directions.signIn);
+            return;
+        }
+
         setIsLoading(true);
         const data = { productId: product.id, quantity: 1 };
         const result = await cartServices.addCart(data);

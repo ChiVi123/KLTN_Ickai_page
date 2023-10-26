@@ -51,7 +51,7 @@ function Header() {
                     <Col baseCols={6} offset={1}>
                         <div className={cx('form')}>
                             <form
-                                action='search'
+                                action='http://localhost:3000/search'
                                 method='get'
                                 className={cx('form-inner')}
                             >

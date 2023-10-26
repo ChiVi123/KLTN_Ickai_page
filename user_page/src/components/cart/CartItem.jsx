@@ -29,12 +29,11 @@ function CartItem({ product, isLoading = false }) {
         const data = { productId, quantity: value - product?.quantity };
         const result = await cartServices.addCart(data);
 
-        if (result?.isSuccess) {
-            dispatch(cartAsync.getByToken());
-        } else {
-            toast.error(notifies.error);
+        if (!result?.isSuccess) {
+            toast.error(notifies.outStock);
         }
 
+        dispatch(cartAsync.getByToken());
         setLoading(false);
     };
     const handleRemove = () => {
@@ -57,7 +56,10 @@ function CartItem({ product, isLoading = false }) {
     };
 
     if (isLogger) {
-        logger({ groupName: CartItem.name, values: [product] });
+        logger({
+            groupName: CartItem.name,
+            values: [product?.quantity, isLoading],
+        });
     }
 
     return (
@@ -87,12 +89,21 @@ function CartItem({ product, isLoading = false }) {
 
             <Col baseCols={2}>
                 <div className={cx({ loading })}>
-                    <InputQuantity
-                        id={product.itemId}
-                        name={inputNames.quantity}
-                        initValue={product?.quantity || 1}
-                        onChange={handleChange}
-                    />
+                    {!isLoading && (
+                        <InputQuantity
+                            id={product.itemId}
+                            name={inputNames.quantity}
+                            initValue={product?.quantity || 1}
+                            onChange={handleChange}
+                        />
+                    )}
+                    {isLoading && (
+                        <InputQuantity
+                            id={product.itemId}
+                            name={inputNames.quantity}
+                            initValue={product?.quantity || 1}
+                        />
+                    )}
                 </div>
             </Col>
             <Col baseCols={2}>

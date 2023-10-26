@@ -12,18 +12,3 @@ export const getProductById = createAsyncThunk(
         }
     },
 );
-
-export const getAllProductByClient = createAsyncThunk(
-    'products/getAllProductByClient',
-    async ({ page, size }, { rejectWithValue }) => {
-        try {
-            const result = await productServices.getProductsByState({
-                page,
-                size,
-            });
-            return result;
-        } catch (error) {
-            return rejectWithValue(error.response.data);
-        }
-    },
-);

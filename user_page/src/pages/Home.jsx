@@ -4,43 +4,44 @@ import { useDispatch, useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 
 import { contextPage, directions } from '~/common';
-import { Col, ProductCard, Row, TextLink, Typography } from '~/components';
+import { Col, ProductCard, Row, Typography } from '~/components';
 import { ProductCardSkeleton } from '~/components/skeletons';
 import { cartAsync, categoriesSelector, userSelector } from '~/redux';
-import styles from '~/scss/pages/home.module.scss';
 import { productServices } from '~/services';
 import { toArray } from '~/utils/funcs';
 import { logger } from '~/utils/logger';
 
+import styles from '~/scss/pages/home.module.scss';
+
 const cx = classNames.bind(styles);
 
-const page = 0;
-const size = 8;
-
 function Home() {
+    const page = 0;
+    const size = 8;
     const productsSkeleton = toArray(size);
     const isLogger = false;
 
-    const [products, setProducts] = useState([]);
-    const dispatch = useDispatch();
+    const [latest, setLatest] = useState([]);
+    const [popular, setPopular] = useState([]);
     const categories = useSelector(categoriesSelector.selectItems);
     const { accessToken } = useSelector(userSelector.selectInfo);
+    const dispatch = useDispatch();
 
     useEffect(() => {
-        const fetchApi = async (data) => {
-            const result = await productServices.getProductsByState(data);
-            setProducts(result?.list || []);
-        };
+        (async (data) => {
+            const latest = await productServices.getProducts(data);
+            const popular = await productServices.getPopular(data);
 
-        fetchApi({ page, size });
+            setLatest(latest?.list || []);
+            setPopular(popular?.list || []);
+        })({ page, size });
     }, []);
 
     useEffect(() => {
         if (accessToken) {
             dispatch(cartAsync.getByToken());
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [accessToken]);
+    }, [accessToken, dispatch]);
 
     if (isLogger) {
         logger({ groupName: Home.name, values: ['re-render'] });
@@ -85,7 +86,7 @@ function Home() {
                         </Typography>
 
                         <Row cols={2} colsMd={3} colsLg={4} g={3}>
-                            {products.map((product) => (
+                            {latest.map((product) => (
                                 <Col key={product.id}>
                                     <ProductCard product={product} />
                                 </Col>
@@ -93,7 +94,7 @@ function Home() {
                         </Row>
 
                         {/* Skeleton */}
-                        {!!products.length || (
+                        {!!latest.length || (
                             <Row cols={2} colsMd={3} colsLg={4} g={3}>
                                 {productsSkeleton.map((_, index) => (
                                     <Col key={index}>
@@ -103,24 +104,19 @@ function Home() {
                             </Row>
                         )}
 
-                        <TextLink
-                            to={directions.search}
-                            center
-                            classes={cx('main-link')}
-                        >
-                            {contextPage.more}
-                        </TextLink>
-
                         {/* Popular */}
                         <Typography
                             variant='h2'
-                            style={{ '--margin-bottom': 'var(--spacer-4)' }}
+                            style={{
+                                marginTop: 'var(--spacer-4)',
+                                '--margin-bottom': 'var(--spacer-4)',
+                            }}
                         >
                             {contextPage.popular}
                         </Typography>
 
                         <Row cols={2} colsMd={3} colsLg={4} g={3}>
-                            {products.map((product) => (
+                            {popular.map((product) => (
                                 <Col key={product.id}>
                                     <ProductCard product={product} />
                                 </Col>
@@ -128,7 +124,7 @@ function Home() {
                         </Row>
 
                         {/* Skeleton */}
-                        {!!products.length || (
+                        {!!popular.length || (
                             <Row cols={2} colsMd={3} colsLg={4} g={3}>
                                 {productsSkeleton.map((_, index) => (
                                     <Col key={index}>
@@ -137,14 +133,6 @@ function Home() {
                                 ))}
                             </Row>
                         )}
-
-                        <TextLink
-                            to={directions.search}
-                            center
-                            classes={cx('main-link')}
-                        >
-                            {contextPage.more}
-                        </TextLink>
                     </section>
                 </Col>
             </Row>

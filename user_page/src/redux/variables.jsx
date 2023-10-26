@@ -1,8 +1,29 @@
 import { createObjectList } from '~/utils/funcs';
 
-export const watched = {
-    name: 'watched',
-    initialState: { list: [] },
+export const cart = {
+    name: 'cart',
+    initialState: {
+        isLoading: false,
+        items: [],
+        total: 0,
+        totalPrice: 0,
+        totalProduct: 0,
+    },
+};
+export const categories = {
+    name: 'categories',
+    initialState: {
+        isLoading: false,
+        items: [],
+        message: '',
+    },
+};
+export const orderHistory = {
+    name: 'orderHistory',
+    initialState: {
+        list: [],
+        ...createObjectList(),
+    },
 };
 export const products = {
     name: 'products',
@@ -22,12 +43,23 @@ export const products = {
         },
     },
 };
-export const categories = {
-    name: 'categories',
+export const reviews = {
+    name: 'reviews',
     initialState: {
-        isLoading: false,
-        items: [],
-        message: '',
+        item: {
+            isLoading: false,
+            list: [],
+            message: '',
+            totalPage: 0,
+            totalQuantity: 0,
+        },
+    },
+};
+export const search = {
+    name: 'search',
+    initialState: {
+        status: 'pending',
+        ...createObjectList(),
     },
 };
 export const user = {
@@ -43,34 +75,9 @@ export const user = {
         role: '',
     },
 };
-export const orderHistory = {
-    name: 'orderHistory',
-    initialState: {
-        list: [],
-        ...createObjectList(),
-    },
-};
-export const reviews = {
-    name: 'reviews',
-    initialState: {
-        item: {
-            isLoading: false,
-            list: [],
-            message: '',
-            totalPage: 0,
-            totalQuantity: 0,
-        },
-    },
-};
-export const cart = {
-    name: 'cart',
-    initialState: {
-        isLoading: false,
-        items: [],
-        total: 0,
-        totalPrice: 0,
-        totalProduct: 0,
-    },
+export const watched = {
+    name: 'watched',
+    initialState: { list: [] },
 };
 
 export const typeState = {
@@ -79,6 +86,7 @@ export const typeState = {
     orderHistory: orderHistory.initialState,
     products: products.initialState,
     reviews: reviews.initialState,
+    search: search.initialState,
     user: user.initialState,
     watched: watched.initialState,
 };
