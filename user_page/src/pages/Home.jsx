@@ -59,7 +59,7 @@ function Home() {
                             {contextPage.category}
                         </Typography>
                         {categories.map((item) => {
-                            const path = `${directions.search}?cate=${item.id}`;
+                            const path = `${directions.search}?category=${item.id}`;
 
                             return (
                                 <Typography
