@@ -1,17 +1,8 @@
 import { request } from '~/utils';
 
+const prefix = 'admin/manage/orders';
 const orderServices = {
-    adminGetAllOrder: async (page) => {
-        try {
-            const response = await request.get('admin/manage/orders', {
-                params: { page, size: 10 },
-            });
-            return response.data;
-        } catch (error) {
-            throw error;
-        }
-    },
-    adminGetAllOrderEnable: async (page) => {
+    getAllOrder: async (page) => {
         try {
             const response = await request.get('admin/manage/ordersEnable', {
                 params: { page, size: 10 },
@@ -21,78 +12,36 @@ const orderServices = {
             throw error;
         }
     },
-    adminGetOrderById: async ({ id }) => {
+    getOrderById: async (id) => {
         try {
-            const response = await request.get(`admin/manage/orders/${id}`);
+            const response = await request.get(`${prefix}/${id}`);
             return response.data;
         } catch (error) {
             throw error;
         }
     },
-    userGetAllOrder: async () => {
+    cancelById: async (id) => {
         try {
-            const response = await request.get(`orders/getallorder`);
-            return response.data;
-        } catch (error) {
-            throw error;
-        }
-    },
-    userGetOrderById: async ({ id }) => {
-        try {
-            const response = await request.get(`orders/${id}`);
-            return response.data;
-        } catch (error) {
-            throw error;
-        }
-    },
-    userGetOrdersComplete: async () => {
-        try {
-            const response = await request.get(`orders/getallordercomplete`);
-            return response.data;
-        } catch (error) {
-            throw error;
-        }
-    },
-    adminCancelOrderById: async ({ id }) => {
-        try {
-            const response = await request.put(
-                `admin/manage/orders/setcancel/${id}`,
-            );
+            const response = await request.put(`${prefix}/setcancel/${id}`);
             return response;
         } catch (error) {
             throw error;
         }
     },
-    adminDeliveryOrderById: async ({ id }) => {
+    deliveryById: async (id) => {
         try {
-            const response = await request.put(
-                `admin/manage/orders/setdelivery/${id}`,
-            );
+            const response = await request.put(`${prefix}/setdelivery/${id}`);
             return response;
         } catch (error) {
             throw error;
         }
     },
-    adminCompleteOrderById: async ({ id }) => {
+    completeById: async (id) => {
         try {
-            const response = await request.put(
-                `admin/manage/orders/setcomplete/${id}`,
-            );
+            const response = await request.put(`${prefix}/setcomplete/${id}`);
             return response;
         } catch (error) {
             throw error;
-        }
-    },
-    userCancelOrderById: async ({ id }) => {
-        try {
-            const response = await request.put(`orders/cancel/${id}`);
-            return response;
-        } catch ({
-            response: {
-                data: { message },
-            },
-        }) {
-            throw message;
         }
     },
 };

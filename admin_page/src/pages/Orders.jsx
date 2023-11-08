@@ -4,7 +4,6 @@ import classNames from 'classnames/bind';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
-import styles from '~/scss/pages/orders.module.scss';
 
 import { directions, enums, keys, lists, titles } from '~/common';
 import {
@@ -18,8 +17,9 @@ import { orderHistorySelector, ordersAsync } from '~/redux';
 import { currencyVN } from '~/utils/funcs';
 import { logger } from '~/utils/logger';
 
-const cx = classNames.bind(styles);
+import styles from '~/scss/pages/orders.module.scss';
 
+const cx = classNames.bind(styles);
 function Orders() {
     const isLogger = false;
     const skeleton = Array.from({ length: 10 }, (_, index) => index);
@@ -29,7 +29,7 @@ function Orders() {
         items: orders,
         totalPage,
         isLoading,
-    } = useSelector(orderHistorySelector.getOrdersAdmin);
+    } = useSelector(orderHistorySelector.getAllOrder);
 
     if (isLogger) {
         logger({ groupName: Orders.name, values: [totalPage] });
@@ -39,7 +39,7 @@ function Orders() {
     const currentPage = parseInt(searchParams.get(keys.page)) || firstPage;
 
     useEffect(() => {
-        dispatch(ordersAsync.getAllOrderEnableByAdmin(currentPage - 1));
+        dispatch(ordersAsync.getAllOrderEnable(currentPage - 1));
     }, [currentPage, dispatch]);
 
     return (

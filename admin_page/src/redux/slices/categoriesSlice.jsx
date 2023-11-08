@@ -7,34 +7,44 @@ const categoriesSlice = createSlice({
     name,
     initialState,
     reducers: {},
-    extraReducers: {
+    extraReducers: (builder) => {
         // getAllEnable
-        [getAllEnable.pending]: (state = initialState) => {
-            state.client.isLoading = true;
-        },
-        [getAllEnable.fulfilled]: (state = initialState, { payload }) => {
-            state.client.isLoading = false;
-            state.client.items = payload;
-            state.client.totalPage = 1;
-        },
-        [getAllEnable.rejected]: (state = initialState, { payload }) => {
-            state.client.isLoading = false;
-            state.client.message = payload;
-        },
+        builder.addCase(getAllEnable.pending, (state) => {
+            state.allItemEnabled.isLoading = true;
+            state.allItemEnabled.status = 'pending';
+        });
+        builder.addCase(getAllEnable.fulfilled, (state, { payload }) => {
+            state.allItemEnabled.isLoading = false;
+            state.allItemEnabled.status = 'fulfilled';
+            state.allItemEnabled.items = payload;
+            state.allItemEnabled.totalPage = 1;
+        });
+        builder.addCase(getAllEnable.rejected, (state, { payload }) => {
+            state.allItemEnabled.isLoading = false;
+            state.allItemEnabled.status = 'rejected';
+            state.allItemEnabled.items = [];
+            state.allItemEnabled.totalPage = 0;
+            state.allItemEnabled.message = payload;
+        });
 
         // getAllState
-        [getAllState.pending]: (state = initialState) => {
-            state.admin.isLoading = true;
-        },
-        [getAllState.fulfilled]: (state = initialState, { payload }) => {
-            state.admin.isLoading = false;
-            state.admin.items = payload;
-            state.admin.totalPage = 1;
-        },
-        [getAllState.rejected]: (state = initialState, { payload }) => {
-            state.admin.isLoading = false;
-            state.admin.message = payload;
-        },
+        builder.addCase(getAllState.pending, (state) => {
+            state.allItem.isLoading = true;
+            state.allItem.status = 'pending';
+        });
+        builder.addCase(getAllState.fulfilled, (state, { payload }) => {
+            state.allItem.isLoading = false;
+            state.allItem.status = 'fulfilled';
+            state.allItem.items = payload;
+            state.allItem.totalPage = 1;
+        });
+        builder.addCase(getAllState.rejected, (state, { payload }) => {
+            state.allItem.isLoading = false;
+            state.allItem.status = 'rejected';
+            state.allItem.items = [];
+            state.allItem.totalPage = 0;
+            state.allItem.message = payload;
+        });
     },
 });
 

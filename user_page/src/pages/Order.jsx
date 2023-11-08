@@ -14,17 +14,18 @@ const cx = classNames.bind(styles);
 
 function Order() {
     const [order, setOrder] = useState();
-    const [orderState, setOrderState] = useState();
+    const [isCancel, setIsCancel] = useState(false);
     const { id } = useParams();
     const navigate = useNavigate();
 
     useEffect(() => {
         const fetchApi = async (id) => {
             const result = await orderServices.userGetOrderById(id);
-            const state = enums.orderState[result.state];
 
             setOrder(result);
-            setOrderState(state[result.paymentType]);
+            setIsCancel(
+                result.state === 'pending' && result.paymentType === 'COD',
+            );
         };
 
         fetchApi(id);
@@ -132,7 +133,7 @@ function Order() {
                             <Col>
                                 <span className={cx('large-text')}>
                                     {contextPage.status}
-                                    {orderState.isPay}
+                                    {enums.payments[order.state].state}
                                 </span>
                             </Col>
                         )}
@@ -156,12 +157,12 @@ function Order() {
                             </Col>
                         )}
 
-                        {orderState?.isCancel && (
+                        {isCancel && (
                             <div
                                 className={cx('col', 'l-4')}
-                                style={{ marginTop: '1.2rem' }}
+                                style={{ marginTop: '12px' }}
                             >
-                                <Button color={'second'} onClick={handleCancel}>
+                                <Button color='second' onClick={handleCancel}>
                                     {contextPage.cancel}
                                 </Button>
                             </div>

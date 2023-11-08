@@ -1,10 +1,10 @@
 export function currencyVN(
     value,
-    locales = "vi",
+    locales = 'vi',
     options = {
-        style: "currency",
-        currency: "VND",
-    }
+        style: 'currency',
+        currency: 'VND',
+    },
 ) {
     return value.toLocaleString(locales, options);
 }
@@ -17,23 +17,27 @@ export function priceSaleVN(price, sale) {
 }
 
 function padTo2Digits(num) {
-    return num.toString().padStart(2, "0");
+    return num.toString().padStart(2, '0');
 }
 
 // '14/05/2023 15:26:22'
-export function formatStringDate(string = "") {
-    const array = string.split(" ");
-    let arrayDate = array[0].split("/");
+export function formatStringDate(string = '') {
+    const array = string.split(' ');
+    let arrayDate = array[0].split('/');
     [arrayDate[0], arrayDate[1]] = [arrayDate[1], arrayDate[0]];
-    return [arrayDate.join("/"), array[1]].join(" ");
+    return [arrayDate.join('/'), array[1]].join(' ');
 }
 
-export function formatDate(date = new Date(), split = "-") {
-    return [padTo2Digits(date.getDate()), padTo2Digits(date.getMonth() + 1), date.getFullYear()].join(split);
+export function formatDate(date = new Date(), split = '-') {
+    return [
+        padTo2Digits(date.getDate()),
+        padTo2Digits(date.getMonth() + 1),
+        date.getFullYear(),
+    ].join(split);
 }
 
 export function toArray(number = 1, callback = (_, index) => index + 1) {
-    if (typeof number !== "number" || number < 1) {
+    if (typeof number !== 'number' || number < 1) {
         // throw new Error('Invalid input. Please provide a positive number.');
         return [];
     }
@@ -73,9 +77,10 @@ export const createObjectParams = (array = [], conditions = []) => {
 
 export function createObjectList() {
     return {
-        isLoading: false,
         items: [],
         totalPage: 0,
-        message: "",
+        message: '',
+        isLoading: false,
+        status: 'pending',
     };
 }

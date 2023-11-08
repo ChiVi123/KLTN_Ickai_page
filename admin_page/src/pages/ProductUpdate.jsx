@@ -36,6 +36,7 @@ import { UploadImage } from '~/components/upload_image';
 import {
     categoriesAsync,
     categoriesSelector,
+    productsActions,
     productsAsync,
     productsSelector,
 } from '~/redux';
@@ -74,7 +75,10 @@ function ProductUpdate() {
     useEffect(() => {
         dispatch(categoriesAsync.getAllEnable());
         dispatch(productsAsync.getById(id));
-        return () => {};
+
+        return () => {
+            dispatch(productsActions.resetItem());
+        };
     }, [dispatch, id]);
     // Set value form
     useEffect(() => {
@@ -218,7 +222,7 @@ function ProductUpdate() {
                             errors={errors}
                         >
                             <Skeleton
-                                ready={product.images.length}
+                                ready={product.status === 'fulfilled'}
                                 height='156px'
                             >
                                 <Controller

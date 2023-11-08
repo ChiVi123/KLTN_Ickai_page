@@ -12,7 +12,7 @@ import styles from '~/scss/layouts/sidebar.module.scss';
 const cx = classNames.bind(styles);
 
 function Sidebar() {
-    const user = useSelector(userSelector.getUser);
+    const user = useSelector(userSelector.selectInfo);
     const dispatch = useDispatch();
     const navigate = useNavigate();
 

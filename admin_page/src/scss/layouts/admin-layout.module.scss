@@ -1,7 +1,9 @@
-.wrapper {
-    --width-sidebar: 27.5rem;
+.side {
+    &:first-child {
+        padding-left: 0;
+    }
 
-    display: flex;
-    min-height: calc(100vh - var(--height-footer));
-    background-color: #f2f7ff;
+    &:last-child {
+        padding-right: 0;
+    }
 }

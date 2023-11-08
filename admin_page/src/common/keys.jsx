@@ -1,8 +1,6 @@
 // includes search params
 export const persist = 'ickai_admin_page';
-export const cate = 'cate';
 export const category = 'category';
-export const cates = 'cates';
 export const description = 'description';
 export const images = 'images';
 export const name = 'name';

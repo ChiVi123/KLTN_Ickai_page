@@ -1,11 +1,11 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { orderServices } from '~/services';
 
-export const getAllOrderEnableByAdmin = createAsyncThunk(
-    'orders/getAllOrderEnableByAdmin',
+export const getAllOrderEnable = createAsyncThunk(
+    'orders/getAllOrderEnable',
     async (page, { rejectWithValue }) => {
         try {
-            const result = await orderServices.adminGetAllOrderEnable(page);
+            const result = await orderServices.getAllOrder(page);
             return result;
         } catch (error) {
             return rejectWithValue(error);

@@ -21,7 +21,7 @@ function OrderItem({ order }) {
                                 {contextParams.titleOrderId(order.id)}
                             </Typography>
                             <span className={cx('tag', `tag--${order.state}`)}>
-                                {enums.orderState[order.state].state}
+                                {enums.payments[order.state].state}
                             </span>
                         </div>
                         <div className={cx('inner')}>

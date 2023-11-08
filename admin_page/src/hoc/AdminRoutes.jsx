@@ -7,7 +7,7 @@ import { directions } from '~/common';
 import { userActions, userSelector } from '~/redux';
 
 function AdminRoutes() {
-    const user = useSelector(userSelector.getUser);
+    const user = useSelector(userSelector.selectInfo);
     const dispatch = useDispatch();
 
     useEffect(() => {
