@@ -49,7 +49,7 @@ function Dashboard() {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        const fetchApi = async () => {
+        (async () => {
             try {
                 const resultCount = await statisticalServices.getCountByState();
                 const expectMessage = 'Get count by state success';
@@ -65,9 +65,7 @@ function Dashboard() {
             } catch (error) {
                 logger({ groupName: 'Dashboard catch', values: [error] });
             }
-        };
-
-        fetchApi();
+        })();
     }, []);
     useEffect(() => {
         dispatch(
@@ -189,7 +187,7 @@ function Dashboard() {
                 </Col>
             </Row>
 
-            <br style={{ marginTop: '1rem' }} />
+            <br style={{ marginTop: '10px' }} />
 
             <Typography variant='h2'>Thống kê tổng doanh thu</Typography>
 
@@ -202,6 +200,7 @@ function Dashboard() {
                         Từ:
                     </Typography>
                     <DateTimePicker
+                        clearIcon={null}
                         value={startDate}
                         format='dd/MM/y'
                         onChange={onStartDate}
@@ -227,7 +226,7 @@ function Dashboard() {
             <ChartBar
                 data={statisticalAmount}
                 keyXAxis='date'
-                keyBar={'amount'}
+                keyBar='amount'
                 name='Tổng doanh thu tháng'
             />
         </section>

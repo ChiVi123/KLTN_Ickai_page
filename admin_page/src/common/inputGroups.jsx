@@ -4,40 +4,15 @@ import * as labels from './labels';
 import * as placeholders from './placeholders';
 import * as types from './types';
 
-const email = {
-    type: types.email,
-    inputName: inputNames.email,
-    label: labels.email,
-    placeholder: placeholders.email,
-    autoComplete: autoCompletes.email,
-};
-const password = {
-    type: types.password,
-    inputName: inputNames.password,
-    label: labels.password,
-    placeholder: placeholders.password,
-    autoComplete: autoCompletes.off,
-};
-const name = {
-    type: types.text,
-    inputName: inputNames.name,
-    label: labels.name,
-    placeholder: placeholders.name,
-    autoComplete: autoCompletes.name,
-};
-const productName = {
-    type: types.text,
-    inputName: inputNames.name,
-    label: labels.productName,
-    placeholder: placeholders.productName,
-    autoComplete: autoCompletes.name,
-    props: {},
-};
-
-export const login = [email, password];
-export const profile = [name];
 export const product = [
-    productName,
+    {
+        type: types.text,
+        inputName: inputNames.name,
+        label: labels.productName,
+        placeholder: placeholders.productName,
+        autoComplete: autoCompletes.name,
+        props: {},
+    },
     {
         type: types.number,
         inputName: inputNames.price,

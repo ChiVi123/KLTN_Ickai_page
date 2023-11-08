@@ -27,9 +27,7 @@ function UserItem({ user, callback }) {
     const handleIsActivate = async ({ id, state }) => {
         switch (state) {
             case 'active':
-                const resultBlock = await userServices.adminBlockUserById({
-                    id,
-                });
+                const resultBlock = await userServices.blockUserById(id);
                 const messageBlockSuccess = 'Delete user success';
 
                 if (resultBlock?.message === messageBlockSuccess) {
@@ -39,9 +37,7 @@ function UserItem({ user, callback }) {
                 }
                 break;
             case 'block':
-                const resultActive = await userServices.adminUnblockUserById({
-                    id,
-                });
+                const resultActive = await userServices.unblockUserById(id);
                 const messageUnblockSuccess = 'Unblock user success';
 
                 if (resultActive?.message === messageUnblockSuccess) {

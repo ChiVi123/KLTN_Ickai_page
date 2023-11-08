@@ -99,7 +99,7 @@ function ProductCreate() {
                     isSuccess,
                 } = await productServices.addProduct(newData);
 
-                if (isSuccess === 'true') {
+                if (isSuccess) {
                     await productServices.addImagesProduct({
                         id,
                         data: formData,

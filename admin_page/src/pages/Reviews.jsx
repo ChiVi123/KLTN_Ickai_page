@@ -15,7 +15,7 @@ function Reviews() {
         items: reviews,
         isLoading,
         totalPage,
-    } = useSelector(reviewsSelector.getReviewsByAdmin);
+    } = useSelector(reviewsSelector.getAllReview);
 
     const itemPerPage = 5;
     const displayPages = 4;
@@ -24,7 +24,7 @@ function Reviews() {
 
     useEffect(() => {
         dispatch(
-            reviewsAsync.getReviewsByAdmin({
+            reviewsAsync.getAllReview({
                 page: currentPage - 1,
                 size: itemPerPage,
             }),
@@ -40,9 +40,7 @@ function Reviews() {
                     <ReviewItem
                         key={index}
                         review={item}
-                        callback={() =>
-                            dispatch(reviewsAsync.getReviewsByAdmin())
-                        }
+                        callback={() => dispatch(reviewsAsync.getAllReview())}
                     />
                 ))}
             </Table>

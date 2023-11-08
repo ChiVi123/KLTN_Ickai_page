@@ -41,7 +41,7 @@ function Login() {
     });
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const user = useSelector(userSelector.getUser);
+    const user = useSelector(userSelector.selectInfo);
 
     useEffect(() => {
         if (user.role === 'role_admin') {

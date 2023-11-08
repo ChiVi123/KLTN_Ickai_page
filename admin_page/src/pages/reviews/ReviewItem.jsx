@@ -31,7 +31,7 @@ function ReviewItem({ review, callback }) {
         switch (state) {
             case 'enable':
                 const expectMessageBlock = 'Block comment successfully ';
-                const resultBlock = await reviewServices.blockReview({ id });
+                const resultBlock = await reviewServices.blockReview(id);
 
                 if (resultBlock?.message === expectMessageBlock) {
                     toast.success(notifies.blockReviewSuccess);
@@ -43,7 +43,7 @@ function ReviewItem({ review, callback }) {
                 break;
             case 'block':
                 const expectMessageEnable = ' Comment successfully ';
-                const resultEnable = await reviewServices.unblockReview({ id });
+                const resultEnable = await reviewServices.unblockReview(id);
 
                 if (resultEnable?.message === expectMessageEnable) {
                     toast.success(notifies.unblockReviewSuccess);

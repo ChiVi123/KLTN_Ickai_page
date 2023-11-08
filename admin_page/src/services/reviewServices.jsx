@@ -1,9 +1,10 @@
 import { request } from '~/utils';
 
+const prefix = 'admin/manage/comment';
 const reviewServices = {
-    adminGetReviews: async ({ page, size }) => {
+    getReviews: async ({ page, size }) => {
         try {
-            const response = await request.get('admin/manage/comment/findall', {
+            const response = await request.get(`${prefix}/findall`, {
                 params: { page, size },
             });
             return response.data;
@@ -11,55 +12,19 @@ const reviewServices = {
             throw error;
         }
     },
-    getReviewByProductId: async (id) => {
-        try {
-            const response = await request.get(`comment/${id}`);
-            return response.data;
-        } catch (error) {
-            throw error;
-        }
-    },
-    addReview: async (data) => {
-        try {
-            const response = await request.post('comment', data);
-            return response;
-        } catch (error) {
-            throw error;
-        }
-    },
-    editReview: async ({ id, data }) => {
-        try {
-            const response = await request.put(`comment/edit/${id}`, data);
-            return response;
-        } catch (error) {
-            throw error;
-        }
-    },
-    blockReview: async ({ id }) => {
+    blockReview: async (id) => {
         try {
             const response = await request.requestDelete(
-                `admin/manage/comment/block/${id}`,
+                `${prefix}/block/${id}`,
             );
             return response;
         } catch (error) {
             throw error;
         }
     },
-    unblockReview: async ({ id }) => {
+    unblockReview: async (id) => {
         try {
-            const response = await request.put(
-                `admin/manage/comment/setenable/${id}`,
-            );
-            return response;
-        } catch (error) {
-            throw error;
-        }
-    },
-    deleteReviewByUser: async ({ id }) => {
-        try {
-            const response = await request.requestDelete(
-                `comment/deletebyuser/${id}`,
-            );
+            const response = await request.put(`${prefix}/setenable/${id}`);
             return response;
         } catch (error) {
             throw error;

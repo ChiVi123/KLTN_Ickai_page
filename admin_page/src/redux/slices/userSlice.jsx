@@ -8,45 +8,41 @@ const userSlice = createSlice({
     initialState,
     reducers: {
         addUser(state, { payload }) {
-            state.id = payload.id;
-            state.email = payload.email;
-            state.name = payload.name;
-            state.avatar = payload.avatar;
-            state.address = payload.address;
-            state.phone = payload.phone;
-            state.role = payload.role;
-            state.accessToken = payload.accessToken;
-        },
-        updateUser(state, { payload }) {
-            state.name = payload.name;
-            state.phone = payload.phone;
-        },
-        updateAvatar(state, { payload }) {
-            state.avatar = payload.avatar;
+            state.item.id = payload.id;
+            state.item.email = payload.email;
+            state.item.name = payload.name;
+            state.item.avatar = payload.avatar;
+            state.item.address = payload.address;
+            state.item.phone = payload.phone;
+            state.item.role = payload.role;
+            state.item.accessToken = payload.accessToken;
         },
         resetUser(state) {
-            state.id = '';
-            state.email = '';
-            state.name = '';
-            state.avatar = '';
-            state.address = '';
-            state.phone = '';
-            state.role = '';
-            state.accessToken = '';
+            state.item.id = '';
+            state.item.email = '';
+            state.item.name = '';
+            state.item.avatar = '';
+            state.item.address = '';
+            state.item.phone = '';
+            state.item.role = '';
+            state.item.accessToken = '';
         },
     },
-    extraReducers: {
-        [getUsers.pending]: (state) => {
-            state.admin.isLoading = true;
-        },
-        [getUsers.fulfilled]: (state, { payload }) => {
-            state.admin.isLoading = false;
-            state.admin.items = payload.list;
-            state.admin.totalPage = payload.totalPage;
-        },
-        [getUsers.rejected]: (state, { payload }) => {
-            state.admin.message = 'rejected';
-        },
+    extraReducers: (builder) => {
+        builder.addCase(getUsers.pending, (state) => {
+            state.list.isLoading = true;
+            state.list.status = 'pending';
+        });
+        builder.addCase(getUsers.fulfilled, (state, { payload }) => {
+            state.list.isLoading = false;
+            state.list.items = payload.list;
+            state.list.totalPage = payload.totalPage;
+            state.list.status = 'fulfilled';
+        });
+        builder.addCase(getUsers.rejected, (state, { payload }) => {
+            state.list.message = payload;
+            state.list.status = 'rejected';
+        });
     },
 });
 

@@ -15,7 +15,7 @@ function Users() {
         items: users,
         totalPage,
         isLoading,
-    } = useSelector(userSelector.getUsers);
+    } = useSelector(userSelector.selectList);
     const dispatch = useDispatch();
 
     const isLogger = false;

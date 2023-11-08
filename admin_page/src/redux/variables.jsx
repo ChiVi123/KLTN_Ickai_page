@@ -3,7 +3,7 @@ import { createObjectList } from '~/utils/funcs';
 export const products = {
     name: 'products',
     initialState: {
-        admin: createObjectList(),
+        list: createObjectList(),
         item: {
             category: '',
             category_id: '',
@@ -19,40 +19,43 @@ export const products = {
             summary: 'summary',
             tags: [],
             state: '',
+            status: 'pending',
         },
     },
 };
 export const categories = {
     name: 'categories',
     initialState: {
-        admin: createObjectList(),
-        client: createObjectList(),
+        allItem: createObjectList(),
+        allItemEnabled: createObjectList(),
     },
 };
 export const user = {
     name: 'user',
     initialState: {
-        accessToken: '',
-        address: '',
-        admin: createObjectList(),
-        avatar: '',
-        email: '',
-        id: '',
-        name: '',
-        phone: '',
-        role: '',
+        list: createObjectList(),
+        item: {
+            id: '',
+            name: '',
+            email: '',
+            avatar: '',
+            phone: '',
+            address: '',
+            role: '',
+            accessToken: '',
+        },
     },
 };
 export const orderHistory = {
     name: 'orderHistory',
     initialState: {
-        admin: createObjectList(),
+        ...createObjectList(),
     },
 };
 export const reviews = {
     name: 'reviews',
     initialState: {
-        admin: createObjectList(),
+        ...createObjectList(),
     },
 };
 export const statistical = {
@@ -61,6 +64,7 @@ export const statistical = {
         isLoading: false,
         statisticalAmount: [],
         message: '',
+        status: 'pending',
     },
 };
 

@@ -27,18 +27,17 @@ function AdminOrder() {
     const navigate = useNavigate();
 
     useEffect(() => {
-        const fetchApi = async ({ id }) => {
-            const resultOrder = await orderServices.adminGetOrderById({ id });
+        (async (id) => {
+            const resultOrder = await orderServices.getOrderById(id);
+            const resultUser = await userServices.getUserById(
+                resultOrder.userId,
+            );
             const state = enums.orderState[resultOrder.state];
-            const resultUser = await userServices.getUserById({
-                id: resultOrder.userId,
-            });
 
             setOrder(resultOrder);
             setOrderState(state[resultOrder.paymentType]);
             setUser(resultUser);
-        };
-        fetchApi({ id });
+        })(id);
     }, [id]);
 
     const handleCancel = () => {
@@ -50,7 +49,8 @@ function AdminOrder() {
         }).then(async ({ isConfirmed }) => {
             if (isConfirmed) {
                 const expectMessage = 'Cancel order successfully';
-                const result = await orderServices.adminCancelOrderById({ id });
+                const result = await orderServices.cancelById(id);
+
                 if (result?.message === expectMessage) {
                     Swal.fire({
                         title: 'Hủy đơn hàng thành công',
@@ -87,9 +87,8 @@ function AdminOrder() {
         }).then(async ({ isConfirmed }) => {
             if (isConfirmed) {
                 const expectMessage = 'Delivery order successfully';
-                const result = await orderServices.adminDeliveryOrderById({
-                    id,
-                });
+                const result = await orderServices.deliveryById(id);
+
                 if (result?.message === expectMessage) {
                     Swal.fire({
                         title: 'Xác nhận đơn hàng thành công',
@@ -126,9 +125,8 @@ function AdminOrder() {
         }).then(async ({ isConfirmed }) => {
             if (isConfirmed) {
                 const expectMessage = 'Complete order successfully';
-                const result = await orderServices.adminCompleteOrderById({
-                    id,
-                });
+                const result = await orderServices.completeById(id);
+
                 if (result?.message === expectMessage) {
                     Swal.fire({
                         title: 'Đã xác nhận đơn hàng',

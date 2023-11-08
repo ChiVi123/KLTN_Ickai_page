@@ -7,17 +7,21 @@ const statisticalSlice = createSlice({
     name,
     initialState,
     reducers: {},
-    extraReducers: {
-        [getStatistical.pending]: (state) => {
+    extraReducers: (builder) => {
+        builder.addCase(getStatistical.pending, (state) => {
             state.isLoading = true;
-        },
-        [getStatistical.fulfilled]: (state, { payload }) => {
+            state.status = 'pending';
+        });
+        builder.addCase(getStatistical.fulfilled, (state, { payload }) => {
             state.isLoading = false;
+            state.status = 'fulfilled';
             state.statisticalAmount = payload;
-        },
-        [getStatistical.rejected]: (state, { payload }) => {
+        });
+        builder.addCase(getStatistical.rejected, (state, { payload }) => {
+            state.isLoading = false;
+            state.status = 'rejected';
             state.message = payload;
-        },
+        });
     },
 });
 

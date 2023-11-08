@@ -6,19 +6,14 @@ const baseURL = `${process.env.REACT_APP_API}/api/`;
 
 // const getToken = (request) => {
 const getToken = () => {
-    const item = window.localStorage.getItem(key);
+    const localStorage = window.localStorage.getItem(key);
 
-    // logger({
-    //     groupName: getToken.name,
-    //     values: [item, request],
-    // });
+    if (localStorage) {
+        const { user } = JSON.parse(localStorage);
+        const { item } = JSON.parse(user);
 
-    if (item) {
-        const { user } = JSON.parse(item);
-        const { accessToken } = JSON.parse(user);
-
-        if (accessToken) {
-            return accessToken;
+        if (item?.accessToken) {
+            return item?.accessToken;
         } else {
             return null;
         }

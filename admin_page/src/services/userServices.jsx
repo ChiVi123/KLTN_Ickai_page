@@ -1,48 +1,18 @@
 import { request } from '~/utils';
 
+const prefix = 'admin/manage/users';
 const userServices = {
-    getUser: async (id) => {
+    blockUserById: async (id) => {
         try {
-            const response = await request.get(`users/${id}`);
-            return response.data;
-        } catch (error) {
-            console.log(error);
-        }
-    },
-    updateUser: async (id, data) => {
-        try {
-            const response = await request.put(`users/${id}`, data);
+            const response = await request.requestDelete(`${prefix}/${id}`);
             return response;
         } catch (error) {
             console.log(error);
         }
     },
-    adminBlockUserById: async ({ id }) => {
+    unblockUserById: async (id) => {
         try {
-            const response = await request.requestDelete(
-                `admin/manage/users/${id}`,
-            );
-            return response;
-        } catch (error) {
-            console.log(error);
-        }
-    },
-    adminUnblockUserById: async ({ id }) => {
-        try {
-            const response = await request.put(
-                `admin/manage/users/unblockuser/${id}`,
-            );
-            return response;
-        } catch (error) {
-            console.log(error);
-        }
-    },
-    adminSetRoleUserById: async ({ id, data }) => {
-        try {
-            const response = await request.put(
-                `admin/manage/users/setrole/${id}`,
-                data,
-            );
+            const response = await request.put(`${prefix}/unblockuser/${id}`);
             return response;
         } catch (error) {
             console.log(error);
@@ -50,15 +20,13 @@ const userServices = {
     },
     getUsers: async (params = { page: 1, size: 5 }) => {
         try {
-            const response = await request.get('admin/manage/users', {
-                params,
-            });
+            const response = await request.get(prefix, { params });
             return response.data;
         } catch (error) {
             console.log(error);
         }
     },
-    getUserById: async ({ id }) => {
+    getUserById: async (id) => {
         try {
             const response = await request.get(`/users/${id}`);
             return response.data;

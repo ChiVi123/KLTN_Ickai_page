@@ -1,3 +1,3 @@
-import { typeState } from "../variables";
+import { typeState } from '../variables';
 
-export const getOrdersAdmin = (state = typeState) => state.orderHistory.admin;
+export const getAllOrder = (state = typeState) => state.orderHistory;
