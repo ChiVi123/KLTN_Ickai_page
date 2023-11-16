@@ -2,6 +2,7 @@ export const root = '/';
 export const login = 'sign-in';
 export const product = 'product/:id';
 export const search = 'search';
+export const searchByCategory = 'search/:categoryId';
 export const sendOTP = 'send-otp';
 export const signUp = 'sign-up';
 export const verify = 'check-otp';

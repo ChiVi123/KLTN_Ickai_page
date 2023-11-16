@@ -1,4 +1,5 @@
-export const productTotal = (quantity) => `Tất cả ${quantity} sản phẩm`;
+export const productTotal = (quantity) =>
+    `Có ${quantity} sản phẩm trong giỏ hàng`;
 export const cartTotal = (quantity) => `Đơn hàng (${quantity}) sản phẩm`;
 export const pageNoteFound = (pathName) =>
     `Xin lỗi, trang ${pathName} không tồn tại!`;
@@ -16,3 +17,4 @@ export const address = ({
     shipDistrict,
     shipWard,
 }) => `Địa chỉ: ${shipAddress}, ${shipProvince}, ${shipDistrict}, ${shipWard}`;
+export const hello = (username) => `Xin chào ${username}`;

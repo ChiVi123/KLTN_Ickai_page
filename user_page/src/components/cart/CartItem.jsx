@@ -9,7 +9,7 @@ import { Col, InputQuantity, Row, Typography } from '~/components';
 import { TrashIcon } from '~/icons';
 import { cartAsync } from '~/redux';
 import { cartServices } from '~/services';
-import { currencyVN, priceSaleVN } from '~/utils/funcs';
+import { currencyVN } from '~/utils/funcs';
 import { logger } from '~/utils/logger';
 
 import styles from '~cart/item.module.scss';
@@ -18,7 +18,6 @@ const cx = classNames.bind(styles);
 
 function CartItem({ product, isLoading = false }) {
     const isLogger = false;
-    const newPrice = priceSaleVN(product.price, product.sale);
     const [loading, setLoading] = useState(isLoading);
     const dispatch = useDispatch();
 
@@ -63,67 +62,72 @@ function CartItem({ product, isLoading = false }) {
     }
 
     return (
-        <Row classes={cx('wrap')}>
-            <Col baseCols={2}>
+        <Row classes={cx('align-start', 'wrap')}>
+            <Col baseCols={3} baseColsLg={2}>
                 <div className={cx('wrap-image')}>
-                    <img
-                        src={product.image[0].url}
-                        alt={product.name}
-                        width={170}
-                        height={68}
-                    />
+                    <img src={product.image[0].url} alt={product.name} />
                 </div>
             </Col>
 
             <Col>
-                <Typography variant='h5' clamp={1}>
-                    {product.name}
-                </Typography>
-                <Typography variant='text1' classes={cx('text', 'price-new')}>
-                    {currencyVN(newPrice)}
-                </Typography>
-                <Typography variant='text2' classes={cx('text', 'price-old')}>
-                    {!!product.sale && currencyVN(product.price)}
-                </Typography>
-            </Col>
+                <Row cols={1} gy={2}>
+                    <Col>
+                        <div className='flex align-center space-between'>
+                            <Typography variant='h5' clamp={2}>
+                                {product.name}
+                            </Typography>
+                            <button
+                                type='button'
+                                aria-label='trash'
+                                onClick={handleRemove}
+                                className={cx('icon-trash')}
+                            >
+                                <TrashIcon />
+                            </button>
+                        </div>
+                    </Col>
 
-            <Col baseCols={2}>
-                <div className={cx({ loading })}>
-                    {!isLoading && (
-                        <InputQuantity
-                            id={product.itemId}
-                            name={inputNames.quantity}
-                            initValue={product?.quantity || 1}
-                            onChange={handleChange}
-                        />
-                    )}
-                    {isLoading && (
-                        <InputQuantity
-                            id={product.itemId}
-                            name={inputNames.quantity}
-                            initValue={product?.quantity || 1}
-                        />
-                    )}
-                </div>
-            </Col>
-            <Col baseCols={2}>
-                <Typography
-                    variant='text1'
-                    center
-                    classes={cx('text', 'price-new')}
-                >
-                    {currencyVN(product.subPrice)}
-                </Typography>
-            </Col>
-            <Col baseCols={1}>
-                <button
-                    type='button'
-                    aria-label='trash'
-                    onClick={handleRemove}
-                    className={cx('icon-trash')}
-                >
-                    <TrashIcon />
-                </button>
+                    {/* Quantity And Price */}
+                    <Col>
+                        <div className='flex space-between'>
+                            <div className={cx({ loading })}>
+                                {!isLoading && (
+                                    <InputQuantity
+                                        id={product.itemId}
+                                        name={inputNames.quantity}
+                                        initValue={product?.quantity || 1}
+                                        onChange={handleChange}
+                                    />
+                                )}
+                                {isLoading && (
+                                    <InputQuantity
+                                        id={product.itemId}
+                                        name={inputNames.quantity}
+                                        initValue={product?.quantity || 1}
+                                    />
+                                )}
+                            </div>
+
+                            <div>
+                                <Typography
+                                    variant='text1'
+                                    classes={cx('text', 'price-new')}
+                                >
+                                    {currencyVN(product.subPrice)}
+                                </Typography>
+                                <Typography
+                                    variant='text2'
+                                    classes={cx('text', 'price-old')}
+                                >
+                                    {!!product.sale &&
+                                        currencyVN(
+                                            product.price * product.quantity,
+                                        )}
+                                </Typography>
+                            </div>
+                        </div>
+                    </Col>
+                </Row>
             </Col>
         </Row>
     );

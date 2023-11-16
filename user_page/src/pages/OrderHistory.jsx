@@ -22,7 +22,6 @@ function OrderHistory() {
 
     useEffect(() => {
         dispatch(ordersAsync.getAllOrder());
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     useEffect(() => {
@@ -33,43 +32,30 @@ function OrderHistory() {
 
     return (
         <div className='width-md'>
-            <Row cols={1} gy={3}>
-                <Col>
-                    <div className='section'>
-                        <Typography variant='h1'>
-                            {contextPage.titleOrdersPage}
-                        </Typography>
-                    </div>
-                </Col>
+            <div className='section' style={{ marginBottom: '16px' }}>
+                <Typography variant='h2'>
+                    {contextPage.titleOrdersPage}
+                </Typography>
+            </div>
+            <nav className='section' style={{ marginBottom: '16px' }}>
+                <Tabs tabs={lists.tabs} tab={tab} onClick={handleClickTab} />
+            </nav>
 
-                <Col>
-                    <nav className='section'>
-                        <Tabs
-                            tabs={lists.tabs}
-                            tab={tab}
-                            onClick={handleClickTab}
-                        />
-                    </nav>
-                </Col>
-
-                <Col>
-                    <div className='width-sm'>
-                        <Row cols={1}>
-                            {isLoading
-                                ? skeleton.map((_, index) => (
-                                      <Col key={index}>
-                                          <OrderItemSkeleton />
-                                      </Col>
-                                  ))
-                                : orders.map((order, index) => (
-                                      <Col key={index}>
-                                          <OrderItem order={order} />
-                                      </Col>
-                                  ))}
-                        </Row>
-                    </div>
-                </Col>
-            </Row>
+            <div className='width-sm'>
+                <Row cols={1} gy={1}>
+                    {isLoading
+                        ? skeleton.map((_, index) => (
+                              <Col key={index}>
+                                  <OrderItemSkeleton />
+                              </Col>
+                          ))
+                        : orders.map((order, index) => (
+                              <Col key={index}>
+                                  <OrderItem order={order} />
+                              </Col>
+                          ))}
+                </Row>
+            </div>
         </div>
     );
 }

@@ -4,10 +4,7 @@
 @use '../abstracts/typography-v' as typo;
 
 .footer {
-    height: var(--footer-height);
-
     &-top {
-        height: 84px;
         @include space-m.spacing-y(padding, var(--spacer-3));
         background-color: var(--bg-footer-top-color);
     }
@@ -20,7 +17,6 @@
 
 .text {
     color: #{color.$white};
-    line-height: var(--line-height-xs);
     font-size: #{typo.$font-size-sm};
 
     &--center {
@@ -32,6 +28,7 @@
         align-items: center;
         justify-content: center;
         height: 100%;
+        text-align: center;
     }
 
     & + * {

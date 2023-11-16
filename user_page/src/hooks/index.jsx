@@ -1,4 +1,5 @@
 import { googleLogout } from '@react-oauth/google';
+import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { directions } from '~/common';
@@ -15,7 +16,6 @@ export const useLogout = () => {
         navigate(directions.signIn);
     };
 };
-
 export const useLogoutNoDirect = () => {
     const dispatch = useDispatch();
 
@@ -24,4 +24,11 @@ export const useLogoutNoDirect = () => {
         dispatch(userActions.reset());
         dispatch(cartActions.reset());
     };
+};
+export const useModal = () => {
+    const [isOpenModal, setIsOpenModal] = useState(false);
+    const handleOpenModal = () => setIsOpenModal(true);
+    const handleCloseModal = () => setIsOpenModal(false);
+
+    return { isOpenModal, handleCloseModal, handleOpenModal };
 };

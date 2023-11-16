@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { getReviewByProductId } from '../async_thunks/reviewsAsync';
+import { getByProductId } from '../async_thunks/reviewsAsync';
 import { reviews } from '../variables';
 
 const { name, initialState } = reviews;
@@ -7,31 +7,30 @@ const reviewsSlice = createSlice({
     name,
     initialState,
     reducers: {
-        resetItem: (state) => {
+        reset: (state) => {
             state.item.isLoading = false;
             state.item.list = [];
             state.item.totalPage = 0;
-            state.item.totalQuantity = 0;
         },
     },
-    extraReducers: {
-        // getReviewByProductId
-        [getReviewByProductId.pending]: (state) => {
+    extraReducers: (builder) => {
+        builder.addCase(getByProductId.pending, (state) => {
             state.item.isLoading = true;
-        },
-        [getReviewByProductId.fulfilled]: (state, { payload }) => {
+            state.item.status = 'pending';
+        });
+        builder.addCase(getByProductId.fulfilled, (state, { payload }) => {
             state.item.isLoading = false;
             state.item.list = payload.list;
             state.item.totalPage = payload.totalPage;
-            state.item.totalQuantity = payload.totalQuantity;
-        },
-        [getReviewByProductId.rejected]: (state) => {
-            state.item.message = 'error';
+            state.item.status = 'fulfilled';
+        });
+        builder.addCase(getByProductId.rejected, (state, { payload }) => {
             state.item.isLoading = false;
             state.item.list = [];
             state.item.totalPage = 0;
-            state.item.totalQuantity = 0;
-        },
+            state.item.message = payload;
+            state.item.status = 'rejected';
+        });
     },
 });
 

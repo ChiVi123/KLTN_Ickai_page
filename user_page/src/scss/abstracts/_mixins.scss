@@ -1,0 +1,13 @@
+@use '../layouts/grid';
+
+@mixin breakpoint($infix) {
+    $dimension: map-get(grid.$grid-breakpoints, $infix);
+
+    @if ($dimension) {
+        @media (min-width: $dimension) {
+            @content;
+        }
+    } @else {
+        @error 'Invalid infix not have #{infix}.';
+    }
+}

@@ -34,13 +34,14 @@ import { orderServices } from '~/services';
 import { averageRating } from '~/utils/funcs';
 import { logger } from '~/utils/logger';
 
+import { useModal } from '~/hooks';
 import styles from '~/scss/pages/product.module.scss';
 
 const cx = classNames.bind(styles);
 
 function Product() {
-    const [isOpen, setIsOpen] = useState(false);
     const [isReview, setIsReview] = useState(false);
+    const { isOpenModal, handleCloseModal, handleOpenModal } = useModal();
 
     const userId = useSelector(userSelector.selectId);
     const watched = useSelector(watchedSelector.selectList);
@@ -56,11 +57,11 @@ function Product() {
 
     useEffect(() => {
         dispatch(productsAsync.getProductById(id));
-        dispatch(reviewsAsync.getReviewByProductId(id));
+        dispatch(reviewsAsync.getByProductId(id));
         window.scrollTo(0, 0);
 
         return () => {
-            dispatch(reviewsActions.resetItem());
+            dispatch(reviewsActions.reset());
             dispatch(productsActions.reset());
         };
     }, [dispatch, id]);
@@ -116,16 +117,8 @@ function Product() {
         return total;
     }, [review.list]);
 
-    const handleOpen = () => {
-        setIsOpen(true);
-    };
-
-    const closeModal = () => {
-        setIsOpen(false);
-    };
-
     if (isLogger) {
-        logger({ groupName: Product.name, values: [userId] });
+        logger({ groupName: Product.name, values: [review] });
     }
 
     return (
@@ -150,70 +143,77 @@ function Product() {
                 </Col>
 
                 {/* Review */}
-                <Col>
-                    <section className={cx('section')}>
-                        <Typography variant='h2'>
-                            {contextPage.review}
-                        </Typography>
-                        {/* Send Review */}
-                        {isReview && (
-                            <div className={cx('stat')}>
-                                <Typography variant='text2'>
-                                    {contextPage.messageReview}
-                                </Typography>
+                {review.status === 'fulfilled' && (
+                    <Col>
+                        <section className={cx('section')}>
+                            <Typography variant='h2'>
+                                {contextPage.review}
+                            </Typography>
+                            {/* Send Review */}
+                            {isReview && (
+                                <div className={cx('stat')}>
+                                    <Typography variant='text2'>
+                                        {contextPage.messageReview}
+                                    </Typography>
 
-                                <Button
-                                    color='primary'
-                                    size='sm'
-                                    onClick={handleOpen}
-                                >
-                                    {contextPage.sendReview}
-                                </Button>
+                                    <Button
+                                        color='primary'
+                                        size='sm'
+                                        onClick={handleOpenModal}
+                                    >
+                                        {contextPage.sendReview}
+                                    </Button>
 
-                                <ReactModal
-                                    isOpen={isOpen}
-                                    overlayClassName={'overlay'}
-                                    className={'modal'}
-                                    preventScroll={true}
-                                    ariaHideApp={false}
-                                    onRequestClose={closeModal}
-                                >
-                                    <FormReview
-                                        productId={id}
-                                        onClose={closeModal}
-                                    />
-                                </ReactModal>
-                            </div>
-                        )}
+                                    <ReactModal
+                                        isOpen={isOpenModal}
+                                        overlayClassName='overlay'
+                                        className='modal modal--small modal--center'
+                                        preventScroll={true}
+                                        ariaHideApp={false}
+                                        onRequestClose={handleCloseModal}
+                                    >
+                                        <FormReview
+                                            productId={id}
+                                            onClose={handleCloseModal}
+                                        />
+                                    </ReactModal>
+                                </div>
+                            )}
 
-                        {/* List Review */}
-                        {review.isLoading || <Reviews reviews={review.list} />}
+                            {/* List Review */}
+                            {review.isLoading || (
+                                <Reviews reviews={review.list} />
+                            )}
 
-                        {review.isLoading || (
-                            <Pagination
-                                total={review.totalPage}
-                                current={currentPage}
-                                center
-                            />
-                        )}
-                    </section>
-                </Col>
+                            {review.isLoading || (
+                                <Pagination
+                                    total={review.totalPage}
+                                    current={currentPage}
+                                    center
+                                />
+                            )}
+                        </section>
+                    </Col>
+                )}
 
                 {/* Watched */}
-                <Col>
-                    <section className='section'>
-                        <Typography variant='h2'>
+                <Col classes={cx('watched')}>
+                    <section
+                        className='section'
+                        style={{ marginBottom: 'var(--spacer-2)' }}
+                    >
+                        <Typography variant='h2' style={{ marginBottom: '0' }}>
                             {contextPage.watched}
                         </Typography>
-
-                        <Row cols={4} gx={3}>
-                            {watched.map((item) => (
-                                <Col key={item.id}>
-                                    <ProductWatched product={item} />
-                                </Col>
-                            ))}
-                        </Row>
                     </section>
+
+                    <Row cols={5} gx={2}>
+                        {watched.map((item) => (
+                            <Col key={item.id}>
+                                <ProductWatched product={item} />
+                            </Col>
+                        ))}
+                    </Row>
                 </Col>
             </Row>
         </div>

@@ -34,6 +34,7 @@
         "sweetalert",
         "tippyjs",
         "toastify",
-        "vnpay"
+        "vnpay",
+        "Xmark"
     ]
 }

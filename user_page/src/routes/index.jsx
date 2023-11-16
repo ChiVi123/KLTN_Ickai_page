@@ -57,6 +57,14 @@ export const router = createBrowserRouter([
                 ),
             },
             {
+                path: paths.searchByCategory,
+                element: (
+                    <DefaultLayout>
+                        <Search />
+                    </DefaultLayout>
+                ),
+            },
+            {
                 path: paths.login,
                 element: (
                     <DefaultLayout>

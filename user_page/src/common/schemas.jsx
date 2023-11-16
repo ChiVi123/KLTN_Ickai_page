@@ -26,11 +26,20 @@ const phoneRegExp = /(84|0[3|5|7|8|9])+([0-9]{8})\b/g;
 
 const phone = yup.string().matches(phoneRegExp, phoneFormat);
 const otp = yup.number().required(otpRequired).typeError(otpNotNumber);
+// const price = yup
+//     .number(priceProperly)
+//     .typeError(priceProperly)
+//     .positive(priceProperly)
+//     .required(priceProperly);
 const price = yup
     .number(priceProperly)
     .typeError(priceProperly)
-    .positive(priceProperly)
-    .required(priceProperly);
+    .required(priceProperly)
+    .test(
+        'greater than or equal to zero',
+        priceProperly,
+        (value) => value >= 0,
+    );
 
 export const login = yup.object({
     email: yup.string().trim().required(emailRequired).email(emailFormat),

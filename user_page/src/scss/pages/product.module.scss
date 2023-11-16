@@ -50,3 +50,13 @@
     align-items: center;
     column-gap: 14px;
 }
+
+.watched {
+    display: none;
+}
+
+@media (min-width: 992px) {
+    .watched {
+        display: block;
+    }
+}

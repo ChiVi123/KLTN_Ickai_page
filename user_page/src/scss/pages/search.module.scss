@@ -1,3 +1,5 @@
+@use '../abstracts/mixins';
+
 %df-dir-column {
     display: flex;
     flex-direction: column;
@@ -13,6 +15,7 @@
 
 .filter {
     @extend %df-dir-column;
+    height: 100%;
 
     &-item {
         @extend %df-dir-column;
@@ -42,5 +45,24 @@
 
 .sorts,
 .list {
+    margin-bottom: var(--spacer-1);
+}
+
+.filter-wrap {
+    padding: var(--spacer-2);
     margin-bottom: var(--spacer-3);
+    border-radius: var(--spacer-1);
+    box-shadow: var(--shadow-theme);
+}
+
+.btn-filter {
+    display: flex;
+    column-gap: var(--spacer-1);
+    color: var(--text-3-color);
+}
+
+@include mixins.breakpoint(lg) {
+    .filter-wrap {
+        display: none;
+    }
 }

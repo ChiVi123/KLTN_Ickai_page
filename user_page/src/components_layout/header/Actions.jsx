@@ -24,6 +24,7 @@ const buttons = [
         color: 'primary',
         size: 'sm',
         context: contextPage.signIn,
+        classes: 'btn-sign-in',
     },
     {
         to: directions.signUp,
@@ -32,6 +33,7 @@ const buttons = [
         color: 'primary',
         size: 'sm',
         context: contextPage.signUp,
+        classes: '',
     },
 ];
 
@@ -68,6 +70,7 @@ function Actions() {
                         variant={item.variant}
                         color={item.color}
                         size={item.size}
+                        classes={cx(item.classes)}
                     >
                         {item.context}
                     </Button>
@@ -79,6 +82,7 @@ function Actions() {
                     handleTheme={handleToggle}
                     dark={isDark}
                     tabIndex={-1}
+                    classes={cx('btn-toggle')}
                 />
             )}
 

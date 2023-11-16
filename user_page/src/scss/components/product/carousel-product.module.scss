@@ -4,7 +4,6 @@
         flex-direction: column;
         row-gap: var(--spacer-4);
         padding: 0 var(--spacer-2);
-        border-right: 1px solid var(--gray-color);
     }
 
     &-thumb {
@@ -42,5 +41,11 @@
     &:hover,
     &--active {
         border-color: var(--second-color);
+    }
+}
+
+@media (min-width: 768px) {
+    .wrap-image {
+        border-right: 1px solid var(--gray-color);
     }
 }

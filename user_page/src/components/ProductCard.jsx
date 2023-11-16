@@ -8,7 +8,7 @@ import { userSelector } from '~/redux';
 import { cartServices } from '~/services';
 import { currencyVN } from '~/utils/funcs';
 import { logger } from '~/utils/logger';
-import { Button, Skeleton, Typography } from '.';
+import { Button, Typography } from '.';
 
 function ProductCard({ product }) {
     const isLogger = false;
@@ -45,13 +45,13 @@ function ProductCard({ product }) {
     return (
         <article className='product-card'>
             <Link to={directions.product(product.id)} className='link'>
-                <figure className='image'>
+                <figure className='image-wrap'>
                     <img
                         src={product?.images[0]?.url}
                         alt={product.name}
                         loading='lazy'
+                        className='image image--scale'
                     />
-                    <Skeleton height='212px' />
                 </figure>
             </Link>
 

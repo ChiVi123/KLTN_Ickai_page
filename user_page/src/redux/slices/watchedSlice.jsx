@@ -15,7 +15,7 @@ const watchedSlice = createSlice({
                 state.list.unshift(payload);
             }
 
-            if (state.list.length > 4) state.list.pop();
+            if (state.list.length > state.limit) state.list.pop();
         },
         resetWatched: (state) => {
             state.list.length = 0;

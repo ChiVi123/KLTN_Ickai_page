@@ -3,7 +3,7 @@ import classNames from 'classnames/bind';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
-import { useSearchParams } from 'react-router-dom';
+import { useParams, useSearchParams } from 'react-router-dom';
 
 import {
     contextPage,
@@ -21,7 +21,7 @@ import {
     Row,
     Typography,
 } from '~/components';
-import { FilterField, Sorts } from '~/components/search';
+import { FilterField, ModalFilter, Sorts } from '~/components/search';
 import { ProductCardSkeleton } from '~/components/skeletons';
 import {
     categoriesSelector,
@@ -32,16 +32,21 @@ import {
 import { createObjectParams, toArray } from '~/utils/funcs';
 import { logger } from '~/utils/logger';
 
+import { faFilter } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import ReactModal from 'react-modal';
+import { useModal } from '~/hooks';
 import styles from '~/scss/pages/search.module.scss';
 
 const cx = classNames.bind(styles);
 
 function Search() {
     const isLogger = false;
-    const sizeSearch = 6;
+    const sizeSearch = 8;
     const skeleton = toArray(sizeSearch);
     const dispatch = useDispatch();
     const [searchParams, setSearchParams] = useSearchParams();
+    const { categoryId } = useParams();
     const categories = useSelector(categoriesSelector.selectItems);
     const search = useSelector(searchSelector.selectList);
     const {
@@ -51,13 +56,16 @@ function Search() {
     } = useForm({
         resolver: yupResolver(schemas.filterPrice),
         defaultValues: {
-            minPrice: parseInt(searchParams.get(keys.minPrice)) || '',
-            maxPrice: parseInt(searchParams.get(keys.maxPrice)) || '',
+            minPrice: parseInt(searchParams.get(keys.minPrice)) || 0,
+            maxPrice: parseInt(searchParams.get(keys.maxPrice)) || 0,
         },
     });
+
+    // Custom hooks
+    const { isOpenModal, handleCloseModal, handleOpenModal } = useModal();
+
     const query = searchParams.get(keys.query) || '';
     const sortBy = searchParams.get(keys.sortBy) || 'latest';
-    const category = searchParams.get(keys.cate);
     const minPrice = parseInt(searchParams.get(keys.minPrice)) || 0;
     const maxPrice = parseInt(searchParams.get(keys.maxPrice)) || 0;
     const currentPage = parseInt(searchParams.get(keys.page)) || 1;
@@ -70,15 +78,15 @@ function Search() {
             dispatch(searchAsync.getAllProductByQuery(params));
         }
 
-        if (category) {
-            params.categoryId = category;
+        if (categoryId) {
+            params.categoryId = categoryId;
             dispatch(searchAsync.getAllProductByCategory(params));
         }
 
         return () => {
             dispatch(searchActions.reset());
         };
-    }, [category, dispatch, maxPrice, minPrice, query, sortBy]);
+    }, [categoryId, dispatch, maxPrice, minPrice, query, sortBy]);
 
     const handleOnSubmit = (data) => {
         setSearchParams((prev) => ({
@@ -93,8 +101,8 @@ function Search() {
 
     return (
         <div className='container'>
-            <Row classes='inner'>
-                <Col baseCols={3}>
+            <Row gx={2} classes='inner'>
+                <Col baseCols={0} baseColsLg={3}>
                     <section className={cx('section', 'filter')}>
                         <div className={cx('filter-item')}>
                             <Typography variant='text1'>
@@ -159,42 +167,74 @@ function Search() {
                     </section>
                 </Col>
 
-                <Col baseCols={9}>
-                    <section className='section'>
-                        {/* Sort */}
-                        <Sorts classes={cx('sorts')} />
+                <Col baseCols={12} baseColsLg={9}>
+                    <Sorts classes={cx('sorts')} />
+                    <div className={cx('filter-wrap')}>
+                        <button
+                            type='button'
+                            className={cx('btn-filter')}
+                            onClick={handleOpenModal}
+                        >
+                            <FontAwesomeIcon icon={faFilter} />
+                            <Typography variant='text1'>
+                                {contextPage.filter}
+                            </Typography>
+                        </button>
+                    </div>
 
-                        {/* Skeleton */}
-                        {search.status === 'pending' && (
-                            <Row
-                                colsMd={2}
-                                colsLg={3}
-                                gy={3}
-                                classes={cx('list')}
-                            >
-                                {skeleton.map((_, index) => (
-                                    <Col key={index}>
-                                        <ProductCardSkeleton />
-                                    </Col>
-                                ))}
-                            </Row>
-                        )}
+                    <ReactModal
+                        isOpen={isOpenModal}
+                        overlayClassName='overlay'
+                        className='modal modal--right'
+                        ariaHideApp={false}
+                        onRequestClose={handleCloseModal}
+                    >
+                        <ModalFilter
+                            categories={categories}
+                            errors={errors}
+                            register={register}
+                            onSubmit={handleSubmit(handleOnSubmit)}
+                            onClose={handleCloseModal}
+                        />
+                    </ReactModal>
 
-                        {/* List */}
-                        <Row colsMd={2} colsLg={3} gy={3} classes={cx('list')}>
-                            {search.items.map((item) => (
-                                <Col key={item.id}>
-                                    <ProductCard product={item} />
+                    {/* Skeleton */}
+                    {search.status === 'pending' && (
+                        <Row
+                            cols={2}
+                            colsSm={3}
+                            colsMd={4}
+                            g={1}
+                            classes={cx('list')}
+                        >
+                            {skeleton.map((item) => (
+                                <Col key={item}>
+                                    <ProductCardSkeleton />
                                 </Col>
                             ))}
                         </Row>
+                    )}
 
-                        <Pagination
-                            total={search.totalPage}
-                            current={currentPage}
-                            center
-                        />
-                    </section>
+                    {/* List */}
+                    <Row
+                        cols={2}
+                        colsSm={3}
+                        colsMd={4}
+                        g={1}
+                        classes={cx('list')}
+                    >
+                        {search.items.map((item) => (
+                            <Col key={item.id}>
+                                <ProductCard product={item} />
+                            </Col>
+                        ))}
+                    </Row>
+
+                    <Pagination
+                        total={search.totalPage}
+                        current={currentPage}
+                        center
+                    />
                 </Col>
             </Row>
         </div>

@@ -52,13 +52,13 @@ export const reviews = {
             message: '',
             totalPage: 0,
             totalQuantity: 0,
+            status: 'pending',
         },
     },
 };
 export const search = {
     name: 'search',
     initialState: {
-        status: 'pending',
         ...createObjectList(),
     },
 };
@@ -77,7 +77,7 @@ export const user = {
 };
 export const watched = {
     name: 'watched',
-    initialState: { list: [] },
+    initialState: { list: [], limit: 5 },
 };
 
 export const typeState = {

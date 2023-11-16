@@ -2,7 +2,6 @@ import { Link } from 'react-router-dom';
 import { directions } from '~/common';
 import { currencyVN } from '~/utils/funcs';
 import { logger } from '~/utils/logger';
-import Skeleton from './Skeleton';
 import Typography from './Typography';
 
 function ProductWatched({ product }) {
@@ -17,9 +16,12 @@ function ProductWatched({ product }) {
     return (
         <article className='product-card'>
             <Link to={directions.product(product.id)} className='link'>
-                <figure className='image'>
-                    <img src={product?.images[0]?.url} alt={product.name} />
-                    <Skeleton ready={false} height='212px' />
+                <figure className='image-wrap'>
+                    <img
+                        src={product?.images[0]?.url}
+                        alt={product.name}
+                        className='image image--scale'
+                    />
                 </figure>
             </Link>
             <section className='body'>
@@ -35,7 +37,7 @@ function ProductWatched({ product }) {
                     >
                         {currencyVN(product.discount)}
                     </span>
-                    <span className='text-price'>
+                    <span className='old-price'>
                         {!!product.sale && currencyVN(product.price)}
                     </span>
                 </div>

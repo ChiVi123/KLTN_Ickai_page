@@ -1,11 +1,18 @@
 .tabs {
     display: flex;
     align-items: center;
-    justify-content: space-around;
+    flex-wrap: nowrap;
+    gap: 16px;
+    overflow-x: auto;
+
+    &::-webkit-scrollbar {
+        display: none;
+    }
 }
 
 .tab {
     position: relative;
+    min-width: max-content;
     padding: 2px;
     cursor: pointer;
 
@@ -39,37 +46,8 @@
 }
 
 // Responsive
-
-/* Mobile, Tablet */
-@media screen and (max-width: 1023px) {
-}
-
-/* Tablet */
-@media screen and (min-width: 740px) and (max-width: 1023px) {
+@media (min-width: 768px) {
     .tabs {
-        overflow-x: auto;
-        overflow-y: hidden;
-    }
-
-    .tabs::-webkit-scrollbar {
-        display: none;
-    }
-}
-
-/* Mobile */
-@media screen and (max-width: 739px) {
-    .tabs {
-        overflow-x: auto;
-        overflow-y: hidden;
-    }
-
-    .tabs::-webkit-scrollbar {
-        display: none;
-    }
-
-    .tab {
-        &__button {
-            font-size: 1.6rem;
-        }
+        justify-content: space-around;
     }
 }

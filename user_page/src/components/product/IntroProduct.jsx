@@ -40,7 +40,6 @@ function IntroProduct({
     images,
     stars,
     stock,
-    isLoading = false,
 }) {
     const isLogger = false;
     const dispatch = useDispatch();
@@ -90,7 +89,7 @@ function IntroProduct({
     return (
         <section className='section'>
             <Row>
-                <Col baseCols={5}>
+                <Col baseCols={12} baseColsMd={5}>
                     <CarouselProduct images={images} />
                 </Col>
                 <Col component='section'>
@@ -127,13 +126,22 @@ function IntroProduct({
                         marginTop='48px'
                     >
                         <div className={cx('wrap-price')}>
-                            <Typography variant='h2' component='span'>
+                            <Typography
+                                variant='h2'
+                                component='span'
+                                classes={cx('price-new')}
+                            >
                                 {currencyVN(discount)}
                             </Typography>
 
-                            <Typography variant='text1'>
-                                {currencyVN(price)}
-                            </Typography>
+                            {price !== discount && (
+                                <Typography
+                                    variant='text1'
+                                    classes={cx('price-old')}
+                                >
+                                    {currencyVN(price)}
+                                </Typography>
+                            )}
                         </div>
                     </Skeleton>
 
@@ -142,7 +150,7 @@ function IntroProduct({
                         onSubmit={handleSubmit(handleOnSubmit)}
                         className={cx('form')}
                     >
-                        <div className={cx('form-group')}>
+                        <div className={cx('group-quantity')}>
                             <Controller
                                 control={control}
                                 name={inputNames.quantity}
@@ -164,6 +172,7 @@ function IntroProduct({
                                 color='primary'
                                 size='lg'
                                 disabled={!stock}
+                                classes={cx('btn')}
                                 buy-now='true'
                             >
                                 {contextPage.buyNow}
@@ -174,8 +183,21 @@ function IntroProduct({
                                 color='primary'
                                 disabled={!stock}
                                 size='lg'
+                                classes={cx('btn')}
                             >
                                 {contextPage.addCart}
+                            </Button>
+
+                            {/* Button mobile */}
+                            <Button
+                                type={types.submit}
+                                color='primary'
+                                size='md'
+                                disabled={!stock}
+                                classes={cx('btn-mobile')}
+                                buy-now='true'
+                            >
+                                {contextPage.buyNow}
                             </Button>
                         </div>
                     </form>

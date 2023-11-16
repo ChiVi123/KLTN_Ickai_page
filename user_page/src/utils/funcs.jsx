@@ -88,5 +88,6 @@ export function createObjectList() {
         items: [],
         totalPage: 0,
         message: '',
+        status: 'pending',
     };
 }

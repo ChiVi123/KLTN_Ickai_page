@@ -5,19 +5,19 @@ import { NavLink } from 'react-router-dom';
 
 import { contextPage, directions } from '~/common';
 import { Col, ProductCard, Row, Typography } from '~/components';
-import { ProductCardSkeleton } from '~/components/skeletons';
 import { cartAsync, categoriesSelector, userSelector } from '~/redux';
 import { productServices } from '~/services';
 import { toArray } from '~/utils/funcs';
 import { logger } from '~/utils/logger';
 
+import { ProductCardSkeleton } from '~/components/skeletons';
 import styles from '~/scss/pages/home.module.scss';
 
 const cx = classNames.bind(styles);
 
 function Home() {
     const page = 0;
-    const size = 8;
+    const size = 12;
     const productsSkeleton = toArray(size);
     const isLogger = false;
 
@@ -50,8 +50,11 @@ function Home() {
     return (
         <div className='container'>
             <Row classes='inner'>
-                <Col baseCols={2}>
-                    <nav className={cx('section', 'main-nav')}>
+                <Col baseCols={0} baseColsLg={3} baseColsXl={2}>
+                    <nav
+                        className={cx('section', 'main-nav')}
+                        style={{ height: '100%' }}
+                    >
                         <Typography
                             variant='h2'
                             style={{ '--margin-bottom': 'var(--spacer-3)' }}
@@ -59,7 +62,7 @@ function Home() {
                             {contextPage.category}
                         </Typography>
                         {categories.map((item) => {
-                            const path = `${directions.search}?category=${item.id}`;
+                            const path = `${directions.search}/${item.id}`;
 
                             return (
                                 <Typography
@@ -75,65 +78,73 @@ function Home() {
                         })}
                     </nav>
                 </Col>
-                <Col baseCols={10}>
-                    <section className='section'>
-                        {/* Latest */}
+                <Col>
+                    <section
+                        className='section'
+                        style={{ marginBottom: 'var(--spacer-1)' }}
+                    >
                         <Typography
                             variant='h2'
-                            style={{ '--margin-bottom': 'var(--spacer-4)' }}
+                            style={{ '--margin-bottom': '0' }}
                         >
                             {contextPage.latest}
                         </Typography>
+                    </section>
 
-                        <Row cols={2} colsMd={3} colsLg={4} g={3}>
-                            {latest.map((product) => (
-                                <Col key={product.id}>
-                                    <ProductCard product={product} />
+                    {/* Latest */}
+                    <Row cols={2} colsMd={3} colsXl={4} g={1}>
+                        {latest.map((product) => (
+                            <Col key={product.id}>
+                                <ProductCard product={product} />
+                            </Col>
+                        ))}
+                    </Row>
+
+                    {/* Skeleton */}
+                    {!latest.length && (
+                        <Row cols={2} colsMd={3} colsXl={4} g={1}>
+                            {productsSkeleton.map((_, index) => (
+                                <Col key={index}>
+                                    <ProductCardSkeleton />
                                 </Col>
                             ))}
                         </Row>
+                    )}
 
-                        {/* Skeleton */}
-                        {!!latest.length || (
-                            <Row cols={2} colsMd={3} colsLg={4} g={3}>
-                                {productsSkeleton.map((_, index) => (
-                                    <Col key={index}>
-                                        <ProductCardSkeleton />
-                                    </Col>
-                                ))}
-                            </Row>
-                        )}
-
-                        {/* Popular */}
+                    <section
+                        className='section'
+                        style={{
+                            marginTop: 'var(--spacer-5)',
+                            marginBottom: 'var(--spacer-1)',
+                        }}
+                    >
                         <Typography
                             variant='h2'
-                            style={{
-                                marginTop: 'var(--spacer-4)',
-                                '--margin-bottom': 'var(--spacer-4)',
-                            }}
+                            style={{ '--margin-bottom': '0' }}
                         >
                             {contextPage.popular}
                         </Typography>
+                    </section>
 
-                        <Row cols={2} colsMd={3} colsLg={4} g={3}>
-                            {popular.map((product) => (
-                                <Col key={product.id}>
-                                    <ProductCard product={product} />
+                    {/* Popular */}
+                    <Row cols={2} colsMd={3} colsXl={4} g={1}>
+                        {popular.map((product) => (
+                            <Col key={product.id}>
+                                <ProductCard product={product} />
+                            </Col>
+                        ))}
+                    </Row>
+
+                    {/* Skeleton */}
+                    {!popular.length && (
+                        <Row cols={2} colsMd={3} colsXl={4} g={1}>
+                            {productsSkeleton.map((_, index) => (
+                                <Col key={index}>
+                                    <ProductCardSkeleton />
                                 </Col>
                             ))}
                         </Row>
-
-                        {/* Skeleton */}
-                        {!!popular.length || (
-                            <Row cols={2} colsMd={3} colsLg={4} g={3}>
-                                {productsSkeleton.map((_, index) => (
-                                    <Col key={index}>
-                                        <ProductCardSkeleton />
-                                    </Col>
-                                ))}
-                            </Row>
-                        )}
-                    </section>
+                    )}
                 </Col>
             </Row>
         </div>
