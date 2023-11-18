@@ -4,7 +4,15 @@ const reviewServices = {
     getByProductId: async (id) => {
         try {
             const response = await request.get(`comment/${id}`);
-            return response.data;
+
+            if (response.isSuccess) {
+                return response.data;
+            }
+
+            return {
+                list: [],
+                totalPage: 0,
+            };
         } catch (error) {
             throw error;
         }
