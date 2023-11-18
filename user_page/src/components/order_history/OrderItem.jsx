@@ -15,7 +15,7 @@ function OrderItem({ order }) {
         return (
             <article className='section'>
                 <Row gx={4}>
-                    <Col baseCols={9}>
+                    <Col baseCols={12} baseColsMd={9}>
                         <div className={cx('inner')}>
                             <Typography variant='h4' classes={cx('title')}>
                                 {contextParams.titleOrderId(order.id)}

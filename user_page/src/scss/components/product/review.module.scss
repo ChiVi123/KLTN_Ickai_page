@@ -27,8 +27,9 @@
 
     &-info {
         display: flex;
+        flex-wrap: wrap;
         align-items: center;
-        column-gap: var(--spacer-2);
+        gap: var(--spacer-2);
         margin-top: var(--spacer-2);
     }
 }

@@ -10,6 +10,7 @@ function ButtonToggle({
     component = 'span',
     handleTheme = () => {},
     dark = false,
+    classes,
     ...passProps
 }) {
     const Component = component;
@@ -19,6 +20,7 @@ function ButtonToggle({
         <Component
             className={cx('btn', {
                 'btn--checked': dark,
+                [classes]: classes,
             })}
             onClick={handleTheme}
             {...props}

@@ -70,7 +70,7 @@ function FormReview({
             }
         }
 
-        dispatch(reviewsAsync.getReviewByProductId(productId));
+        dispatch(reviewsAsync.getByProductId(productId));
         onClose();
     };
 
@@ -95,7 +95,7 @@ function FormReview({
                             <StarRating
                                 initialValue={review.rate}
                                 transition
-                                size='xl'
+                                size='lg'
                                 onClick={onChange}
                             />
                         )}

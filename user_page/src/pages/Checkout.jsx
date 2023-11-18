@@ -352,7 +352,11 @@ function Checkout() {
                             </div>
 
                             {/* Bill */}
-                            <Row cols={2} classes={cx('wrap-section')}>
+                            <Row
+                                cols={1}
+                                colsSm={2}
+                                classes={cx('wrap-section')}
+                            >
                                 <Col>
                                     <div className={cx('wrap-text')}>
                                         <span className={cx('text')}>
@@ -396,7 +400,12 @@ function Checkout() {
                             </div>
 
                             {/* Button */}
-                            <Row cols={2} classes={cx('wrap-section')}>
+                            <Row
+                                cols={1}
+                                colsSm={2}
+                                gy={4}
+                                classes={cx('wrap-section')}
+                            >
                                 <Col>
                                     <TextLink
                                         to={directions.cart}
@@ -410,6 +419,7 @@ function Checkout() {
                                 <Col>
                                     <Button
                                         color='primary'
+                                        full
                                         onClick={handleSubmit(handleOnSubmit)}
                                     >
                                         {contextPage.makeOrder}

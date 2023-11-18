@@ -1,8 +1,8 @@
 import classNames from 'classnames/bind';
 import { useEffect, useRef, useState } from 'react';
-import { NavLink, useSearchParams } from 'react-router-dom';
+import { NavLink, useParams } from 'react-router-dom';
 
-import { directions, keys } from '~/common';
+import { directions } from '~/common';
 import { Typography } from '~/components';
 import { ChevronDown } from '~/icons';
 import { logger } from '~/utils/logger';
@@ -17,7 +17,7 @@ function FilterField({ heading, data = [] }) {
     const elementRef = useRef();
     const [height, setHeight] = useState(heightField.current);
     const [isOpen, setIsOpen] = useState(true);
-    const [searchParams] = useSearchParams();
+    const { categoryId } = useParams();
 
     useEffect(() => {
         const { scrollHeight } = elementRef.current;
@@ -49,16 +49,14 @@ function FilterField({ heading, data = [] }) {
                 <ChevronDown classes={cx('icon', { 'icon--open': isOpen })} />
             </button>
             {data.map((item) => {
-                const cateId = searchParams.get(keys.cate);
-
                 return (
                     <Typography
                         key={item.id}
                         variant='text1'
-                        to={`${directions.search}?category=${item.id}`}
+                        to={`${directions.search}/${item.id}`}
                         component={NavLink}
                         classes={cx('link', {
-                            'link--active': cateId === item.id,
+                            'link--active': categoryId === item.id,
                         })}
                     >
                         {item.name}

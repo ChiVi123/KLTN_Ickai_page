@@ -3,8 +3,8 @@ import Skeleton from '../Skeleton';
 function ProductCard() {
     return (
         <div className='product-card'>
-            <div className='image'>
-                <Skeleton animation='wave' height='218px' />
+            <div className='image-wrap'>
+                <Skeleton animation='wave' height='' classes='image' />
             </div>
 
             <section className='body'>

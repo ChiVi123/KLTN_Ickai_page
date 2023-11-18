@@ -2,7 +2,7 @@ import classNames from 'classnames/bind';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { contextPage, directions } from '~/common';
+import { contextPage, contextParams, directions } from '~/common';
 import { Button, Col, Row, TextLink, Typography } from '~/components';
 import { CartList } from '~/components/cart';
 import { cartAsync, cartSelector } from '~/redux';
@@ -18,6 +18,7 @@ function Cart() {
     const isLogger = false;
     const dispatch = useDispatch();
     const totalPrice = useSelector(cartSelector.selectTotalPrice);
+    const totalProduct = useSelector(cartSelector.selectTotalProduct);
 
     useEffect(() => {
         dispatch(cartAsync.getByToken());
@@ -29,37 +30,43 @@ function Cart() {
 
     return (
         <div className='container'>
-            <div className='section'>
+            <Typography variant='h4' style={{ marginBottom: '0' }}>
+                {!!totalProduct && contextParams.productTotal(totalProduct)}
+            </Typography>
+
+            {/* Cart List */}
+            <div
+                style={{
+                    paddingLeft: '12px',
+                    paddingRight: '12px',
+                    marginTop: '16px',
+                }}
+            >
+                <Row cols={1} gy={1}>
+                    <Col>{!!totalPrice && <CartList />}</Col>
+                </Row>
+            </div>
+
+            <div className='section' style={{ marginTop: '16px' }}>
                 <Row cols={1} gy={3}>
-                    {/* Cart */}
-                    <Col>
-                        <Typography variant='h2' component='h3'>
-                            {contextPage.cart}
-                        </Typography>
-
-                        {!!totalPrice && <CartList />}
-                    </Col>
-
                     {/* Sub Total */}
                     {!!totalPrice && (
                         <Col>
-                            <Row classes={cx('line-bottom')}>
-                                <Col offset={8}>
-                                    <Typography variant='text1' component='h3'>
-                                        {contextPage.subTotal}
-                                    </Typography>
-                                </Col>
-                                <Col>
-                                    <Typography
-                                        variant='text1'
-                                        component='h3'
-                                        center
-                                    >
-                                        {currencyVN(totalPrice)}
-                                    </Typography>
-                                </Col>
-                                <Col></Col>
-                            </Row>
+                            <div
+                                className={cx(
+                                    'flex',
+                                    'flex-end',
+                                    'line-bottom',
+                                    'gap-1',
+                                )}
+                            >
+                                <Typography variant='text1'>
+                                    {contextPage.subTotal}
+                                </Typography>
+                                <Typography variant='text1'>
+                                    {currencyVN(totalPrice)}
+                                </Typography>
+                            </div>
                         </Col>
                     )}
 
@@ -74,31 +81,29 @@ function Cart() {
                     {/* Actions */}
                     <Col>
                         {!!totalPrice && (
-                            <Row>
-                                <Col offset={8}>
-                                    <Button
-                                        to={directions.checkout}
-                                        color='primary'
-                                        size='sm'
-                                    >
-                                        {contextPage.makePay}
-                                    </Button>
-                                </Col>
-                                <Col>
-                                    <Button
-                                        to={directions.home}
-                                        variant='outlined'
-                                        color='primary'
-                                        size='sm'
-                                    >
-                                        {contextPage.backHome}
-                                    </Button>
-                                </Col>
-                            </Row>
+                            <div className='flex align-center flex-end gap-1'>
+                                <Button
+                                    to={directions.checkout}
+                                    color='primary'
+                                    size='sm'
+                                >
+                                    {contextPage.makePay}
+                                </Button>
+                                <Button
+                                    to={directions.home}
+                                    variant='outlined'
+                                    color='primary'
+                                    size='sm'
+                                >
+                                    {contextPage.backHome}
+                                </Button>
+                            </div>
                         )}
 
                         {!totalPrice && (
-                            <TextLink center>{contextPage.backHome}</TextLink>
+                            <TextLink to={directions.home} center>
+                                {contextPage.backHome}
+                            </TextLink>
                         )}
                     </Col>
                 </Row>

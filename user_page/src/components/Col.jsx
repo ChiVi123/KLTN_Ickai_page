@@ -9,21 +9,33 @@ function Col({
     baseColsMd,
     baseColsLg,
     baseColsXl,
+    baseColsXxl,
     offset,
+    offsetSm,
+    offsetMd,
+    offsetLg,
+    offsetXl,
+    offsetXxl,
     classes,
     component,
 }) {
-    const infix = baseCols ? `-${baseCols}` : '';
+    const infix = baseCols || baseCols === 0 ? `-${baseCols}` : '';
     const Component = component || 'div';
 
     return (
         <Component
             className={cx(`col${infix}`, {
-                [`col-sm-${baseColsSm}`]: baseColsSm,
-                [`col-md-${baseColsMd}`]: baseColsMd,
-                [`col-lg-${baseColsLg}`]: baseColsLg,
-                [`col-xl-${baseColsXl}`]: baseColsXl,
+                [`col-sm-${baseColsSm}`]: baseColsSm || baseColsSm === 0,
+                [`col-md-${baseColsMd}`]: baseColsMd || baseColsMd === 0,
+                [`col-lg-${baseColsLg}`]: baseColsLg || baseColsLg === 0,
+                [`col-xl-${baseColsXl}`]: baseColsXl || baseColsXl === 0,
+                [`col-xxl-${baseColsXxl}`]: baseColsXxl || baseColsXxl === 0,
                 [`offset-${offset}`]: offset || offset === 0,
+                [`offset-sm-${offsetSm}`]: offsetSm || offsetSm === 0,
+                [`offset-md-${offsetMd}`]: offsetMd || offsetMd === 0,
+                [`offset-lg-${offsetLg}`]: offsetLg || offsetLg === 0,
+                [`offset-xl-${offsetXl}`]: offsetXl || offsetXl === 0,
+                [`offset-xxl-${offsetXxl}`]: offsetXxl || offsetXxl === 0,
                 [classes]: classes,
             })}
         >

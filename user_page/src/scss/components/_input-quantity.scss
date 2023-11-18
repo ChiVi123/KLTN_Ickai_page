@@ -1,7 +1,6 @@
 .quantity {
-    --width: 64px;
-    --size: 32px;
-
+    --width: 32px;
+    --size: 24px;
     display: flex;
 
     &__btn {
@@ -48,5 +47,12 @@
             -webkit-appearance: none;
             margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
         }
+    }
+}
+
+@media (min-width: 768px) {
+    .quantity {
+        --width: 42px;
+        --size: 26px;
     }
 }

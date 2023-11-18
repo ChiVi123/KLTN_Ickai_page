@@ -1,7 +1,7 @@
 import { request } from '~/utils';
 
 const reviewServices = {
-    getReviewByProductId: async (id) => {
+    getByProductId: async (id) => {
         try {
             const response = await request.get(`comment/${id}`);
             return response.data;

@@ -11,22 +11,22 @@ const cx = classNames.bind(styles);
 
 function Footer() {
     return (
-        <footer className={cx('footer')}>
+        <footer>
             <div className={cx('footer-top')}>
                 <div className='container'>
-                    <div className='row'>
-                        <div className='col-2'>
+                    <div className='row row-cols-1 gy-2'>
+                        <div className='col col-sm-2'>
                             <p className={cx('text', 'text--middle')}>
                                 KLTN Nhóm 2
                             </p>
                         </div>
-                        <div className='col-8'>
+                        <div className='col col-sm-8'>
                             <p className={cx('text', 'text--middle')}>
                                 Địa chỉ: 01 Võ Văn Ngân, Linh Chiểu, Thủ Đức,
                                 Thành phố Hồ Chí Minh
                             </p>
                         </div>
-                        <div className='col-2'>
+                        <div className='col col-sm-2'>
                             <p className={cx('text')}>Liên hệ</p>
                             <a
                                 href='https://www.facebook.com/chivi1801'

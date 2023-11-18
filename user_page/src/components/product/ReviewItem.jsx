@@ -1,20 +1,21 @@
 import classNames from 'classnames/bind';
 import parser from 'html-react-parser';
-import { useState } from 'react';
 import ReactModal from 'react-modal';
 import { useDispatch, useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
 import Swal from 'sweetalert2';
 
-import { useParams } from 'react-router-dom';
 import { avatarDefault } from '~/assets/images';
 import { contextPage } from '~/common';
 import { StarRating, Typography } from '~/components';
 import { reviewsAsync, userSelector } from '~/redux';
 import { reviewServices } from '~/services';
 import { logger } from '~/utils/logger';
+
 import styles from '~product/review.module.scss';
+
+import { useModal } from '~/hooks';
 import FormReview from './FormReview';
-import Reviews from './Reviews';
 
 const cx = classNames.bind(styles);
 
@@ -24,16 +25,8 @@ function ReviewItem({ review }) {
 
     const dispatch = useDispatch();
     const { id } = useParams();
-    const [isOpen, setIsOpen] = useState(false);
     const userId = useSelector(userSelector.selectId);
-
-    const handleOpen = () => {
-        setIsOpen(true);
-    };
-
-    const closeModal = () => {
-        setIsOpen(false);
-    };
+    const { isOpenModal, handleCloseModal, handleOpenModal } = useModal();
 
     const handleDelete = async () => {
         Swal.fire({
@@ -48,9 +41,7 @@ function ReviewItem({ review }) {
                 });
 
                 if (result.isSuccess) {
-                    dispatch(
-                        reviewsAsync.getReviewByProductId(review.productid),
-                    );
+                    dispatch(reviewsAsync.getByProductId(review.productid));
                 }
             }
         });
@@ -92,9 +83,9 @@ function ReviewItem({ review }) {
                             <>
                                 <div className={cx('dot')}></div>
                                 <Typography
-                                    variant={'text2'}
+                                    variant='text2'
                                     classes={cx('text-line')}
-                                    onClick={handleOpen}
+                                    onClick={handleOpenModal}
                                 >
                                     {contextPage.edit}
                                 </Typography>
@@ -102,18 +93,18 @@ function ReviewItem({ review }) {
                         )}
 
                         <ReactModal
-                            isOpen={isOpen}
-                            overlayClassName={'overlay'}
-                            className={'modal'}
+                            isOpen={isOpenModal}
+                            overlayClassName='overlay'
+                            className='modal modal--small modal--center'
                             preventScroll={true}
                             ariaHideApp={false}
-                            onRequestClose={closeModal}
+                            onRequestClose={handleCloseModal}
                         >
                             <FormReview
                                 productId={id}
                                 review={review}
                                 edit
-                                onClose={closeModal}
+                                onClose={handleCloseModal}
                             />
                         </ReactModal>
 
@@ -121,7 +112,7 @@ function ReviewItem({ review }) {
                             <>
                                 <div className={cx('dot')}></div>
                                 <Typography
-                                    variant={'text2'}
+                                    variant='text2'
                                     classes={cx('text-line')}
                                     onClick={handleDelete}
                                 >
@@ -131,10 +122,6 @@ function ReviewItem({ review }) {
                         )}
                     </div>
                 </div>
-
-                {!!review?.child?.length && (
-                    <Reviews reviews={review.child} isChild />
-                )}
             </div>
         </div>
     );

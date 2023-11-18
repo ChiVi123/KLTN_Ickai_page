@@ -20,11 +20,11 @@ function Sorts({ classes }) {
 
     return (
         <div
-            className={cx('sorts', {
+            className={cx('list', {
                 [classes]: classes,
             })}
         >
-            <Typography variant='text1' classes={cx('sorts-text')}>
+            <Typography variant='text1' classes={cx('list-text')}>
                 {contextPage.sort}
             </Typography>
             {lists.sorts.map((sort) => (

@@ -98,9 +98,14 @@ $gutters: (
 }
 
 @mixin make-columns($infix) {
+    .col#{$infix}-0 {
+        display: none;
+    }
+
     @for $i from 1 through $grid-columns {
         .col#{$infix}-#{$i} {
             flex: 0 0 auto;
+            display: block;
             @include width-column('width', $i);
         }
     }
