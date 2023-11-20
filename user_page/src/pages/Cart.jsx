@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { contextPage, contextParams, directions } from '~/common';
-import { Button, Col, Row, TextLink, Typography } from '~/components';
+import { Button, TextLink, Typography } from '~/components';
 import { CartList } from '~/components/cart';
 import { cartAsync, cartSelector } from '~/redux';
 import { currencyVN } from '~/utils/funcs';
@@ -29,84 +29,68 @@ function Cart() {
     }
 
     return (
-        <div className='container'>
+        <div className='width-md'>
             <Typography variant='h4' style={{ marginBottom: '0' }}>
                 {!!totalProduct && contextParams.productTotal(totalProduct)}
             </Typography>
 
             {/* Cart List */}
-            <div
-                style={{
-                    paddingLeft: '12px',
-                    paddingRight: '12px',
-                    marginTop: '16px',
-                }}
-            >
-                <Row cols={1} gy={1}>
-                    <Col>{!!totalPrice && <CartList />}</Col>
-                </Row>
-            </div>
+            {!!totalPrice && <CartList />}
 
-            <div className='section' style={{ marginTop: '16px' }}>
-                <Row cols={1} gy={3}>
-                    {/* Sub Total */}
+            <div className={`section ${cx('section-bottom')}`}>
+                {/* Sub Total */}
+                {!!totalPrice && (
+                    <div
+                        className={cx(
+                            'flex',
+                            'flex-end',
+                            'line-bottom',
+                            'gap-1',
+                        )}
+                    >
+                        <Typography variant='text1'>
+                            {contextPage.subTotal}
+                        </Typography>
+                        <Typography variant='text1'>
+                            {currencyVN(totalPrice)}
+                        </Typography>
+                    </div>
+                )}
+
+                {!totalPrice && (
+                    <div className='df-center'>
+                        <img src={emptyCart} alt='empty cart' />
+                    </div>
+                )}
+
+                {/* Actions */}
+                <div style={{ marginTop: '8px' }}>
                     {!!totalPrice && (
-                        <Col>
-                            <div
-                                className={cx(
-                                    'flex',
-                                    'flex-end',
-                                    'line-bottom',
-                                    'gap-1',
-                                )}
+                        <div className='flex align-center flex-end gap-1'>
+                            <Button
+                                to={directions.checkout}
+                                color='primary'
+                                size='sm'
                             >
-                                <Typography variant='text1'>
-                                    {contextPage.subTotal}
-                                </Typography>
-                                <Typography variant='text1'>
-                                    {currencyVN(totalPrice)}
-                                </Typography>
-                            </div>
-                        </Col>
+                                {contextPage.makePay}
+                            </Button>
+                            <Button
+                                to={directions.home}
+                                variant='outlined'
+                                color='primary'
+                                size='sm'
+                            >
+                                {contextPage.backHome}
+                            </Button>
+                        </div>
                     )}
 
                     {!totalPrice && (
-                        <Col>
-                            <div className='df-center'>
-                                <img src={emptyCart} alt='empty cart' />
-                            </div>
-                        </Col>
+                        <TextLink to={directions.home} center>
+                            {contextPage.backHome}
+                        </TextLink>
                     )}
-
-                    {/* Actions */}
-                    <Col>
-                        {!!totalPrice && (
-                            <div className='flex align-center flex-end gap-1'>
-                                <Button
-                                    to={directions.checkout}
-                                    color='primary'
-                                    size='sm'
-                                >
-                                    {contextPage.makePay}
-                                </Button>
-                                <Button
-                                    to={directions.home}
-                                    variant='outlined'
-                                    color='primary'
-                                    size='sm'
-                                >
-                                    {contextPage.backHome}
-                                </Button>
-                            </div>
-                        )}
-
-                        {!totalPrice && (
-                            <TextLink to={directions.home} center>
-                                {contextPage.backHome}
-                            </TextLink>
-                        )}
-                    </Col>
-                </Row>
+                </div>
             </div>
         </div>
     );

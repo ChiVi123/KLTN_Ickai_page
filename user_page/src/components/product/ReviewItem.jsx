@@ -8,13 +8,13 @@ import Swal from 'sweetalert2';
 import { avatarDefault } from '~/assets/images';
 import { contextPage } from '~/common';
 import { StarRating, Typography } from '~/components';
+import { useModal } from '~/hooks';
 import { reviewsAsync, userSelector } from '~/redux';
 import { reviewServices } from '~/services';
 import { logger } from '~/utils/logger';
 
 import styles from '~product/review.module.scss';
 
-import { useModal } from '~/hooks';
 import FormReview from './FormReview';
 
 const cx = classNames.bind(styles);
@@ -36,9 +36,7 @@ function ReviewItem({ review }) {
             cancelButtonText: contextPage.cancel,
         }).then(async (result) => {
             if (result.isConfirmed) {
-                const result = await reviewServices.deleteReviewByUser({
-                    id: review.id,
-                });
+                const result = await reviewServices.deleteByUser(review.id);
 
                 if (result.isSuccess) {
                     dispatch(reviewsAsync.getByProductId(review.productid));

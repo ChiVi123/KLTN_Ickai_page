@@ -11,6 +11,10 @@
         @extend %df;
         column-gap: var(--spacer-1);
         color: var(--third-color);
+
+        svg {
+            margin-bottom: 2px;
+        }
     }
 }
 

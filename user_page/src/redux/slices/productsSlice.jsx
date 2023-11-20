@@ -11,12 +11,11 @@ const productsSlice = createSlice({
             state.item = initialState.item;
         },
     },
-    extraReducers: {
-        // getProductById
-        [getProductById.pending]: (state) => {
+    extraReducers: (builder) => {
+        builder.addCase(getProductById.pending, (state) => {
             state.item.isLoading = true;
-        },
-        [getProductById.fulfilled]: (state, { payload }) => {
+        });
+        builder.addCase(getProductById.fulfilled, (state, { payload }) => {
             state.item.isLoading = false;
             state.item.id = payload.id;
             state.item.name = payload.name;
@@ -26,8 +25,8 @@ const productsSlice = createSlice({
             state.item.discount = payload.discount;
             state.item.quantity = payload.quantity;
             state.item.description = payload.description;
-        },
-        [getProductById.rejected]: (state, { payload }) => {
+        });
+        builder.addCase(getProductById.rejected, (state) => {
             state.item.message = 'error';
             state.item.isLoading = false;
 
@@ -38,7 +37,7 @@ const productsSlice = createSlice({
             state.item.images = initialState.item.images;
             state.item.quantity = initialState.item.quantity;
             state.item.description = initialState.item.description;
-        },
+        });
     },
 });
 

@@ -7,7 +7,6 @@ const paymentServices = {
                 `checkout/${type}/${cartId}`,
                 data,
             );
-            console.log(response);
             return response;
         } catch (error) {
             console.log(error);

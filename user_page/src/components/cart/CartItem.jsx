@@ -12,7 +12,7 @@ import { cartServices } from '~/services';
 import { currencyVN } from '~/utils/funcs';
 import { logger } from '~/utils/logger';
 
-import styles from '~cart/item.module.scss';
+import styles from '~cart/cart-list.module.scss';
 
 const cx = classNames.bind(styles);
 
@@ -62,9 +62,9 @@ function CartItem({ product, isLoading = false }) {
     }
 
     return (
-        <Row classes={cx('align-start', 'wrap')}>
+        <Row gx={2} classes={cx('align-start', 'item')}>
             <Col baseCols={3} baseColsLg={2}>
-                <div className={cx('wrap-image')}>
+                <div className={cx('image')}>
                     <img src={product.image[0].url} alt={product.name} />
                 </div>
             </Col>

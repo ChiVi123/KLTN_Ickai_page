@@ -8,3 +8,7 @@ export const order = 'order';
 export const cates = 'cates';
 export const minPrice = 'minPrice';
 export const maxPrice = 'maxPrice';
+
+export const pending = 'pending';
+export const fulfilled = 'fulfilled';
+export const rejected = 'rejected';

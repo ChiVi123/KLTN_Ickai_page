@@ -1,3 +1,4 @@
+@use '../abstracts/mixins';
 @use '../abstracts/spacing-m' as space-m;
 @use '../abstracts/typography-v' as typo;
 
@@ -22,14 +23,6 @@
         &:hover h3 {
             color: var(--primary-color);
         }
-    }
-
-    .btn-link {
-        min-width: 120px;
-        margin-right: auto;
-        margin-left: auto;
-        transition: opacity 1000ms;
-        opacity: 0;
     }
 
     .image-wrap {
@@ -70,9 +63,8 @@
 
     .price {
         display: flex;
-        align-items: center;
-        flex-wrap: wrap;
-        column-gap: var(--spacer-3);
+        flex-direction: column;
+        align-items: flex-start;
         row-gap: var(--spacer-1);
         margin-bottom: var(--spacer-2);
     }
@@ -106,9 +98,24 @@
     }
 
     .old-price {
+        height: 12px;
+        padding-left: var(--spacer-2);
         color: var(--text-3-color);
         font-size: #{typo.$font-size-xs};
         text-decoration: line-through;
+    }
+
+    .btn-link {
+        display: none;
+        min-width: 120px;
+        margin-right: auto;
+        margin-left: auto;
+        transition: opacity 1000ms;
+        opacity: 0;
+
+        @include mixins.breakpoint(xl) {
+            display: block;
+        }
     }
 
     &:hover {

@@ -16,21 +16,21 @@ const cartSlice = createSlice({
             state.totalProduct += 1;
         },
     },
-    extraReducers: {
-        [getByToken.pending]: (state) => {
+    extraReducers: (builder) => {
+        builder.addCase(getByToken.pending, (state) => {
             state.isLoading = true;
-        },
-        [getByToken.fulfilled]: (state, { payload: { data } }) => {
+        });
+        builder.addCase(getByToken.fulfilled, (state, { payload }) => {
             state.isLoading = false;
-            state.items = data.items || [];
-            state.totalProduct = data.totalProduct;
-            state.totalPrice = data.totalPrice;
-        },
-        [getByToken.rejected](state) {
+            state.items = payload.items || [];
+            state.totalProduct = payload.totalProduct;
+            state.totalPrice = payload.totalPrice;
+        });
+        builder.addCase(getByToken.rejected, (state) => {
             state.items = [];
             state.totalProduct = 0;
             state.totalPrice = 0;
-        },
+        });
     },
 });
 

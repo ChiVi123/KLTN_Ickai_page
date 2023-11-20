@@ -15,21 +15,21 @@ const cx = classNames.bind(styles);
 function Order() {
     const [order, setOrder] = useState();
     const [isCancel, setIsCancel] = useState(false);
-    const { id } = useParams();
+    const { orderId } = useParams();
     const navigate = useNavigate();
 
+    const isCancelDisplay = ({ state = '', paymentType = '' }) => {
+        return state === 'pending' && paymentType === 'COD';
+    };
+
     useEffect(() => {
-        const fetchApi = async (id) => {
-            const result = await orderServices.userGetOrderById(id);
+        (async (orderId) => {
+            const result = await orderServices.getOrderById(orderId);
 
             setOrder(result);
-            setIsCancel(
-                result.state === 'pending' && result.paymentType === 'COD',
-            );
-        };
-
-        fetchApi(id);
-    }, [id]);
+            setIsCancel(isCancelDisplay(result));
+        })(orderId);
+    }, [orderId]);
 
     const handleCancel = () => {
         Swal.fire({
@@ -41,9 +41,7 @@ function Order() {
             const expectMessage = 'Cancel order successfully';
             if (isConfirmed) {
                 try {
-                    const result = await orderServices.userCancelOrderById({
-                        id,
-                    });
+                    const result = await orderServices.cancelById(orderId);
                     if (result?.message === expectMessage) {
                         Swal.fire({
                             title: 'Hủy đơn hàng thành công',

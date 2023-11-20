@@ -1,3 +1,9 @@
+.wrap {
+    padding-right: 12px;
+    padding-left: 12px;
+    margin-top: 16px;
+}
+
 .icon-trash {
     margin-left: var(--spacer-1);
     color: var(--text-1-color);
@@ -7,28 +13,35 @@
     }
 }
 
-.wrap {
-    --grid-gutter-y: 0;
+.item {
     padding-top: var(--spacer-1);
     padding-bottom: var(--spacer-1);
     background-color: var(--bg-color);
     box-shadow: var(--shadow-theme);
 
-    &-image {
-        position: relative;
-        padding-top: 100%;
-        background-color: var(--bg-gray-color);
-        border-radius: var(--spacer-1);
-        overflow: hidden;
+    &:first-child {
+        margin-top: 0;
+    }
 
-        & > img {
-            position: absolute;
-            top: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: auto;
-            height: 100%;
-        }
+    & + & {
+        margin-top: 4px;
+    }
+}
+
+.image {
+    position: relative;
+    padding-top: 100%;
+    background-color: var(--bg-gray-color);
+    border-radius: var(--spacer-1);
+    overflow: hidden;
+
+    & > img {
+        position: absolute;
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: auto;
+        height: 100%;
     }
 }
 
@@ -56,7 +69,7 @@
 }
 
 @media (min-width: 768px) {
-    .wrap-image {
+    .image {
         padding-top: 56.25%;
     }
 }

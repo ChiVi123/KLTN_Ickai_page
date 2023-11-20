@@ -1,7 +1,7 @@
 import { request } from '~/utils';
 
 const orderServices = {
-    userGetAllOrder: async () => {
+    getAllOrder: async () => {
         try {
             const response = await request.get(`orders/getallorder`);
             return response.data;
@@ -9,7 +9,7 @@ const orderServices = {
             throw error;
         }
     },
-    userGetOrderById: async (id) => {
+    getOrderById: async (id) => {
         try {
             const response = await request.get(`orders/${id}`);
             return response.data;
@@ -17,24 +17,25 @@ const orderServices = {
             throw error;
         }
     },
-    userGetOrdersComplete: async () => {
+    getAllStateComplete: async () => {
         try {
             const response = await request.get(`orders/getallordercomplete`);
-            return response.data;
+
+            if (response.isSuccess) {
+                return response.data;
+            }
+
+            return { list: [] };
         } catch (error) {
             return { list: [] };
         }
     },
-    userCancelOrderById: async ({ id }) => {
+    cancelById: async (id) => {
         try {
             const response = await request.put(`orders/cancel/${id}`);
             return response;
-        } catch ({
-            response: {
-                data: { message },
-            },
-        }) {
-            throw message;
+        } catch (error) {
+            throw error?.response?.data?.message;
         }
     },
 };

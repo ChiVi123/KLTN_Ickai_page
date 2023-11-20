@@ -19,7 +19,7 @@ import { userServices } from '~/services';
 import { logger } from '~/utils/logger';
 
 function ChangePassword() {
-    const isLogger = true;
+    const isLogger = false;
     const userId = useSelector(userSelector.selectId);
     const navigate = useNavigate();
     const {

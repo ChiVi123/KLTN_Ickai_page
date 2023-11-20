@@ -1,14 +1,16 @@
 import { useState } from 'react';
+import { useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
-import { useSelector } from 'react-redux';
 import { contextPage, directions, notifies } from '~/common';
 import { userSelector } from '~/redux';
 import { cartServices } from '~/services';
 import { currencyVN } from '~/utils/funcs';
 import { logger } from '~/utils/logger';
-import { Button, Typography } from '.';
+
+import Button from './Button';
+import Typography from './Typography';
 
 function ProductCard({ product }) {
     const isLogger = false;
@@ -70,11 +72,9 @@ function ProductCard({ product }) {
                         {currencyVN(product.discount)}
                     </span>
 
-                    {!!product.sale && (
-                        <span className='old-price'>
-                            {currencyVN(product.price)}
-                        </span>
-                    )}
+                    <span className='old-price'>
+                        {!!product.sale && currencyVN(product.price)}
+                    </span>
                 </div>
 
                 <Button

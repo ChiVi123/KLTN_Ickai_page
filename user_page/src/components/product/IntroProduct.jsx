@@ -100,7 +100,9 @@ function IntroProduct({
                         height='48px'
                         marginBottom='8px'
                     >
-                        <Typography variant='h2'>{name}</Typography>
+                        <Typography variant='h2' component='h1'>
+                            {name}
+                        </Typography>
                     </Skeleton>
                     <div className={cx('stats')}>
                         <div className={cx('stats-star')}>
@@ -109,7 +111,7 @@ function IntroProduct({
                                 {contextPage.rateStar}
                             </Typography>
 
-                            <FontAwesomeIcon icon={faStar} />
+                            <FontAwesomeIcon icon={faStar} size='sm' />
                         </div>
 
                         <div className={cx('separate')}></div>

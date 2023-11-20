@@ -7,18 +7,17 @@ const categoriesSlice = createSlice({
     name,
     initialState,
     reducers: {},
-    extraReducers: {
-        // getAllCategory
-        [getAllCategory.pending]: (state) => {
+    extraReducers: (builder) => {
+        builder.addCase(getAllCategory.pending, (state) => {
             state.isLoading = true;
-        },
-        [getAllCategory.fulfilled]: (state, { payload }) => {
+        });
+        builder.addCase(getAllCategory.fulfilled, (state, { payload }) => {
             state.isLoading = false;
             state.items = payload;
-        },
-        [getAllCategory.rejected]: (state, { payload }) => {
+        });
+        builder.addCase(getAllCategory.rejected, (state, { payload }) => {
             state.message = payload;
-        },
+        });
     },
 });
 
