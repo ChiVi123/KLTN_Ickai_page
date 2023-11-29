@@ -43,13 +43,15 @@ export const sidebar = [
 export const tableProducts = [
     'Hình ảnh',
     'Tên sản phẩm',
+    'Ngày tạo',
+    'Tồn kho',
     'Giá',
-    'Các hoạt động',
+    'Các thao tác',
 ];
 export const tableCate = [
     'Tên danh mục  sản phẩm',
     'Trạng thái',
-    'Các hoạt động',
+    'Các thao tác',
 ];
 export const tableOrders = [
     'Mã đơn hàng',
@@ -60,18 +62,17 @@ export const tableOrders = [
     'Xem chi tiết',
 ];
 export const tableUsers = [
-    'ID',
     'Tên người dùng',
+    'Số điện thoại',
     'Email',
     'Vai trò',
-    'Các hoạt động',
+    'Các thao tác',
 ];
 export const tableReviews = [
-    'Mã đánh giá',
     'Tên người dùng',
     'Tên sản phẩm',
     'Lần cuối chỉnh sửa',
-    'Các hoạt động',
+    'Các thao tác',
 ];
 export const formatsDescription = [
     'header',

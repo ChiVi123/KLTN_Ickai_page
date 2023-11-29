@@ -60,9 +60,6 @@ function ReviewItem({ review, callback }) {
 
     return (
         <tr>
-            <td className={cx('td-review-id')} title={review.id}>
-                {review.id}
-            </td>
             <td className={cx('td-user')} title={review.reviewedBy}>
                 {review.reviewedBy}
             </td>

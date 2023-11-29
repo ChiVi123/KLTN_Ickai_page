@@ -1,18 +1,18 @@
 {
   "files": {
-    "main.css": "/static/css/main.6b912c1c.css",
-    "main.js": "/static/js/main.942ce7bc.js",
+    "main.css": "/static/css/main.18760154.css",
+    "main.js": "/static/js/main.04c4396d.js",
     "static/js/787.b4d28e1e.chunk.js": "/static/js/787.b4d28e1e.chunk.js",
     "static/media/logo.png": "/static/media/logo.892a95b9c034e06d582c.png",
     "static/media/logo_vnpay_tiny.png": "/static/media/logo_vnpay_tiny.95e7f8e382feaa279526.png",
     "static/media/logo-vector.svg": "/static/media/logo-vector.fad42b6c98ed7700ba7b931c499e66d6.svg",
     "index.html": "/index.html",
-    "main.6b912c1c.css.map": "/static/css/main.6b912c1c.css.map",
-    "main.942ce7bc.js.map": "/static/js/main.942ce7bc.js.map",
+    "main.18760154.css.map": "/static/css/main.18760154.css.map",
+    "main.04c4396d.js.map": "/static/js/main.04c4396d.js.map",
     "787.b4d28e1e.chunk.js.map": "/static/js/787.b4d28e1e.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.6b912c1c.css",
-    "static/js/main.942ce7bc.js"
+    "static/css/main.18760154.css",
+    "static/js/main.04c4396d.js"
   ]
 }

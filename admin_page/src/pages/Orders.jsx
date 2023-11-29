@@ -76,28 +76,33 @@ function Orders() {
                             </td>
                         </tr>
                     ))}
-                {orders.map((order, index) => (
-                    <tr key={index}>
-                        <td className={cx('td-id')} title={order.id}>
-                            {order.id}
-                        </td>
-                        <td className={cx('td-name')}>{order.userName}</td>
-                        <td>{order.lastModifiedDate || order.createdDate}</td>
-                        <td className={cx('td-total')}>
-                            {currencyVN(order.totalPrice)}
-                        </td>
-                        <td>
-                            <span className={cx('state', order.state)}>
-                                {enums.orderState[order.state].state}
-                            </span>
-                        </td>
-                        <td>
-                            <ButtonIcon to={directions.orderDetail(order.id)}>
-                                <FontAwesomeIcon icon={faEye} />
-                            </ButtonIcon>
-                        </td>
-                    </tr>
-                ))}
+                {!isLoading &&
+                    orders.map((order, index) => (
+                        <tr key={index}>
+                            <td className={cx('td-id')} title={order.id}>
+                                {order.id}
+                            </td>
+                            <td className={cx('td-name')}>{order.userName}</td>
+                            <td>
+                                {order.lastModifiedDate || order.createdDate}
+                            </td>
+                            <td className={cx('td-total')}>
+                                {currencyVN(order.totalPrice)}
+                            </td>
+                            <td>
+                                <span className={cx('state', order.state)}>
+                                    {enums.orderState[order.state].state}
+                                </span>
+                            </td>
+                            <td>
+                                <ButtonIcon
+                                    to={directions.orderDetail(order.id)}
+                                >
+                                    <FontAwesomeIcon icon={faEye} />
+                                </ButtonIcon>
+                            </td>
+                        </tr>
+                    ))}
             </Table>
 
             <Pagination total={totalPage} current={currentPage} center />

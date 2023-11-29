@@ -1,10 +1,10 @@
 import classNames from 'classnames/bind';
-import { useEffect, useState } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 
 import { contextPage, directions } from '~/common';
-import { Col, ProductCard, Row, Typography } from '~/components';
+import { Col, ProductCard, Row, TextLink, Typography } from '~/components';
 import { ProductCardSkeleton } from '~/components/skeletons';
 import { cartAsync, categoriesSelector, userSelector } from '~/redux';
 import { productServices } from '~/services';
@@ -23,10 +23,19 @@ function Home() {
 
     const [latest, setLatest] = useState([]);
     const [popular, setPopular] = useState([]);
+    const [productByAllCategory, setProductByAllCategory] = useState([]);
     const categories = useSelector(categoriesSelector.selectItems);
     const { accessToken } = useSelector(userSelector.selectInfo);
     const dispatch = useDispatch();
 
+    useEffect(() => {
+        (async () => {
+            const result = await productServices.getProductsByCategories();
+            setProductByAllCategory(result);
+        })();
+
+        return () => {};
+    }, []);
     useEffect(() => {
         (async (data) => {
             const latest = await productServices.getProducts(data);
@@ -46,6 +55,16 @@ function Home() {
     if (isLogger) {
         logger({ groupName: Home.name, values: ['re-render'] });
     }
+
+    const listProduct = (array = []) => (
+        <Row cols={2} colsMd={5} g={1}>
+            {array.map((product) => (
+                <Col key={product.id}>
+                    <ProductCard product={product} />
+                </Col>
+            ))}
+        </Row>
+    );
 
     return (
         <div className='container'>
@@ -81,13 +100,7 @@ function Home() {
                     </div>
 
                     {/* Latest */}
-                    <Row cols={2} colsMd={5} g={1}>
-                        {latest.map((product) => (
-                            <Col key={product.id}>
-                                <ProductCard product={product} />
-                            </Col>
-                        ))}
-                    </Row>
+                    {listProduct(latest)}
 
                     {/* Skeleton */}
                     {!latest.length && (
@@ -107,13 +120,7 @@ function Home() {
                     </div>
 
                     {/* Popular */}
-                    <Row cols={2} colsMd={5} g={1}>
-                        {popular.map((product) => (
-                            <Col key={product.id}>
-                                <ProductCard product={product} />
-                            </Col>
-                        ))}
-                    </Row>
+                    {listProduct(popular)}
 
                     {/* Skeleton */}
                     {!popular.length && (
@@ -125,6 +132,21 @@ function Home() {
                             ))}
                         </Row>
                     )}
+
+                    {productByAllCategory.map((item) => (
+                        <Fragment key={item.categoryId}>
+                            <div className={cx('heading-wrap')}>
+                                <Typography variant='h2'>
+                                    {item.title}
+                                </Typography>
+                                <TextLink to={`/search/${item.categoryId}`}>
+                                    {contextPage.more}
+                                </TextLink>
+                            </div>
+
+                            {listProduct(item?.items || [])}
+                        </Fragment>
+                    ))}
                 </Col>
             </Row>
         </div>

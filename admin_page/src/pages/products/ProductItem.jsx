@@ -10,8 +10,9 @@ import { contextPage, directions, notifies, titles } from '~/common';
 import { ButtonIcon } from '~/components';
 import { productsAsync } from '~/redux';
 import { productServices } from '~/services';
-import { currencyVN } from '~/utils/funcs';
+import { currencyVN, formatLocalDate } from '~/utils/funcs';
 
+import ProgressBar from '@ramonak/react-progress-bar';
 import styles from '~/scss/pages/products/product-item.module.scss';
 
 const cx = classNames.bind(styles);
@@ -82,11 +83,29 @@ function ProductItem({ product }) {
                     />
                 )}
             </td>
-            <td>
+            <td className={cx('col-product-name')}>
                 <span className={cx('product-name')}>{product.name}</span>
             </td>
+            <td className={cx('col-date')}>
+                {formatLocalDate(new Date(product.createdDate))}
+            </td>
+            <td className={cx('col-stock')}>
+                <div className={cx('stock-wrap')}>
+                    <ProgressBar
+                        height='4px'
+                        width='80px'
+                        labelSize='0'
+                        completed={product.quantity}
+                        maxCompleted={product.quantity + product.sold}
+                        bgColor={'#22c55e'}
+                    />
+                    <span>
+                        {product.quantity} {contextPage.product}
+                    </span>
+                </div>
+            </td>
             <td>{product.price && currencyVN(product.price)}</td>
-            <td>
+            <td className={cx('col-actions')}>
                 {product.state === 'enable' && (
                     <ButtonIcon to={directions.editProduct(product.id)}>
                         <FontAwesomeIcon icon={faPen} />

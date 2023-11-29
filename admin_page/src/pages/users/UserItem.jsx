@@ -1,16 +1,11 @@
 import { faLock, faLockOpen } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import classNames from 'classnames/bind';
 import PropTypes from 'prop-types';
 import { toast } from 'react-toastify';
 
 import { notifies } from '~/common';
 import { ButtonIcon } from '~/components';
 import { userServices } from '~/services';
-
-import styles from '~/scss/pages/users/user-item.module.scss';
-
-const cx = classNames.bind(styles);
 
 function UserItem({ user, callback }) {
     const isActive = user.state === 'active';
@@ -57,10 +52,8 @@ function UserItem({ user, callback }) {
 
     return (
         <tr>
-            <td className={cx('td-id')} title={user.id}>
-                {user.id}
-            </td>
             <td>{user.name}</td>
+            <td>{user.phone}</td>
             <td>{user.email}</td>
             <td>{user.role.split('_')[1]}</td>
             <td>

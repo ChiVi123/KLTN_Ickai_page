@@ -32,6 +32,14 @@ const productServices = {
             throw error;
         }
     },
+    getProductsByCategories: async () => {
+        try {
+            const response = await request.get('products/home');
+            return response.data;
+        } catch (error) {
+            console.log(error);
+        }
+    },
     getProduct: async (id) => {
         try {
             const response = await request.get(`products/${id}`);
