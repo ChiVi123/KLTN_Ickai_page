@@ -8,10 +8,10 @@ import { toast } from 'react-toastify';
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
 import { notifies, titles } from '~/common';
-
 import { ButtonIcon } from '~/components';
 import styles from '~/scss/pages/reviews/review-item.module.scss';
 import { reviewServices } from '~/services';
+import { formatLocalDate } from '~/utils/funcs';
 
 const cx = classNames.bind(styles);
 const reactSwal = withReactContent(Swal);
@@ -66,7 +66,7 @@ function ReviewItem({ review, callback }) {
             <td className={cx('td-product')} title={review.productname}>
                 {review.productname}
             </td>
-            <td>{review.lastupdateDate || review.createdDate}</td>
+            <td>{formatLocalDate(new Date(review.createdDate))}</td>
             <td>
                 <ButtonIcon
                     color={review.state === 'block' ? 'third' : 'second'}

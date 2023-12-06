@@ -15,6 +15,7 @@ import { logger } from '~/utils/logger';
 
 import styles from '~product/review.module.scss';
 
+import { formatLocalDate } from '~/utils/funcs';
 import FormReview from './FormReview';
 
 const cx = classNames.bind(styles);
@@ -74,7 +75,8 @@ function ReviewItem({ review }) {
 
                     <div className={cx('wrap-info')}>
                         <Typography variant='text2' classes={cx('text-date')}>
-                            {contextPage.date} {review.createdDate}
+                            {contextPage.date}{' '}
+                            {formatLocalDate(new Date(review.createdDate))}
                         </Typography>
 
                         {userId === review.userid && (

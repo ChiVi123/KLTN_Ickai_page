@@ -1,5 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { productServices } from '~/services';
+import { request } from '~/utils';
 
 export const getById = createAsyncThunk(
     'products/getById',
@@ -12,16 +13,17 @@ export const getById = createAsyncThunk(
         }
     },
 );
-
-export const getAllState = createAsyncThunk(
-    'products/getAllState',
-    async ({ page, size }, { rejectWithValue }) => {
+export const search = createAsyncThunk(
+    'products/search',
+    async (
+        { query, sortBy = '', minPrice, maxPrice, state, page, size },
+        { rejectWithValue },
+    ) => {
         try {
-            const result = await productServices.getProducts({
-                page,
-                size,
+            const response = await request.get('admin/products/search', {
+                params: { q: query, sortBy, minPrice, maxPrice, state },
             });
-            return result;
+            return { list: response.data, page, size };
         } catch (error) {
             return rejectWithValue(error);
         }

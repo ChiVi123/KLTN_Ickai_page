@@ -12,6 +12,14 @@ const orderServices = {
             throw error;
         }
     },
+    countState: async () => {
+        try {
+            const response = await request.get('admin/orders/count');
+            return response.data;
+        } catch (error) {
+            console.log(error);
+        }
+    },
     getOrderById: async (id) => {
         try {
             const response = await request.get(`${prefix}/${id}`);

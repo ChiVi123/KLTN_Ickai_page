@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { getAllState, getById } from '../async_thunks/productsAsync';
+import { getById, search } from '../async_thunks/productsAsync';
 import { products } from '../variables';
 
 const { name, initialState } = products;
@@ -8,8 +8,8 @@ const productsSlice = createSlice({
     initialState,
     reducers: {
         resetList(state) {
-            state.admin.items = [];
-            state.admin.totalPage = 0;
+            state.list.items = [];
+            state.list.totalPage = 0;
         },
         resetItem(state) {
             state.item.name = '';
@@ -45,18 +45,23 @@ const productsSlice = createSlice({
             state.item.status = 'rejected';
         });
 
-        // getAllState
-        builder.addCase(getAllState.pending, (state) => {
+        // Search
+        builder.addCase(search.pending, (state) => {
             state.list.isLoading = true;
             state.list.status = 'pending';
         });
-        builder.addCase(getAllState.fulfilled, (state, { payload }) => {
+        builder.addCase(search.fulfilled, (state, { payload }) => {
+            const page = payload.page - 1;
+            const size = payload.size;
+            const start = page * size;
+            const total = Math.ceil(payload.list.length / size);
+
             state.list.isLoading = false;
             state.list.status = 'fulfilled';
-            state.list.items = payload.list;
-            state.list.totalPage = payload.totalPage;
+            state.list.items = payload.list.slice(start, start + size);
+            state.list.totalPage = total;
         });
-        builder.addCase(getAllState.rejected, (state, { payload }) => {
+        builder.addCase(search.rejected, (state, { payload }) => {
             state.list.isLoading = false;
             state.list.status = 'rejected';
             state.list.items = [];

@@ -44,7 +44,7 @@ function Dashboard() {
             <Typography variant='h2'>Thống kê tổng doanh thu</Typography>
 
             <Row>
-                <Col baseCols={4}>
+                <Col baseCols={3}>
                     <Typography
                         variant='h3'
                         classes={cx('label-datetime-picker')}
@@ -59,7 +59,7 @@ function Dashboard() {
                     />
                 </Col>
 
-                <Col baseCols={4}>
+                <Col baseCols={3}>
                     <Typography
                         variant='h3'
                         classes={cx('label-datetime-picker')}

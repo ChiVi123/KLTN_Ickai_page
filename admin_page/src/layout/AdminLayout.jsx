@@ -6,7 +6,7 @@ import Sidebar from './Sidebar';
 const cx = classNames.bind(styles);
 function AdminLayout({ children }) {
     return (
-        <Row gx={3} noSide>
+        <Row gx={0} noSide>
             <Col baseCols={3} classes={cx('side')}>
                 <Sidebar />
             </Col>

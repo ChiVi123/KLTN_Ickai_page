@@ -49,3 +49,6 @@ export const product = yup.object({
 export const category = yup.object({
     name: yup.string().trim().required(required),
 });
+export const searchList = yup.object({
+    query: yup.string().trim(),
+});

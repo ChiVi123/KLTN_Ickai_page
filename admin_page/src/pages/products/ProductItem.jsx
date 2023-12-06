@@ -6,7 +6,7 @@ import { useSearchParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import Swal from 'sweetalert2';
 
-import { contextPage, directions, notifies, titles } from '~/common';
+import { contextPage, directions, keys, notifies, titles } from '~/common';
 import { ButtonIcon } from '~/components';
 import { productsAsync } from '~/redux';
 import { productServices } from '~/services';
@@ -59,13 +59,19 @@ function ProductItem({ product }) {
 
     const itemPerPage = 5;
     const firstPage = 1;
-    const currentPage = searchParams.get('page') || firstPage;
+    const currentPage = parseInt(searchParams.get(keys.page)) || firstPage;
+    const query = searchParams.get(keys.query) || '';
+    const productSort = searchParams.get(keys.sortBy) || 'latest';
+    const productState = searchParams.get(keys.state) || '';
 
     const handleClick = (product) => {
         handleSoftDelete(product, () => {
             dispatch(
-                productsAsync.getAllState({
-                    page: currentPage - 1,
+                productsAsync.search({
+                    query,
+                    sortBy: productSort,
+                    state: productState,
+                    page: currentPage,
                     size: itemPerPage,
                 }),
             );
@@ -104,7 +110,7 @@ function ProductItem({ product }) {
                     </span>
                 </div>
             </td>
-            <td>{product.price && currencyVN(product.price)}</td>
+            <td>{product.price && currencyVN(product.discount)}</td>
             <td className={cx('col-actions')}>
                 {product.state === 'enable' && (
                     <ButtonIcon to={directions.editProduct(product.id)}>

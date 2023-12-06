@@ -2,12 +2,28 @@ import { request } from '~/utils';
 
 const prefix = 'admin/manage/comment';
 const reviewServices = {
-    getReviews: async ({ page, size }) => {
+    getReviews: async ({ sortBy = '', state = '', page, size }) => {
         try {
             const response = await request.get(`${prefix}/findall`, {
-                params: { page, size },
+                params: { sortBy, state, page, size },
             });
             return response.data;
+        } catch (error) {
+            throw error;
+        }
+    },
+    countState: async () => {
+        try {
+            const response = await request.get('admin/comment/count');
+            return response.data;
+        } catch (error) {
+            console.log(error);
+        }
+    },
+    unblockReview: async (id) => {
+        try {
+            const response = await request.put(`${prefix}/setenable/${id}`);
+            return response;
         } catch (error) {
             throw error;
         }
@@ -17,14 +33,6 @@ const reviewServices = {
             const response = await request.requestDelete(
                 `${prefix}/block/${id}`,
             );
-            return response;
-        } catch (error) {
-            throw error;
-        }
-    },
-    unblockReview: async (id) => {
-        try {
-            const response = await request.put(`${prefix}/setenable/${id}`);
             return response;
         } catch (error) {
             throw error;

@@ -19,6 +19,14 @@ const productServices = {
             console.log(error);
         }
     },
+    countState: async () => {
+        try {
+            const response = await request.get('admin/products/count');
+            return response.data;
+        } catch (error) {
+            console.log(error);
+        }
+    },
     addProduct: async (data) => {
         try {
             const response = await request.post('products/add', data);

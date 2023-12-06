@@ -10,6 +10,6 @@ export const order = 'Chi tiết hóa đơn';
 export const orders = 'Các đơn hàng';
 export const productAdd = 'Thêm sản phẩm';
 export const productEdit = 'Sửa sản phẩm';
-export const reviews = 'Các đánh giá sản phẩm';
+export const reviews = 'Danh sách đánh giá sản phẩm';
 export const statistics = 'Các số liệu thống kê';
 export const users = 'Danh sách người dùng';

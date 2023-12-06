@@ -66,6 +66,20 @@ function Home() {
         </Row>
     );
 
+    const listSkeleton = (length = 0) => (
+        <>
+            {!length && (
+                <Row cols={2} colsMd={5} g={1}>
+                    {productsSkeleton.map((_, index) => (
+                        <Col key={index}>
+                            <ProductCardSkeleton />
+                        </Col>
+                    ))}
+                </Row>
+            )}
+        </>
+    );
+
     return (
         <div className='container'>
             <Row gx={2} classes='inner'>
@@ -103,35 +117,20 @@ function Home() {
                     {listProduct(latest)}
 
                     {/* Skeleton */}
-                    {!latest.length && (
-                        <Row cols={2} colsMd={5} g={1}>
-                            {productsSkeleton.map((_, index) => (
-                                <Col key={index}>
-                                    <ProductCardSkeleton />
-                                </Col>
-                            ))}
-                        </Row>
-                    )}
+                    {listSkeleton(latest.length)}
 
                     <div className={cx('heading-wrap')}>
                         <Typography variant='h2'>
                             {contextPage.popular}
                         </Typography>
+                        <TextLink to={`/search/`}>{contextPage.more}</TextLink>
                     </div>
 
                     {/* Popular */}
                     {listProduct(popular)}
 
                     {/* Skeleton */}
-                    {!popular.length && (
-                        <Row cols={2} colsMd={5} g={1}>
-                            {productsSkeleton.map((_, index) => (
-                                <Col key={index}>
-                                    <ProductCardSkeleton />
-                                </Col>
-                            ))}
-                        </Row>
-                    )}
+                    {listSkeleton(popular.length)}
 
                     {productByAllCategory.map((item) => (
                         <Fragment key={item.categoryId}>

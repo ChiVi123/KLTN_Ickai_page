@@ -71,7 +71,7 @@ export const tableUsers = [
 export const tableReviews = [
     'Tên người dùng',
     'Tên sản phẩm',
-    'Lần cuối chỉnh sửa',
+    'Ngày tạo',
     'Các thao tác',
 ];
 export const formatsDescription = [
@@ -104,3 +104,14 @@ export const modulesDescription = {
         ['link', { color: [] }],
     ],
 };
+export const optionSorts = [
+    { value: 'newest', label: 'Mới nhất' },
+    { value: 'oldest', label: 'Cũ nhất' },
+];
+export const optionProductSorts = [
+    { value: 'newest', label: 'Mới nhất' },
+    { value: 'oldest', label: 'Cũ nhất' },
+    { value: 'sale', label: 'Bán chạy' },
+    { value: 'priceDesc', label: 'Giá cao tới thấp' },
+    { value: 'priceAsc', label: 'Giá thấp tới cao' },
+];

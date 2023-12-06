@@ -2,7 +2,6 @@ import { faLock, faLockOpen } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import PropTypes from 'prop-types';
 import { toast } from 'react-toastify';
-
 import { notifies } from '~/common';
 import { ButtonIcon } from '~/components';
 import { userServices } from '~/services';

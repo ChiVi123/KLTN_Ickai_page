@@ -3,6 +3,7 @@ import { createObjectList } from '~/utils/funcs';
 export const products = {
     name: 'products',
     initialState: {
+        listRoot: [],
         list: createObjectList(),
         item: {
             category: '',

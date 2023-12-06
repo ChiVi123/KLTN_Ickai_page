@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { getAllOrderEnable } from '../async_thunks/ordersAsync';
+import { getAllOrderEnable, search } from '../async_thunks/ordersAsync';
 import { orderHistory } from '../variables';
 
 const { name, initialState } = orderHistory;
@@ -19,6 +19,24 @@ const orderHistorySlice = createSlice({
             state.status = 'fulfilled';
         });
         builder.addCase(getAllOrderEnable.rejected, (state, { payload }) => {
+            state.items = [];
+            state.totalPage = 0;
+            state.message = payload;
+            state.isLoading = false;
+            state.status = 'rejected';
+        });
+
+        builder.addCase(search.pending, (state) => {
+            state.isLoading = true;
+            state.status = 'pending';
+        });
+        builder.addCase(search.fulfilled, (state, { payload }) => {
+            state.items = payload.list;
+            state.totalPage = payload.totalPage;
+            state.isLoading = false;
+            state.status = 'fulfilled';
+        });
+        builder.addCase(search.rejected, (state, { payload }) => {
             state.items = [];
             state.totalPage = 0;
             state.message = payload;

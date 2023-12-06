@@ -154,3 +154,27 @@ export const orderState = {
         },
     },
 };
+export const contentReviewStates = {
+    all: 'Tất cả',
+    enable: 'Đã đăng',
+    block: 'Bị khóa',
+};
+export const contentUserStates = {
+    all: 'Tất cả',
+    active: 'Đã kích hoạt',
+    not_verify: 'Chưa xác nhận',
+    block: 'Bị khóa',
+};
+export const contentOrderStates = {
+    all: 'Tất cả',
+    pending: 'Đang xử lý',
+    pendingpay: 'Đã thanh toán và đang xử lý',
+    delivery: 'Đang giao hàng',
+    complete: 'Đã giao',
+    cancel: 'Đã hủy',
+};
+export const contentProductStates = {
+    all: 'Tất cả',
+    enable: 'Công bố',
+    disable: 'Đã ẩn',
+};

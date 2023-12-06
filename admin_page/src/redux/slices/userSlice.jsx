@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { getUsers } from '../async_thunks/usersAsync';
+import { getUsers, search } from '../async_thunks/usersAsync';
 import { user } from '../variables';
 
 const { name, initialState } = user;
@@ -40,6 +40,24 @@ const userSlice = createSlice({
             state.list.status = 'fulfilled';
         });
         builder.addCase(getUsers.rejected, (state, { payload }) => {
+            state.list.message = payload;
+            state.list.status = 'rejected';
+        });
+
+        builder.addCase(search.pending, (state) => {
+            state.list.isLoading = true;
+            state.list.status = 'pending';
+        });
+        builder.addCase(search.fulfilled, (state, { payload }) => {
+            state.list.isLoading = false;
+            state.list.items = payload.list;
+            state.list.totalPage = payload.totalPage;
+            state.list.status = 'fulfilled';
+        });
+        builder.addCase(search.rejected, (state, { payload }) => {
+            state.list.isLoading = false;
+            state.list.items = [];
+            state.list.totalPage = 0;
             state.list.message = payload;
             state.list.status = 'rejected';
         });
