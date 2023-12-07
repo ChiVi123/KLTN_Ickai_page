@@ -48,7 +48,7 @@ function ProductUpdate() {
     const isLogger = false;
 
     const { items: categories } = useSelector(categoriesSelector.selectEnable);
-    const product = useSelector(productsSelector.getProduct);
+    const product = useSelector(productsSelector.selectItem);
     const dispatch = useDispatch();
     const {
         control,

@@ -2,7 +2,7 @@ import { request } from '~/utils';
 
 const prefix = 'admin/manage/users';
 const userServices = {
-    getUsers: async (params = { page: 1, size: 5 }) => {
+    async getUsers(params = { page: 1, size: 5 }) {
         try {
             const response = await request.get(prefix, { params });
             return response.data;
@@ -10,7 +10,7 @@ const userServices = {
             console.log(error);
         }
     },
-    getUserById: async (id) => {
+    async getUserById(id) {
         try {
             const response = await request.get(`/users/${id}`);
             return response.data;
@@ -18,7 +18,7 @@ const userServices = {
             console.log(error);
         }
     },
-    countState: async () => {
+    async countState() {
         try {
             const response = await request.get('admin/users/count');
             return response.data;
@@ -26,7 +26,7 @@ const userServices = {
             console.log(error);
         }
     },
-    blockUserById: async (id) => {
+    async blockUserById(id) {
         try {
             const response = await request.requestDelete(`${prefix}/${id}`);
             return response;
@@ -34,7 +34,7 @@ const userServices = {
             console.log(error);
         }
     },
-    unblockUserById: async (id) => {
+    async unblockUserById(id) {
         try {
             const response = await request.put(`${prefix}/unblockuser/${id}`);
             return response;

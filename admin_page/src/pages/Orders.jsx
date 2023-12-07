@@ -20,10 +20,10 @@ import {
     Typography,
 } from '~/components';
 import { orderHistorySelector, ordersAsync } from '~/redux';
-import styles from '~/scss/pages/orders.module.scss';
 import { orderServices } from '~/services';
 import { currencyVN, formatDate, formatLocalDate } from '~/utils/funcs';
-import { logger } from '~/utils/logger';
+
+import styles from '~/scss/pages/orders.module.scss';
 
 const cx = classNames.bind(styles);
 function Orders() {
@@ -36,9 +36,8 @@ function Orders() {
         items: orders,
         totalPage,
         isLoading,
-    } = useSelector(orderHistorySelector.getAllOrder);
+    } = useSelector(orderHistorySelector.selectList);
 
-    const isLogger = false;
     const skeleton = Array.from({ length: 10 }, (_, index) => index);
     const firstPage = 1;
     const currentPage = parseInt(searchParams.get(keys.page)) || firstPage;
@@ -85,10 +84,6 @@ function Orders() {
     const onEndDate = (value) => {
         setEndDate(value);
     };
-
-    if (isLogger) {
-        logger({ groupName: Orders.name, values: [startDate, endDate] });
-    }
 
     return (
         <section className='section section--full-screen'>

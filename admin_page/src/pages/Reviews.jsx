@@ -1,7 +1,7 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
-import { enums, keys, lists, titles } from '~/common';
+import { keys, lists, titles } from '~/common';
 import { optionSorts } from '~/common/lists';
 import {
     Col,
@@ -13,21 +13,19 @@ import {
     Typography,
 } from '~/components';
 import { reviewsAsync, reviewsSelector } from '~/redux';
-import { reviewServices } from '~/services';
 import ReviewItem from './reviews/ReviewItem';
 
 function Reviews() {
-    const [tabs, setTabs] = useState([]);
     const [searchParams] = useSearchParams();
     const dispatch = useDispatch();
     const {
         items: reviews,
         isLoading,
         totalPage,
-    } = useSelector(reviewsSelector.getAllReview);
+    } = useSelector(reviewsSelector.selectList);
+    const { items: tabs } = useSelector(reviewsSelector.selectCount);
 
     const itemPerPage = 5;
-    const displayPages = 5;
     const firstPage = 1;
     const currentPage = parseInt(searchParams.get(keys.page)) || firstPage;
     const reviewState = searchParams.get(keys.state) || '';
@@ -35,7 +33,7 @@ function Reviews() {
 
     useEffect(() => {
         dispatch(
-            reviewsAsync.getAllReview({
+            reviewsAsync.search({
                 sortBy: reviewSort,
                 state: reviewState,
                 page: currentPage - 1,
@@ -44,16 +42,8 @@ function Reviews() {
         );
     }, [currentPage, dispatch, reviewSort, reviewState, searchParams]);
     useEffect(() => {
-        (async () => {
-            const result = (await reviewServices.countState()) || [];
-            setTabs(
-                result.map((item) => ({
-                    ...item,
-                    content: enums.contentReviewStates[item.state],
-                })),
-            );
-        })();
-    }, []);
+        dispatch(reviewsAsync.count());
+    }, [dispatch]);
 
     return (
         <section className='section section--full-screen'>
@@ -75,20 +65,11 @@ function Reviews() {
 
             <Table heads={lists.tableReviews} loading={isLoading}>
                 {reviews.map((item, index) => (
-                    <ReviewItem
-                        key={index}
-                        review={item}
-                        callback={() => dispatch(reviewsAsync.getAllReview())}
-                    />
+                    <ReviewItem key={index} review={item} />
                 ))}
             </Table>
 
-            <Pagination
-                display={displayPages}
-                total={totalPage}
-                current={currentPage}
-                center
-            />
+            <Pagination total={totalPage} current={currentPage} center />
         </section>
     );
 }

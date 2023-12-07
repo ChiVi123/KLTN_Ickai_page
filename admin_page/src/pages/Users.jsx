@@ -1,8 +1,7 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
-
-import { enums, keys, lists, titles } from '~/common';
+import { keys, lists, titles } from '~/common';
 import {
     Col,
     Pagination,
@@ -13,22 +12,18 @@ import {
     Typography,
 } from '~/components';
 import { userSelector, usersAsync } from '~/redux';
-import { logger } from '~/utils/logger';
-
-import { userServices } from '~/services';
 import UserItem from './users/UserItem';
 
 function Users() {
-    const [tabs, setTabs] = useState([]);
     const [searchParams] = useSearchParams();
     const {
         items: users,
         totalPage,
         isLoading,
     } = useSelector(userSelector.selectList);
+    const { items: tabs } = useSelector(userSelector.selectCount);
     const dispatch = useDispatch();
 
-    const isLogger = false;
     const page = parseInt(searchParams.get(keys.page)) || 1;
     const query = searchParams.get(keys.query) || '';
     const userState = searchParams.get(keys.state) || '';
@@ -39,20 +34,8 @@ function Users() {
         );
     }, [dispatch, page, query, userState]);
     useEffect(() => {
-        (async () => {
-            const result = await userServices.countState();
-            setTabs(
-                result.map((item) => ({
-                    ...item,
-                    content: enums.contentUserStates[item.state],
-                })),
-            );
-        })();
-    }, []);
-
-    if (isLogger) {
-        logger({ groupName: Users.name, values: [users] });
-    }
+        dispatch(usersAsync.count());
+    }, [dispatch]);
 
     return (
         <section className='section section--full-screen'>
@@ -70,15 +53,7 @@ function Users() {
             <Table heads={lists.tableUsers} loading={isLoading}>
                 {users
                     ? users.map((item, index) => (
-                          <UserItem
-                              key={index}
-                              user={item}
-                              callback={() =>
-                                  dispatch(
-                                      usersAsync.getUsers({ page: page - 1 }),
-                                  )
-                              }
-                          />
+                          <UserItem key={index} user={item} />
                       ))
                     : []}
             </Table>

@@ -1,20 +1,20 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { statisticalServices } from '~/services';
+import { request } from '~/utils';
 
 export const getStatistical = createAsyncThunk(
     'statistical/getStatistical',
-    async ({ from, to, type }, { rejectWithValue }) => {
+    async function getStatistical(
+        { from, to, type = 'month' },
+        { rejectWithValue },
+    ) {
         try {
-            const result = await statisticalServices.getStats({
-                from,
-                to,
-                type,
+            const response = await request.get('admin/manage/stats/orders', {
+                params: { from, to, type },
             });
             const expectMessage = 'Get orders sale successful';
 
-            if (result?.message === expectMessage) {
-                const { data } = result;
-                return data;
+            if (response?.message === expectMessage) {
+                return response.data;
             }
         } catch (error) {
             return rejectWithValue(error.response.data);

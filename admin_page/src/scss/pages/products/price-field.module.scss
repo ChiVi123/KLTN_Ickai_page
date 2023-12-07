@@ -1,0 +1,28 @@
+.wrap {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.input {
+    width: 100%;
+    padding: 15px 8px;
+    border-radius: 4px;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    color: rgba(0, 0, 0, 0.8);
+    font-size: 1.4rem;
+}
+
+.separate {
+    flex-shrink: 0;
+    width: 24px;
+    height: 1px;
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 1px;
+}
+
+.error {
+    display: block;
+    color: var(--second-color);
+    font-size: 1.2rem;
+}

@@ -1,18 +1,17 @@
 import { faLock, faLockOpen, faPen } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import ProgressBar from '@ramonak/react-progress-bar';
 import classNames from 'classnames/bind';
 import { useDispatch } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import Swal from 'sweetalert2';
-
 import { contextPage, directions, keys, notifies, titles } from '~/common';
 import { ButtonIcon } from '~/components';
 import { productsAsync } from '~/redux';
 import { productServices } from '~/services';
 import { currencyVN, formatLocalDate } from '~/utils/funcs';
 
-import ProgressBar from '@ramonak/react-progress-bar';
 import styles from '~/scss/pages/products/product-item.module.scss';
 
 const cx = classNames.bind(styles);
@@ -61,6 +60,8 @@ function ProductItem({ product }) {
     const firstPage = 1;
     const currentPage = parseInt(searchParams.get(keys.page)) || firstPage;
     const query = searchParams.get(keys.query) || '';
+    const minPrice = parseInt(searchParams.get(keys.minPrice)) || 0;
+    const maxPrice = parseInt(searchParams.get(keys.maxPrice)) || undefined;
     const productSort = searchParams.get(keys.sortBy) || 'latest';
     const productState = searchParams.get(keys.state) || '';
 
@@ -69,12 +70,15 @@ function ProductItem({ product }) {
             dispatch(
                 productsAsync.search({
                     query,
+                    minPrice,
+                    maxPrice,
                     sortBy: productSort,
                     state: productState,
                     page: currentPage,
                     size: itemPerPage,
                 }),
             );
+            dispatch(productsAsync.count());
         });
     };
 

@@ -1,7 +1,7 @@
 import { request } from '~/utils';
 
 const authServices = {
-    login: async (data) => {
+    async login(data) {
         try {
             const response = await request.post('auth/login', data);
             return response.data;

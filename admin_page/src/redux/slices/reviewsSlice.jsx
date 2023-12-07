@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { getAllReview } from '../async_thunks/reviewsAsync';
+import { contentReviewStates } from '~/common/enums';
+import { count, search } from '../async_thunks/reviewsAsync';
 import { reviews } from '../variables';
 
 const { name, initialState } = reviews;
@@ -8,29 +9,49 @@ const reviewsSlice = createSlice({
     initialState,
     reducers: {
         reset: (state) => {
-            state.isLoading = false;
-            state.list = [];
-            state.totalPage = 0;
-            state.totalQuantity = 0;
+            state.list.isLoading = false;
+            state.list.items = [];
+            state.list.message = '';
+            state.list.status = 'pending';
+            state.list.totalPage = 0;
         },
     },
     extraReducers: (builder) => {
-        builder.addCase(getAllReview.pending, (state) => {
-            state.isLoading = true;
-            state.status = 'pending';
+        builder.addCase(search.pending, (state) => {
+            state.list.isLoading = true;
+            state.list.status = 'pending';
         });
-        builder.addCase(getAllReview.fulfilled, (state, { payload }) => {
-            state.isLoading = false;
-            state.status = 'fulfilled';
-            state.items = payload.list;
-            state.totalPage = payload.totalPage;
+        builder.addCase(search.fulfilled, (state, { payload }) => {
+            state.list.isLoading = false;
+            state.list.status = 'fulfilled';
+            state.list.items = payload.list;
+            state.list.totalPage = payload.totalPage;
         });
-        builder.addCase(getAllReview.rejected, (state, { payload }) => {
-            state.isLoading = false;
-            state.status = 'rejected';
-            state.message = payload;
-            state.items = payload.list;
-            state.totalPage = payload.totalPage;
+        builder.addCase(search.rejected, (state, { payload }) => {
+            state.list.isLoading = false;
+            state.list.status = 'rejected';
+            state.list.message = payload;
+            state.list.items = payload.list;
+            state.list.totalPage = payload.totalPage;
+        });
+
+        // Count State
+        builder.addCase(count.pending, (state) => {
+            state.count.isLoading = true;
+            state.count.status = 'pending';
+        });
+        builder.addCase(count.fulfilled, (state, { payload }) => {
+            state.count.isLoading = false;
+            state.count.items = payload.map((item) => ({
+                ...item,
+                content: contentReviewStates[item.state],
+            }));
+            state.count.status = 'fulfilled';
+        });
+        builder.addCase(count.rejected, (state, { payload }) => {
+            state.count.isLoading = false;
+            state.count.message = payload;
+            state.count.status = 'rejected';
         });
     },
 });

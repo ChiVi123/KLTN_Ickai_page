@@ -1,33 +1,7 @@
 import { request } from '~/utils';
 
 const productServices = {
-    getProducts: async ({ page, size }) => {
-        try {
-            const response = await request.get('products', {
-                params: { page, size },
-            });
-            return response.data;
-        } catch (error) {
-            console.log(error);
-        }
-    },
-    getProduct: async (id) => {
-        try {
-            const response = await request.get(`products/${id}`);
-            return response.data;
-        } catch (error) {
-            console.log(error);
-        }
-    },
-    countState: async () => {
-        try {
-            const response = await request.get('admin/products/count');
-            return response.data;
-        } catch (error) {
-            console.log(error);
-        }
-    },
-    addProduct: async (data) => {
+    async addProduct(data) {
         try {
             const response = await request.post('products/add', data);
             return response;
@@ -35,7 +9,7 @@ const productServices = {
             console.log(error);
         }
     },
-    editProduct: async ({ id, data }) => {
+    async editProduct({ id, data }) {
         try {
             const response = await request.put(`products/update/${id}`, data);
             return response;
@@ -43,7 +17,7 @@ const productServices = {
             console.log(error);
         }
     },
-    deleteProduct: async (id) => {
+    async deleteProduct(id) {
         try {
             const response = await request.requestDelete(
                 `products/delete/${id}`,
@@ -53,7 +27,7 @@ const productServices = {
             console.log(error);
         }
     },
-    restoreProduct: async (id) => {
+    async restoreProduct(id) {
         try {
             const response = await request.put(`products/setstateenable/${id}`);
             return response;
@@ -61,7 +35,7 @@ const productServices = {
             console.log(error);
         }
     },
-    addImagesProduct: async ({ id, data }) => {
+    async addImagesProduct({ id, data }) {
         try {
             const response = await request.post(
                 `products/uploadimage/${id}`,
@@ -75,7 +49,7 @@ const productServices = {
             console.log(error);
         }
     },
-    deleteImageProduct: async ({ id, idImage }) => {
+    async deleteImageProduct({ id, idImage }) {
         try {
             const response = await request.requestDelete(
                 `products/deleteimage/${id}/${idImage}`,

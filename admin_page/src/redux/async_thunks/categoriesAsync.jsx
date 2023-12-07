@@ -1,19 +1,12 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { categoryServices } from '~/services';
-import { logger } from '~/utils/logger';
-
-const isLogger = false;
-
-if (isLogger) {
-    logger({ groupName: 'categories', values: ['result'] });
-}
+import { request } from '~/utils';
 
 export const getAllEnable = createAsyncThunk(
     'categories/getAllEnable',
-    async (_, { rejectWithValue }) => {
+    async function getAllEnable(_, { rejectWithValue }) {
         try {
-            const result = await categoryServices.getCategories();
-            return result;
+            const response = await request.get('categories');
+            return response.data;
         } catch (error) {
             return rejectWithValue(error.response.data);
         }
@@ -22,10 +15,10 @@ export const getAllEnable = createAsyncThunk(
 
 export const getAllState = createAsyncThunk(
     'categories/getAllState',
-    async (_, { rejectWithValue }) => {
+    async function getAllState(_, { rejectWithValue }) {
         try {
-            const result = await categoryServices.getCategoriesRoleAdmin();
-            return result;
+            const response = await request.get('admin/manage/categories');
+            return response.data;
         } catch (error) {
             return rejectWithValue(error);
         }

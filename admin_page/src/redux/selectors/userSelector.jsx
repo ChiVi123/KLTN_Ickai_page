@@ -1,4 +1,5 @@
 import { typeState } from '../variables';
 
-export const selectInfo = (state = typeState) => state.user.item;
-export const selectList = (state = typeState) => state.user.list;
+export const selectCount = (state = typeState) => state.users.count;
+export const selectInfo = (state = typeState) => state.users.item;
+export const selectList = (state = typeState) => state.users.list;

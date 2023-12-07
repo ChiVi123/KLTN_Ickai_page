@@ -1,11 +1,11 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
 
 import {
     contextButton,
+    contextPage,
     directions,
-    enums,
     keys,
     lists,
     titles,
@@ -21,21 +21,20 @@ import {
     Tabs,
     Typography,
 } from '~/components';
-import { productsAsync, productsSelector } from '~/redux';
-import { productServices } from '~/services';
-import FormPrice from './products/FormPrice';
+import { productsActions, productsAsync, productsSelector } from '~/redux';
+import PriceField from './products/PriceField';
 import ProductItem from './products/ProductItem';
 
 function Products() {
-    const [tabs, setTabs] = useState([]);
     const [searchParams] = useSearchParams();
     const dispatch = useDispatch();
     const {
         items: products,
         totalPage,
         isLoading,
-    } = useSelector(productsSelector.getProductsAdmin);
-    // const listRoot = useSelector(productsSelector.selectListRoot);
+    } = useSelector(productsSelector.selectList);
+    const { items: tabs } = useSelector(productsSelector.selectCount);
+    const productMaxPrice = useSelector(productsSelector.selectMaxPrice);
 
     const options = [
         { value: 'latest', label: 'Mới nhất' },
@@ -48,6 +47,8 @@ function Products() {
     const firstPage = 1;
     const currentPage = parseInt(searchParams.get(keys.page)) || firstPage;
     const query = searchParams.get(keys.query) || '';
+    const minPrice = parseInt(searchParams.get(keys.minPrice)) || 0;
+    const maxPrice = parseInt(searchParams.get(keys.maxPrice)) || undefined;
     const productSort = searchParams.get(keys.sortBy) || 'latest';
     const productState = searchParams.get(keys.state) || '';
 
@@ -55,24 +56,31 @@ function Products() {
         dispatch(
             productsAsync.search({
                 query,
+                minPrice,
+                maxPrice,
                 sortBy: productSort,
                 state: productState,
                 page: currentPage,
                 size: itemPerPage,
             }),
         );
-    }, [currentPage, dispatch, productSort, productState, query, searchParams]);
+
+        return () => {
+            dispatch(productsActions.resetList());
+        };
+    }, [
+        currentPage,
+        dispatch,
+        maxPrice,
+        minPrice,
+        productSort,
+        productState,
+        query,
+        searchParams,
+    ]);
     useEffect(() => {
-        (async () => {
-            const result = (await productServices.countState()) || [];
-            setTabs(
-                result.map((item) => ({
-                    ...item,
-                    content: enums.contentProductStates[item.state],
-                })),
-            );
-        })();
-    }, []);
+        dispatch(productsAsync.count());
+    }, [dispatch]);
 
     return (
         <section className='section section--full-screen'>
@@ -83,18 +91,39 @@ function Products() {
                 </Button>
             </Row>
 
+            <div style={{ marginBlock: '60px' }}></div>
+
             <Row gx={0} alignItems='center'>
-                <Col baseCols={4}>
-                    <Tabs tabs={tabs} />
+                <Col baseCols={3}>
+                    {/* {isLoading ? (
+                        <div style={{ height: '49px' }}></div>
+                    ) : (
+                        )} */}
+                    <PriceField max={productMaxPrice} />
                 </Col>
                 <Col>
                     <SearchList placeholder='Tìm kiếm...' />
                 </Col>
+                <Col baseCols={2}>
+                    <button
+                        type='submit'
+                        form='form-price'
+                        className='btn'
+                        style={{
+                            '--btn-height': '49px',
+                            '--btn-min-width': '80px',
+                            '--btn-bg-color': '#372ff0',
+                            '--btn-color': '#ffffff',
+                        }}
+                    >
+                        {contextPage.apply}
+                    </button>
+                </Col>
+                <Col baseCols={9}>
+                    <Tabs tabs={tabs} />
+                </Col>
                 <Col baseCols={3}>
                     <SortSelect options={options} defaultValue={productSort} />
-                </Col>
-                <Col baseCols={12}>
-                    <FormPrice />
                 </Col>
             </Row>
 

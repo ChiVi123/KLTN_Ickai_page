@@ -1,7 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { userServices } from '~/services';
 import { request } from '~/utils';
-import { logger } from '~/utils/logger';
 
 export const getUsers = createAsyncThunk(
     'users/getUsers',
@@ -26,11 +25,20 @@ export const search = createAsyncThunk(
                 params: { q: query, state, page, size },
             });
 
-            logger({ groupName: 'api search user', values: [result] });
-
             return result.data;
         } catch (error) {
             return rejectWithValue(error?.response?.data?.message);
+        }
+    },
+);
+export const count = createAsyncThunk(
+    'users/count',
+    async function count(_, { rejectWithValue }) {
+        try {
+            const response = await request.get('admin/users/count');
+            return response.data;
+        } catch (error) {
+            return rejectWithValue(error);
         }
     },
 );

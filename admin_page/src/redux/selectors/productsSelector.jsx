@@ -1,5 +1,6 @@
 import { typeState } from '../variables';
 
-export const getProductsAdmin = (state = typeState) => state.products.list;
-export const getProduct = (state = typeState) => state.products.item;
-export const selectListRoot = (state = typeState) => state.products.listRoot;
+export const selectCount = (state = typeState) => state.products.count;
+export const selectItem = (state = typeState) => state.products.item;
+export const selectList = (state = typeState) => state.products.list;
+export const selectMaxPrice = (state = typeState) => state.products.maxPrice;

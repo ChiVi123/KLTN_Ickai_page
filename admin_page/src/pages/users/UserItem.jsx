@@ -1,12 +1,22 @@
 import { faLock, faLockOpen } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import PropTypes from 'prop-types';
+import { useDispatch } from 'react-redux';
+import { useSearchParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { notifies } from '~/common';
+import { keys, notifies } from '~/common';
 import { ButtonIcon } from '~/components';
+import { usersAsync } from '~/redux';
 import { userServices } from '~/services';
 
-function UserItem({ user, callback }) {
+function UserItem({ user }) {
+    const [searchParams] = useSearchParams();
+    const dispatch = useDispatch();
+
+    const page = parseInt(searchParams.get(keys.page)) || 1;
+    const query = searchParams.get(keys.query) || '';
+    const userState = searchParams.get(keys.state) || '';
+
     const isActive = user.state === 'active';
     let isDisplay = true;
 
@@ -44,9 +54,10 @@ function UserItem({ user, callback }) {
                 break;
         }
 
-        if (callback) {
-            callback();
-        }
+        dispatch(
+            usersAsync.search({ query, state: userState, page: page - 1 }),
+        );
+        dispatch(usersAsync.count());
     };
 
     return (

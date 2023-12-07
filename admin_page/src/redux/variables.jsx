@@ -3,8 +3,10 @@ import { createObjectList } from '~/utils/funcs';
 export const products = {
     name: 'products',
     initialState: {
-        listRoot: [],
+        isFirstCall: true,
+        maxPrice: 999999,
         list: createObjectList(),
+        count: createObjectList(),
         item: {
             category: '',
             category_id: '',
@@ -32,8 +34,9 @@ export const categories = {
     },
 };
 export const user = {
-    name: 'user',
+    name: 'users',
     initialState: {
+        count: createObjectList(),
         list: createObjectList(),
         item: {
             id: '',
@@ -50,13 +53,15 @@ export const user = {
 export const orderHistory = {
     name: 'orderHistory',
     initialState: {
-        ...createObjectList(),
+        list: createObjectList(),
+        count: createObjectList(),
     },
 };
 export const reviews = {
     name: 'reviews',
     initialState: {
-        ...createObjectList(),
+        list: createObjectList(),
+        count: createObjectList(),
     },
 };
 export const statistical = {
@@ -74,6 +79,6 @@ export const typeState = {
     orderHistory: orderHistory.initialState,
     products: products.initialState,
     reviews: reviews.initialState,
-    user: user.initialState,
+    users: user.initialState,
     statistical: statistical.initialState,
 };

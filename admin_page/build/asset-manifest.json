@@ -1,0 +1,18 @@
+{
+  "files": {
+    "main.css": "/static/css/main.a54ef727.css",
+    "main.js": "/static/js/main.f9b2844a.js",
+    "static/js/787.b4d28e1e.chunk.js": "/static/js/787.b4d28e1e.chunk.js",
+    "static/media/logo.png": "/static/media/logo.892a95b9c034e06d582c.png",
+    "static/media/logo_vnpay_tiny.png": "/static/media/logo_vnpay_tiny.95e7f8e382feaa279526.png",
+    "static/media/logo-vector.svg": "/static/media/logo-vector.fad42b6c98ed7700ba7b931c499e66d6.svg",
+    "index.html": "/index.html",
+    "main.a54ef727.css.map": "/static/css/main.a54ef727.css.map",
+    "main.f9b2844a.js.map": "/static/js/main.f9b2844a.js.map",
+    "787.b4d28e1e.chunk.js.map": "/static/js/787.b4d28e1e.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.a54ef727.css",
+    "static/js/main.f9b2844a.js"
+  ]
+}

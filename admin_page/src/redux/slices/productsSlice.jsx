@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { getById, search } from '../async_thunks/productsAsync';
+import { contentProductStates } from '~/common/enums';
+import { count, getById, search } from '../async_thunks/productsAsync';
 import { products } from '../variables';
 
 const { name, initialState } = products;
@@ -8,7 +9,10 @@ const productsSlice = createSlice({
     initialState,
     reducers: {
         resetList(state) {
+            state.list.isLoading = false;
             state.list.items = [];
+            state.list.message = '';
+            state.list.status = 'pending';
             state.list.totalPage = 0;
         },
         resetItem(state) {
@@ -56,6 +60,13 @@ const productsSlice = createSlice({
             const start = page * size;
             const total = Math.ceil(payload.list.length / size);
 
+            // if (state.isFirstCall) {
+            //     state.maxPrice = Math.max(
+            //         ...payload.list.map(({ discount }) => discount),
+            //     );
+            //     state.isFirstCall = false;
+            // }
+
             state.list.isLoading = false;
             state.list.status = 'fulfilled';
             state.list.items = payload.list.slice(start, start + size);
@@ -67,6 +78,25 @@ const productsSlice = createSlice({
             state.list.items = [];
             state.list.totalPage = 0;
             state.list.message = payload;
+        });
+
+        // Count State
+        builder.addCase(count.pending, (state) => {
+            state.count.isLoading = true;
+            state.count.status = 'pending';
+        });
+        builder.addCase(count.fulfilled, (state, { payload }) => {
+            state.count.isLoading = false;
+            state.count.items = payload.map((item) => ({
+                ...item,
+                content: contentProductStates[item.state],
+            }));
+            state.count.status = 'fulfilled';
+        });
+        builder.addCase(count.rejected, (state, { payload }) => {
+            state.count.isLoading = false;
+            state.count.message = payload;
+            state.count.status = 'rejected';
         });
     },
 });
