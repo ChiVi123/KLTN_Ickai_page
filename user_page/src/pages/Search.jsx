@@ -75,12 +75,12 @@ function Search() {
 
         if (query) {
             params.query = query;
-            dispatch(searchAsync.getAllProductByQuery(params));
+            dispatch(searchAsync.getAllByQuery(params));
         }
 
         if (categoryId) {
             params.categoryId = categoryId;
-            dispatch(searchAsync.getAllProductByCategory(params));
+            dispatch(searchAsync.getAllByCategoryId(params));
         }
 
         return () => {

@@ -8,7 +8,6 @@ export function currencyVN(
 ) {
     return value.toLocaleString(locales, options);
 }
-
 export function priceSaleVN(price, sale) {
     const thousand = 1000;
     if (sale) {
@@ -27,7 +26,6 @@ export function formatStringDate(string = '') {
     [arrayDate[0], arrayDate[1]] = [arrayDate[1], arrayDate[0]];
     return [arrayDate.join('/'), array[1]].join(' ');
 }
-
 export function formatDate(date = new Date(), split = '-') {
     return [
         padTo2Digits(date.getDate()),
@@ -35,7 +33,22 @@ export function formatDate(date = new Date(), split = '-') {
         date.getFullYear(),
     ].join(split);
 }
-
+export function formatLocalDate(
+    date = new Date(),
+    locales = 'vi',
+    options = {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+    },
+) {
+    const [hour, dateFormat] = date
+        .toLocaleDateString(locales, options)
+        .split(' ');
+    return [dateFormat, hour].join(' ');
+}
 export function toArray(number = 1, callback = (_, index) => index + 1) {
     if (typeof number !== 'number' || number < 1) {
         // throw new Error('Invalid input. Please provide a positive number.');
@@ -44,7 +57,6 @@ export function toArray(number = 1, callback = (_, index) => index + 1) {
 
     return Array.from({ length: number }, callback);
 }
-
 export function getPageArray({ total = 7, length = 5, current = 3, step = 1 }) {
     const first = 1;
     const halfRange = Math.floor(length / 2);
@@ -55,7 +67,6 @@ export function getPageArray({ total = 7, length = 5, current = 3, step = 1 }) {
 
     return Array.from({ length }, (_, index) => start + index * step);
 }
-
 export function averageRating(totalStar, totalMember) {
     if (totalMember) {
         const shiftOne = (totalStar / totalMember) * 10;
@@ -63,7 +74,6 @@ export function averageRating(totalStar, totalMember) {
     }
     return 0;
 }
-
 export const createObjectParams = (array = [], conditions = []) => {
     const params = {};
 
@@ -74,7 +84,6 @@ export const createObjectParams = (array = [], conditions = []) => {
 
     return params;
 };
-
 export function createObjectList() {
     return {
         items: [],

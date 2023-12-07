@@ -15,21 +15,21 @@ const cx = classNames.bind(styles);
 function Order() {
     const [order, setOrder] = useState();
     const [isCancel, setIsCancel] = useState(false);
-    const { id } = useParams();
+    const { orderId } = useParams();
     const navigate = useNavigate();
 
+    const isCancelDisplay = ({ state = '', paymentType = '' }) => {
+        return state === 'pending' && paymentType === 'COD';
+    };
+
     useEffect(() => {
-        const fetchApi = async (id) => {
-            const result = await orderServices.userGetOrderById(id);
+        (async (orderId) => {
+            const result = await orderServices.getOrderById(orderId);
 
             setOrder(result);
-            setIsCancel(
-                result.state === 'pending' && result.paymentType === 'COD',
-            );
-        };
-
-        fetchApi(id);
-    }, [id]);
+            setIsCancel(isCancelDisplay(result));
+        })(orderId);
+    }, [orderId]);
 
     const handleCancel = () => {
         Swal.fire({
@@ -41,9 +41,7 @@ function Order() {
             const expectMessage = 'Cancel order successfully';
             if (isConfirmed) {
                 try {
-                    const result = await orderServices.userCancelOrderById({
-                        id,
-                    });
+                    const result = await orderServices.cancelById(orderId);
                     if (result?.message === expectMessage) {
                         Swal.fire({
                             title: 'Hủy đơn hàng thành công',
@@ -87,13 +85,12 @@ function Order() {
     };
 
     return (
-        <div className='width-md'>
-            <div className='section'>
-                <Typography variant='h1'>
-                    {contextPage.titleOrderPage}
-                </Typography>
-
-                <div className={cx('section')}>
+        <div className='container'>
+            <Row classes='section'>
+                <Col baseCols={12} baseColsMd={5} classes={cx('section')}>
+                    <Typography variant='h1'>
+                        {contextPage.titleOrderPage}
+                    </Typography>
                     <Row cols={1} gy={2}>
                         {/* Recipient's name */}
                         <Col>
@@ -139,13 +136,11 @@ function Order() {
                         )}
 
                         {/* Total price */}
-                        <Col baseCols={6}>
+                        <Col>
                             <span className={cx('large-text')}>
                                 {contextPage.priceTotal}
                             </span>
-                        </Col>
-                        {order?.totalPrice && (
-                            <Col baseCols={6}>
+                            {order?.totalPrice && (
                                 <span
                                     className={cx(
                                         'large-text',
@@ -154,8 +149,8 @@ function Order() {
                                 >
                                     {currencyVN(order?.totalPrice)}
                                 </span>
-                            </Col>
-                        )}
+                            )}
+                        </Col>
 
                         {isCancel && (
                             <div
@@ -168,9 +163,9 @@ function Order() {
                             </div>
                         )}
                     </Row>
-                </div>
+                </Col>
 
-                <div className={cx('section')}>
+                <Col classes={cx('section')}>
                     <Typography variant='h2'>
                         {contextPage.subTitleOrderPage}
                     </Typography>
@@ -203,8 +198,8 @@ function Order() {
                             </li>
                         ))}
                     </ul>
-                </div>
-            </div>
+                </Col>
+            </Row>
         </div>
     );
 }

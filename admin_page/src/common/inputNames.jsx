@@ -12,3 +12,4 @@ export const sale = 'sale';
 export const search = 'search';
 export const vnpay = 'vnpay';
 export const state = 'state';
+export const query = 'query';

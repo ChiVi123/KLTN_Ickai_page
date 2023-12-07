@@ -24,7 +24,7 @@ function Description({ textHTML = '' }) {
 
     return (
         <section className='section'>
-            <Typography variant='h2'>{contextPage.description}</Typography>
+            <Typography variant='h3'>{contextPage.description}</Typography>
 
             <Skeleton
                 animation='wave'

@@ -1,5 +1,6 @@
 import { requestGHN } from '~/utils';
 
+const prefix = 'v2/shipping-order';
 const servicesGHN = {
     getProvince: async () => {
         try {
@@ -50,11 +51,7 @@ const servicesGHN = {
         };
 
         try {
-            const response = await requestGHN.post(
-                'v2/shipping-order/fee',
-                data,
-            );
-            console.log(response);
+            const response = await requestGHN.post(`${prefix}/fee`, data);
             return response.data.total;
         } catch (error) {
             console.log(error);
@@ -69,7 +66,7 @@ const servicesGHN = {
 
         try {
             const response = await requestGHN.post(
-                'v2/shipping-order/available-services',
+                `${prefix}/available-services`,
                 data,
             );
             return response.data[0];

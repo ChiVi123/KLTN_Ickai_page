@@ -1,8 +1,13 @@
+import classNames from 'classnames/bind';
 import { useSelector } from 'react-redux';
-import { Col, Row } from '~/components';
+
 import { cartSelector } from '~/redux';
 import { logger } from '~/utils/logger';
+import styles from '~cart/cart-list.module.scss';
+
 import CartItem from './CartItem';
+
+const cx = classNames.bind(styles);
 
 function CartList() {
     const isLogger = false;
@@ -13,13 +18,15 @@ function CartList() {
     }
 
     return (
-        <Row cols={1} gy={1}>
+        <div className={cx('wrap')}>
             {cart.map((item) => (
-                <Col key={item.itemId}>
-                    <CartItem product={item} isLoading={cart.isLoading} />
-                </Col>
+                <CartItem
+                    key={item.itemId}
+                    product={item}
+                    isLoading={cart.isLoading}
+                />
             ))}
-        </Row>
+        </div>
     );
 }
 

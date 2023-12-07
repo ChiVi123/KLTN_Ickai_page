@@ -5,8 +5,8 @@ const categoryServices = {
         try {
             const response = await request.get('categories');
             return response.data;
-        } catch ({ response: { data } }) {
-            throw data;
+        } catch (error) {
+            throw error;
         }
     },
 };

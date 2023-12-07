@@ -85,7 +85,7 @@ function Product() {
     useEffect(() => {
         (async () => {
             if (userId) {
-                const orders = await orderServices.userGetOrdersComplete();
+                const orders = await orderServices.getAllStateComplete();
 
                 const existOrder = orders.list.some((order) =>
                     order.items.some((item) => item.productid === id),
@@ -146,9 +146,10 @@ function Product() {
                 {review.status === 'fulfilled' && (
                     <Col>
                         <section className={cx('section')}>
-                            <Typography variant='h2'>
+                            <Typography variant='h3'>
                                 {contextPage.review}
                             </Typography>
+
                             {/* Send Review */}
                             {isReview && (
                                 <div className={cx('stat')}>
@@ -202,7 +203,7 @@ function Product() {
                         className='section'
                         style={{ marginBottom: 'var(--spacer-2)' }}
                     >
-                        <Typography variant='h2' style={{ marginBottom: '0' }}>
+                        <Typography variant='h3' style={{ marginBottom: '0' }}>
                             {contextPage.watched}
                         </Typography>
                     </section>

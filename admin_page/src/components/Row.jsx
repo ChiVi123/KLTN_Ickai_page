@@ -12,6 +12,7 @@ function Row({
     g,
     gx,
     gy,
+    alignItems = '',
     center = false,
     sb = false,
     noSide = false,
@@ -31,6 +32,7 @@ function Row({
                 [`gy-${gy}`]: gy || gy === 0,
                 center,
                 sb,
+                [`align-items-${alignItems}`]: alignItems,
                 'no-gutter-side': noSide,
                 [classes]: classes,
             })}

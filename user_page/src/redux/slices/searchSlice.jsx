@@ -1,8 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
-import {
-    getAllProductByCategory,
-    getAllProductByQuery,
-} from '../async_thunks/searchAsync';
+import { keys } from '~/common';
+import { getAllByCategoryId, getAllByQuery } from '../async_thunks/searchAsync';
 import { search } from '../variables';
 
 const sorts = {
@@ -24,62 +22,53 @@ const searchSlice = createSlice({
         },
     },
     extraReducers: (builder) => {
-        // getAllProductByQuery
-        builder.addCase(getAllProductByQuery.pending, (state) => {
-            state.status = 'pending';
+        // getAllByQuery
+        builder.addCase(getAllByQuery.pending, (state) => {
+            state.status = keys.pending;
             state.isLoading = true;
         });
-        builder.addCase(
-            getAllProductByQuery.fulfilled,
-            (state, { payload }) => {
-                const min = payload.minPrice;
-                const max = payload.maxPrice || Infinity;
-                const isInterval = (item) =>
-                    item.discount >= min && item.discount <= max;
+        builder.addCase(getAllByQuery.fulfilled, (state, { payload }) => {
+            const min = payload.minPrice;
+            const max = payload.maxPrice || Infinity;
+            const isInterval = (item) =>
+                item.discount >= min && item.discount <= max;
 
-                state.status = 'fulfilled';
-                state.isLoading = false;
-                state.items = payload.items
-                    .sort(sorts[payload.sortBy])
-                    .filter(isInterval);
-            },
-        );
-        builder.addCase(getAllProductByQuery.rejected, (state, { payload }) => {
-            state.status = 'rejected';
+            state.status = keys.fulfilled;
+            state.isLoading = false;
+            state.items = payload.items
+                .sort(sorts[payload.sortBy])
+                .filter(isInterval);
+        });
+        builder.addCase(getAllByQuery.rejected, (state, { payload }) => {
+            state.status = keys.rejected;
             state.isLoading = false;
             state.items = [];
             state.message = payload;
         });
 
-        // getAllProductByCategory
-        builder.addCase(getAllProductByCategory.pending, (state) => {
-            state.status = 'pending';
+        // getAllByCategoryId
+        builder.addCase(getAllByCategoryId.pending, (state) => {
+            state.status = keys.pending;
             state.isLoading = true;
         });
-        builder.addCase(
-            getAllProductByCategory.fulfilled,
-            (state, { payload }) => {
-                const min = payload.minPrice;
-                const max = payload.maxPrice || Infinity;
-                const isInterval = (item) =>
-                    item.discount >= min && item.discount <= max;
+        builder.addCase(getAllByCategoryId.fulfilled, (state, { payload }) => {
+            const min = payload.minPrice;
+            const max = payload.maxPrice || Infinity;
+            const isInterval = (item) =>
+                item.discount >= min && item.discount <= max;
 
-                state.status = 'fulfilled';
-                state.isLoading = false;
-                state.items = payload.items
-                    .sort(sorts[payload.sortBy])
-                    .filter(isInterval);
-            },
-        );
-        builder.addCase(
-            getAllProductByCategory.rejected,
-            (state, { payload }) => {
-                state.status = 'rejected';
-                state.isLoading = false;
-                state.items = [];
-                state.message = payload;
-            },
-        );
+            state.status = keys.fulfilled;
+            state.isLoading = false;
+            state.items = payload.items
+                .sort(sorts[payload.sortBy])
+                .filter(isInterval);
+        });
+        builder.addCase(getAllByCategoryId.rejected, (state, { payload }) => {
+            state.status = keys.rejected;
+            state.isLoading = false;
+            state.items = [];
+            state.message = payload;
+        });
     },
 });
 

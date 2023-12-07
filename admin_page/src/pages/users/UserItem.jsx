@@ -1,18 +1,22 @@
 import { faLock, faLockOpen } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import classNames from 'classnames/bind';
 import PropTypes from 'prop-types';
+import { useDispatch } from 'react-redux';
+import { useSearchParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
-
-import { notifies } from '~/common';
+import { keys, notifies } from '~/common';
 import { ButtonIcon } from '~/components';
+import { usersAsync } from '~/redux';
 import { userServices } from '~/services';
 
-import styles from '~/scss/pages/users/user-item.module.scss';
+function UserItem({ user }) {
+    const [searchParams] = useSearchParams();
+    const dispatch = useDispatch();
 
-const cx = classNames.bind(styles);
+    const page = parseInt(searchParams.get(keys.page)) || 1;
+    const query = searchParams.get(keys.query) || '';
+    const userState = searchParams.get(keys.state) || '';
 
-function UserItem({ user, callback }) {
     const isActive = user.state === 'active';
     let isDisplay = true;
 
@@ -50,17 +54,16 @@ function UserItem({ user, callback }) {
                 break;
         }
 
-        if (callback) {
-            callback();
-        }
+        dispatch(
+            usersAsync.search({ query, state: userState, page: page - 1 }),
+        );
+        dispatch(usersAsync.count());
     };
 
     return (
         <tr>
-            <td className={cx('td-id')} title={user.id}>
-                {user.id}
-            </td>
             <td>{user.name}</td>
+            <td>{user.phone}</td>
             <td>{user.email}</td>
             <td>{user.role.split('_')[1]}</td>
             <td>

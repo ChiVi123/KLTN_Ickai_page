@@ -22,7 +22,7 @@ function OrderHistory() {
 
     useEffect(() => {
         dispatch(ordersAsync.getAllOrder());
-    }, []);
+    }, [dispatch]);
 
     useEffect(() => {
         dispatch(orderHistoryActions.filter(tab.value));

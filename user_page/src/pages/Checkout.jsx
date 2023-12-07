@@ -80,7 +80,7 @@ function Checkout() {
     useEffect(() => {
         const fetchApi = async () => {
             const resultCart = await cartServices.getCartByToken();
-            setCart(resultCart.data);
+            setCart(resultCart);
 
             const resultProvinces = await servicesGHN.getProvince();
             setProvinces(resultProvinces);

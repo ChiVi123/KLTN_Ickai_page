@@ -13,6 +13,7 @@ export const orders = '/orders';
 export const addresses = '/addresses';
 export const addressForm = '/address-form';
 export const product = (id) => `/product/${id}`;
+export const searchCategory = (id) => `/search/${id}`;
 
 export const forgotPassword = '/forgot-password';
 export const resetPassword = '/reset-password';

@@ -49,3 +49,25 @@ export const product = yup.object({
 export const category = yup.object({
     name: yup.string().trim().required(required),
 });
+export const searchList = yup.object({
+    query: yup.string().trim(),
+});
+export const filterPrice = yup.object({
+    minPrice: yup
+        .number('phải là số')
+        .typeError('phải là số')
+        .test(
+            'greater than or equal to zero',
+            'không thể là số âm',
+            (value) => value >= 0,
+        ),
+    maxPrice: yup
+        .number('phải là số')
+        .typeError('phải là số')
+        .test(
+            'greater than or equal to zero',
+            'không thể là số âm',
+            (value) => value >= 0,
+        )
+        .moreThan(yup.ref('minPrice'), 'giá trị quá nhỏ'),
+});

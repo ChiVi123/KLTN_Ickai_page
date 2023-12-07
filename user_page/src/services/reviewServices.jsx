@@ -33,7 +33,7 @@ const reviewServices = {
             throw error;
         }
     },
-    deleteReviewByUser: async ({ id }) => {
+    deleteByUser: async (id) => {
         try {
             const response = await request.requestDelete(
                 `comment/deletebyuser/${id}`,

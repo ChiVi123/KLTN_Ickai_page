@@ -12,6 +12,6 @@ export const cart = 'cart';
 export const changePassword = 'change-password';
 export const checkout = 'checkout';
 export const notifyOrder = 'redirect/payment';
-export const order = 'order/:id';
+export const order = 'order/:orderId';
 export const orderHistory = 'orders';
 export const profile = 'profile';

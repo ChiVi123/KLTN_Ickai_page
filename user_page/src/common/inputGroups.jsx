@@ -38,7 +38,13 @@ const phone = {
 
 export const login = [email, password];
 export const register = [
-    name,
+    {
+        type: types.text,
+        label: labels.name,
+        inputName: inputNames.name,
+        placeholder: placeholders.name,
+        autoComplete: autoCompletes.name,
+    },
     email,
     password,
     {
@@ -61,8 +67,8 @@ export const checkout = [
     {
         type: types.text,
         inputName: inputNames.name,
-        label: labels.name,
-        placeholder: placeholders.name,
+        label: 'Tên người nhận',
+        placeholder: 'Nhập tên...',
         isDisable: false,
     },
     {

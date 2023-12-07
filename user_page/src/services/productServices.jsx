@@ -28,12 +28,16 @@ const productServices = {
             const response = await request.get(`products/category/${id}`);
 
             return response.data;
-        } catch ({
-            response: {
-                data: { message },
-            },
-        }) {
-            throw message;
+        } catch (error) {
+            throw error;
+        }
+    },
+    getProductsByCategories: async () => {
+        try {
+            const response = await request.get('products/home');
+            return response.data;
+        } catch (error) {
+            console.log(error);
         }
     },
     getProduct: async (id) => {
@@ -41,7 +45,7 @@ const productServices = {
             const response = await request.get(`products/${id}`);
             return response.data;
         } catch (error) {
-            console.log(error);
+            throw error;
         }
     },
 };

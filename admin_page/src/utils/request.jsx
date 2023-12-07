@@ -9,8 +9,8 @@ const getToken = () => {
     const localStorage = window.localStorage.getItem(key);
 
     if (localStorage) {
-        const { user } = JSON.parse(localStorage);
-        const { item } = JSON.parse(user);
+        const { users } = JSON.parse(localStorage);
+        const { item } = JSON.parse(users);
 
         if (item?.accessToken) {
             return item?.accessToken;

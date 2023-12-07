@@ -34,10 +34,10 @@
 }
 
 .img {
-    height: 5rem;
-    margin-right: 1.4rem;
-    border-radius: 0.8rem;
-    border: 0.1rem solid #0000001a;
+    height: 50px;
+    margin-right: 14px;
+    border-radius: 8px;
+    border: 1px solid #0000001a;
 }
 
 .info {
@@ -46,7 +46,6 @@
 }
 
 .text {
-    padding-top: 1.2rem;
     color: #717171;
     font-size: 1.4rem;
 
@@ -56,8 +55,7 @@
 }
 
 .large-text {
-    display: block;
-    padding-top: 1.2rem;
+    display: inline-block;
 
     color: var(--text-1-color);
     font-size: 1.8rem;

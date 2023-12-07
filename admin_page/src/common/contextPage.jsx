@@ -20,6 +20,7 @@ export const makePay = 'Thanh toán';
 export const moreDetail = 'Xem chi tiết';
 export const no = 'Không';
 export const paymentMethod = 'Phương thức thanh toán';
+export const product = 'sản phẩm';
 export const quantity = 'Số lượng';
 export const resolvePrice = 'Thành tiền';
 export const review = 'Đánh giá';

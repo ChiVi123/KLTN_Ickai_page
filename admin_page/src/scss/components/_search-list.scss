@@ -1,0 +1,23 @@
+.search-list {
+    padding: 16px 8px;
+
+    &__form {
+        padding: 12px 12px;
+        border: 1px solid rgba(#000000, 0.2);
+        border-radius: 4px;
+    }
+
+    &__icon {
+        color: rgba(#000000, 0.4);
+    }
+
+    &__input {
+        width: calc(100% - 16px);
+        padding-left: 8px;
+        color: var(--typography-2-color);
+    }
+
+    &:focus-within &__icon {
+        color: var(--typography-2-color);
+    }
+}

@@ -1,11 +1,10 @@
 import { yupResolver } from '@hookform/resolvers/yup';
+import classNames from 'classnames/bind';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-
-import classNames from 'classnames/bind';
 import {
     contextButton,
     contextPage,
@@ -22,12 +21,10 @@ import { Button, Col, Row, TextField, Typography } from '~/components';
 import { userActions, userSelector } from '~/redux';
 import styles from '~/scss/pages/login.module.scss';
 import { authServices } from '~/services';
-import { logger } from '~/utils/logger';
 
 const cx = classNames.bind(styles);
 
 function Login() {
-    const isLogger = false;
     const {
         handleSubmit,
         register,
@@ -51,10 +48,6 @@ function Login() {
 
     const handleOnSubmit = async (data) => {
         const result = await authServices.login(data);
-
-        if (isLogger) {
-            logger({ groupName: Login.name, values: [result] });
-        }
 
         if (result) {
             dispatch(userActions.addUser(result));

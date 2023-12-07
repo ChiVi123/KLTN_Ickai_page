@@ -8,7 +8,7 @@ export const getProductById = createAsyncThunk(
             const result = await productServices.getProduct(id);
             return result;
         } catch (error) {
-            return rejectWithValue(error.response.data);
+            return rejectWithValue(error?.response?.data?.message);
         }
     },
 );

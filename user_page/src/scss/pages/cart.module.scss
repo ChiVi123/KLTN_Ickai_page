@@ -3,38 +3,8 @@
     border-bottom: 1px solid var(--border-color);
 }
 
-.wrap {
-    display: flex;
-    flex-direction: column;
-    row-gap: var(--spacer-3);
-    padding: var(--spacer-2) var(--spacer-3);
-    border-radius: var(--spacer-2);
-    background-color: var(--bg-contrast-light-3-color);
-
-    &-texts {
-        display: flex;
-        justify-content: space-between;
-    }
-
-    &-buttons {
-        display: flex;
-        justify-content: center;
-        column-gap: var(--spacer-3);
-    }
-}
-
-.text-value {
-    color: var(--text-3-color);
-}
-
-.textarea {
-    width: 100%;
-    padding: var(--spacer-2) var(--spacer-3);
-    color: var(--text-1-color);
-    background-color: transparent;
-    outline: none;
-
-    &:focus {
-        border-color: var(--border-color);
-    }
+.section-bottom {
+    margin-top: 16px;
+    margin-right: 6px;
+    margin-left: 6px;
 }

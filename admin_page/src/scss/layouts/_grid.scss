@@ -72,6 +72,10 @@ $gutters: (
         justify-content: space-between;
     }
 
+    &.align-items-center {
+        align-items: center;
+    }
+
     > * {
         @include spacing-x(padding, calc(var(--grid-gutter-x) * 0.5));
         margin-top: var(--grid-gutter-y);

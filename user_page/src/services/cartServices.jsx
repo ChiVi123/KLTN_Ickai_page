@@ -4,13 +4,9 @@ const cartServices = {
     getCartByToken: async () => {
         try {
             const response = await request.get('cart');
-            return response;
-        } catch ({
-            response: {
-                data: { message },
-            },
-        }) {
-            throw message;
+            return response.data;
+        } catch (error) {
+            throw error?.response?.data?.message;
         }
     },
     addCart: async (data) => {

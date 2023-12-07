@@ -1,16 +1,16 @@
 import { faLock, faLockOpen, faPen } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import ProgressBar from '@ramonak/react-progress-bar';
 import classNames from 'classnames/bind';
 import { useDispatch } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import Swal from 'sweetalert2';
-
-import { contextPage, directions, notifies, titles } from '~/common';
+import { contextPage, directions, keys, notifies, titles } from '~/common';
 import { ButtonIcon } from '~/components';
 import { productsAsync } from '~/redux';
 import { productServices } from '~/services';
-import { currencyVN } from '~/utils/funcs';
+import { currencyVN, formatLocalDate } from '~/utils/funcs';
 
 import styles from '~/scss/pages/products/product-item.module.scss';
 
@@ -58,16 +58,27 @@ function ProductItem({ product }) {
 
     const itemPerPage = 5;
     const firstPage = 1;
-    const currentPage = searchParams.get('page') || firstPage;
+    const currentPage = parseInt(searchParams.get(keys.page)) || firstPage;
+    const query = searchParams.get(keys.query) || '';
+    const minPrice = parseInt(searchParams.get(keys.minPrice)) || 0;
+    const maxPrice = parseInt(searchParams.get(keys.maxPrice)) || undefined;
+    const productSort = searchParams.get(keys.sortBy) || 'latest';
+    const productState = searchParams.get(keys.state) || '';
 
     const handleClick = (product) => {
         handleSoftDelete(product, () => {
             dispatch(
-                productsAsync.getAllState({
-                    page: currentPage - 1,
+                productsAsync.search({
+                    query,
+                    minPrice,
+                    maxPrice,
+                    sortBy: productSort,
+                    state: productState,
+                    page: currentPage,
                     size: itemPerPage,
                 }),
             );
+            dispatch(productsAsync.count());
         });
     };
 
@@ -82,11 +93,29 @@ function ProductItem({ product }) {
                     />
                 )}
             </td>
-            <td>
+            <td className={cx('col-product-name')}>
                 <span className={cx('product-name')}>{product.name}</span>
             </td>
-            <td>{product.price && currencyVN(product.price)}</td>
-            <td>
+            <td className={cx('col-date')}>
+                {formatLocalDate(new Date(product.createdDate))}
+            </td>
+            <td className={cx('col-stock')}>
+                <div className={cx('stock-wrap')}>
+                    <ProgressBar
+                        height='4px'
+                        width='80px'
+                        labelSize='0'
+                        completed={product.quantity}
+                        maxCompleted={product.quantity + product.sold}
+                        bgColor={'#22c55e'}
+                    />
+                    <span>
+                        {product.quantity} {contextPage.product}
+                    </span>
+                </div>
+            </td>
+            <td>{product.price && currencyVN(product.discount)}</td>
+            <td className={cx('col-actions')}>
                 {product.state === 'enable' && (
                     <ButtonIcon to={directions.editProduct(product.id)}>
                         <FontAwesomeIcon icon={faPen} />

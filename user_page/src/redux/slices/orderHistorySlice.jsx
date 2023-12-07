@@ -13,19 +13,18 @@ const orderHistorySlice = createSlice({
             );
         },
     },
-    extraReducers: {
-        // getAllOrder
-        [getAllOrder.pending]: (state) => {
+    extraReducers: (builder) => {
+        builder.addCase(getAllOrder.pending, (state) => {
             state.isLoading = true;
-        },
-        [getAllOrder.fulfilled]: (state, { payload }) => {
+        });
+        builder.addCase(getAllOrder.fulfilled, (state, { payload }) => {
             state.isLoading = false;
             state.list = payload.list;
             state.items = payload.list;
-        },
-        [getAllOrder.rejected]: (state, { payload }) => {
+        });
+        builder.addCase(getAllOrder.rejected, (state) => {
             state.message = 'error';
-        },
+        });
     },
 });
 

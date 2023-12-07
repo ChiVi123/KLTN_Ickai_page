@@ -3,20 +3,32 @@ import { faLock, faLockOpen } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames/bind';
 import HTMLReactParser from 'html-react-parser';
-import PropTypes from 'prop-types';
+import { useDispatch } from 'react-redux';
+import { useSearchParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
-import { notifies, titles } from '~/common';
-
+import { keys, notifies, titles } from '~/common';
 import { ButtonIcon } from '~/components';
-import styles from '~/scss/pages/reviews/review-item.module.scss';
+import { reviewsAsync } from '~/redux';
 import { reviewServices } from '~/services';
+import { formatLocalDate } from '~/utils/funcs';
+
+import styles from '~/scss/pages/reviews/review-item.module.scss';
 
 const cx = classNames.bind(styles);
 const reactSwal = withReactContent(Swal);
 
-function ReviewItem({ review, callback }) {
+function ReviewItem({ review }) {
+    const [searchParams] = useSearchParams();
+    const dispatch = useDispatch();
+
+    const itemPerPage = 5;
+    const firstPage = 1;
+    const currentPage = parseInt(searchParams.get(keys.page)) || firstPage;
+    const reviewState = searchParams.get(keys.state) || '';
+    const reviewSort = searchParams.get(keys.sortBy) || 'newest';
+
     const handleReadContent = (content) => {
         reactSwal.fire({
             title: titles.contentReview,
@@ -36,7 +48,15 @@ function ReviewItem({ review, callback }) {
                 if (resultBlock?.message === expectMessageBlock) {
                     toast.success(notifies.blockReviewSuccess);
 
-                    callback();
+                    dispatch(
+                        reviewsAsync.search({
+                            sortBy: reviewSort,
+                            state: reviewState,
+                            page: currentPage - 1,
+                            size: itemPerPage,
+                        }),
+                    );
+                    dispatch(reviewsAsync.count());
                 } else {
                     toast.error(notifies.blockReviewFail);
                 }
@@ -48,7 +68,15 @@ function ReviewItem({ review, callback }) {
                 if (resultEnable?.message === expectMessageEnable) {
                     toast.success(notifies.unblockReviewSuccess);
 
-                    callback();
+                    dispatch(
+                        reviewsAsync.search({
+                            sortBy: reviewSort,
+                            state: reviewState,
+                            page: currentPage - 1,
+                            size: itemPerPage,
+                        }),
+                    );
+                    dispatch(reviewsAsync.count());
                 } else {
                     toast.error(notifies.unblockReviewFail);
                 }
@@ -60,16 +88,13 @@ function ReviewItem({ review, callback }) {
 
     return (
         <tr>
-            <td className={cx('td-review-id')} title={review.id}>
-                {review.id}
-            </td>
             <td className={cx('td-user')} title={review.reviewedBy}>
                 {review.reviewedBy}
             </td>
             <td className={cx('td-product')} title={review.productname}>
                 {review.productname}
             </td>
-            <td>{review.lastupdateDate || review.createdDate}</td>
+            <td>{formatLocalDate(new Date(review.createdDate))}</td>
             <td>
                 <ButtonIcon
                     color={review.state === 'block' ? 'third' : 'second'}
@@ -91,9 +116,5 @@ function ReviewItem({ review, callback }) {
         </tr>
     );
 }
-
-ReviewItem.propTypes = {
-    callback: PropTypes.func,
-};
 
 export default ReviewItem;

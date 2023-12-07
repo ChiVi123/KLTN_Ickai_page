@@ -2,17 +2,15 @@ import { request } from '~/utils';
 
 const prefix = 'admin/manage/orders';
 const orderServices = {
-    getAllOrder: async (page) => {
+    async countState() {
         try {
-            const response = await request.get('admin/manage/ordersEnable', {
-                params: { page, size: 10 },
-            });
+            const response = await request.get('admin/orders/count');
             return response.data;
         } catch (error) {
-            throw error;
+            console.log(error);
         }
     },
-    getOrderById: async (id) => {
+    async getOrderById(id) {
         try {
             const response = await request.get(`${prefix}/${id}`);
             return response.data;
@@ -20,7 +18,7 @@ const orderServices = {
             throw error;
         }
     },
-    cancelById: async (id) => {
+    async cancelById(id) {
         try {
             const response = await request.put(`${prefix}/setcancel/${id}`);
             return response;
@@ -28,7 +26,7 @@ const orderServices = {
             throw error;
         }
     },
-    deliveryById: async (id) => {
+    async deliveryById(id) {
         try {
             const response = await request.put(`${prefix}/setdelivery/${id}`);
             return response;
@@ -36,7 +34,7 @@ const orderServices = {
             throw error;
         }
     },
-    completeById: async (id) => {
+    async completeById(id) {
         try {
             const response = await request.put(`${prefix}/setcomplete/${id}`);
             return response;
