@@ -35,7 +35,7 @@ export const menuAccount = [
 export const sorts = [
     { name: 'Mới nhất', value: 'latest' },
     { name: 'Bán chạy', value: 'sold' },
-    { name: 'Giá thấp đến cao', value: 'priceAsc' },
+    { name: 'Giá thấp đến cao', value: '' },
     { name: 'Giá cao đến thấp', value: 'priceDesc' },
 ];
 export const sortMobile = [

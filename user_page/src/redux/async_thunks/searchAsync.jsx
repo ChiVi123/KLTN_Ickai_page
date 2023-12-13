@@ -1,12 +1,17 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { productServices, searchServices } from '~/services';
+import { request } from '~/utils';
 
 export const getAllByQuery = createAsyncThunk(
     'search/getAllByQuery',
-    async ({ query, sortBy, minPrice, maxPrice }, { rejectWithValue }) => {
+    async (
+        { query, sortBy, minPrice, maxPrice, page, size },
+        { rejectWithValue },
+    ) => {
         try {
-            const items = await searchServices.getProducts(query);
-            return { items, sortBy, minPrice, maxPrice };
+            const response = await request.get('products/search', {
+                params: { q: query, sortBy, minPrice, maxPrice },
+            });
+            return { items: response.data, page, size };
         } catch (error) {
             return rejectWithValue(error.error?.response?.data?.message);
         }
@@ -14,10 +19,21 @@ export const getAllByQuery = createAsyncThunk(
 );
 export const getAllByCategoryId = createAsyncThunk(
     'search/getAllByCategoryId',
-    async ({ categoryId, sortBy, minPrice, maxPrice }, { rejectWithValue }) => {
+    async (
+        { categoryId, sortBy, minPrice, maxPrice, page, size },
+        { rejectWithValue },
+    ) => {
         try {
-            const items = await productServices.getAllByCategory(categoryId);
-            return { items, sortBy, minPrice, maxPrice };
+            const response = await request.get('products/searchcategory', {
+                params: {
+                    id: categoryId,
+                    sortBy,
+                    minPrice,
+                    maxPrice,
+                    state: 'enable',
+                },
+            });
+            return { items: response.data, page, size };
         } catch (error) {
             return rejectWithValue(error?.response?.data?.message);
         }

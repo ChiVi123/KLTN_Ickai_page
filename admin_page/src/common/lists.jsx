@@ -45,6 +45,7 @@ export const tableProducts = [
     'Tên sản phẩm',
     'Ngày tạo',
     'Tồn kho',
+    'Đã bán',
     'Giá',
     'Các thao tác',
 ];
@@ -66,13 +67,15 @@ export const tableUsers = [
     'Số điện thoại',
     'Email',
     'Vai trò',
-    'Các thao tác',
+    'Trạng thái',
+    'Thao tác',
 ];
 export const tableReviews = [
-    'Tên người dùng',
     'Tên sản phẩm',
+    'Tên người dùng',
+    'Nội dung',
     'Ngày tạo',
-    'Các thao tác',
+    'Thao tác',
 ];
 export const formatsDescription = [
     'header',

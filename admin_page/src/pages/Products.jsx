@@ -49,7 +49,7 @@ function Products() {
     const query = searchParams.get(keys.query) || '';
     const minPrice = parseInt(searchParams.get(keys.minPrice)) || 0;
     const maxPrice = parseInt(searchParams.get(keys.maxPrice)) || undefined;
-    const productSort = searchParams.get(keys.sortBy) || 'latest';
+    const productSort = searchParams.get(keys.sortBy) || '';
     const productState = searchParams.get(keys.state) || '';
 
     useEffect(() => {
@@ -95,10 +95,6 @@ function Products() {
 
             <Row gx={0} alignItems='center'>
                 <Col baseCols={3}>
-                    {/* {isLoading ? (
-                        <div style={{ height: '49px' }}></div>
-                    ) : (
-                        )} */}
                     <PriceField max={productMaxPrice} />
                 </Col>
                 <Col>

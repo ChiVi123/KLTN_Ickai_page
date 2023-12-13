@@ -11,7 +11,7 @@ function Tabs({ tabs = [] }) {
         setTab(value);
         setSearchParams((prev) => ({
             ...createObjectParams(prev),
-            state: value,
+            state: value === 'all' ? '' : value,
             page: 1,
         }));
     };

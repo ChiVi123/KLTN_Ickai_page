@@ -36,5 +36,10 @@
         "toastify",
         "vnpay",
         "Xmark"
-    ]
+    ],
+    "[javascript][javascriptreact]": {
+        "editor.codeActionsOnSave": {
+            "source.organizeImports": "explicit"
+        }
+    }
 }

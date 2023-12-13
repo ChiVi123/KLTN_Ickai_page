@@ -69,6 +69,8 @@ function Reviews() {
                 ))}
             </Table>
 
+            <div style={{ marginBottom: '28px' }}></div>
+
             <Pagination total={totalPage} current={currentPage} center />
         </section>
     );
