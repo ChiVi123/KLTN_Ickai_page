@@ -4,14 +4,14 @@ import { request } from '~/utils';
 export const getAllByQuery = createAsyncThunk(
     'search/getAllByQuery',
     async (
-        { query, sortBy, minPrice, maxPrice, page, size },
+        { query, categoryName, sortBy, minPrice, maxPrice, page, size },
         { rejectWithValue },
     ) => {
         try {
             const response = await request.get('products/search', {
                 params: { q: query, sortBy, minPrice, maxPrice },
             });
-            return { items: response.data, page, size };
+            return { items: response.data, categoryName, page, size };
         } catch (error) {
             return rejectWithValue(error.error?.response?.data?.message);
         }

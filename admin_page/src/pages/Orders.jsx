@@ -53,7 +53,7 @@ function Orders() {
                 from: formatDate(startDate),
                 to: formatDate(endDate),
                 state: orderState,
-                page: currentPage - 1,
+                page: currentPage,
             }),
         );
     }, [

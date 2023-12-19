@@ -6,7 +6,7 @@ import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import ReactModal from 'react-modal';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams, useSearchParams } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 import {
     contextPage,
     inputNames,
@@ -42,7 +42,6 @@ function Search() {
     const skeleton = toArray(sizeSearch);
     const dispatch = useDispatch();
     const [searchParams, setSearchParams] = useSearchParams();
-    const { categoryId } = useParams();
     const categories = useSelector(categoriesSelector.selectItems);
     const search = useSelector(searchSelector.selectList);
     const {
@@ -61,32 +60,37 @@ function Search() {
     const { isOpenModal, handleCloseModal, handleOpenModal } = useModal();
 
     const query = searchParams.get(keys.query) || '';
-    const sortBy = searchParams.get(keys.sortBy) || '';
+    const categoryName = searchParams.get(keys.categoryName) || '';
     const minPrice = parseInt(searchParams.get(keys.minPrice)) || undefined;
     const maxPrice = parseInt(searchParams.get(keys.maxPrice)) || undefined;
+    const sortBy = searchParams.get(keys.sortBy) || '';
     const currentPage = parseInt(searchParams.get(keys.page)) || 1;
 
     useEffect(() => {
         const params = {
-            sortBy,
+            query,
+            categoryName,
             minPrice,
             maxPrice,
+            sortBy,
             page: currentPage,
             size: sizeSearch,
         };
 
-        if (categoryId) {
-            params.categoryId = categoryId;
-            dispatch(searchAsync.getAllByCategoryId(params));
-        } else {
-            params.query = query;
-            dispatch(searchAsync.getAllByQuery(params));
-        }
+        dispatch(searchAsync.getAllByQuery(params));
 
         return () => {
             dispatch(searchActions.reset());
         };
-    }, [categoryId, currentPage, dispatch, maxPrice, minPrice, query, sortBy]);
+    }, [
+        categoryName,
+        currentPage,
+        dispatch,
+        maxPrice,
+        minPrice,
+        query,
+        sortBy,
+    ]);
 
     const handleOnSubmit = (data) => {
         setSearchParams((prev) => ({

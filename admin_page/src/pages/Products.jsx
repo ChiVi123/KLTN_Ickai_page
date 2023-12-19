@@ -21,7 +21,7 @@ import {
     Tabs,
     Typography,
 } from '~/components';
-import { productsActions, productsAsync, productsSelector } from '~/redux';
+import { productsAsync, productsSelector } from '~/redux';
 import PriceField from './products/PriceField';
 import ProductItem from './products/ProductItem';
 
@@ -37,11 +37,11 @@ function Products() {
     const productMaxPrice = useSelector(productsSelector.selectMaxPrice);
 
     const options = [
-        { value: 'latest', label: 'Mới nhất' },
+        { value: '', label: 'Mới nhất' },
         { value: 'oldest', label: 'Cũ nhất' },
         { value: 'sold', label: 'Bán chạy' },
         { value: 'priceDesc', label: 'Giá cao đến thấp' },
-        { value: '', label: 'Giá thấp đến cao' },
+        { value: 'priceAsc', label: 'Giá thấp đến cao' },
     ];
     const itemPerPage = 5;
     const firstPage = 1;
@@ -64,10 +64,6 @@ function Products() {
                 size: itemPerPage,
             }),
         );
-
-        return () => {
-            dispatch(productsActions.resetList());
-        };
     }, [
         currentPage,
         dispatch,

@@ -23,14 +23,22 @@ const searchSlice = createSlice({
             state.isLoading = true;
         });
         builder.addCase(getAllByQuery.fulfilled, (state, { payload }) => {
+            let list = payload.items;
+
+            if (payload.categoryName) {
+                list = payload.items.filter(
+                    (item) => payload.categoryName === item.category,
+                );
+            }
+
             const page = payload.page - 1;
             const size = payload.size;
             const start = page * size;
-            const total = Math.ceil(payload.items.length / size);
+            const total = Math.ceil(list.length / size);
 
             state.status = keys.fulfilled;
             state.isLoading = false;
-            state.items = payload.items.slice(start, start + size);
+            state.items = list.slice(start, start + size);
             state.totalPage = total;
         });
         builder.addCase(getAllByQuery.rejected, (state, { payload }) => {

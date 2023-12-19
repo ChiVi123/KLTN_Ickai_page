@@ -29,14 +29,14 @@ function Reviews() {
     const firstPage = 1;
     const currentPage = parseInt(searchParams.get(keys.page)) || firstPage;
     const reviewState = searchParams.get(keys.state) || '';
-    const reviewSort = searchParams.get(keys.sortBy) || 'newest';
+    const reviewSort = searchParams.get(keys.sortBy) || '';
 
     useEffect(() => {
         dispatch(
             reviewsAsync.search({
                 sortBy: reviewSort,
                 state: reviewState,
-                page: currentPage - 1,
+                page: currentPage,
                 size: itemPerPage,
             }),
         );

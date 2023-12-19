@@ -108,7 +108,7 @@ export const modulesDescription = {
     ],
 };
 export const optionSorts = [
-    { value: 'newest', label: 'Mới nhất' },
+    { value: '', label: 'Mới nhất' },
     { value: 'oldest', label: 'Cũ nhất' },
 ];
 export const optionProductSorts = [

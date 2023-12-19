@@ -17,9 +17,9 @@ export const search = createAsyncThunk(
     ) {
         try {
             const response = await request.get('admin/orders', {
-                params: { q: query, sortBy, from, to, state, page, size },
+                params: { q: query, sortBy, from, to, state },
             });
-            return response.data;
+            return { list: response.data, page, size };
         } catch (error) {
             return rejectWithValue(error);
         }
