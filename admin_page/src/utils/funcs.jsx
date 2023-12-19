@@ -93,3 +93,8 @@ export function createObjectList() {
         status: 'pending',
     };
 }
+export function resolverPagination({ page, size, length }) {
+    const start = (page - 1) * size;
+    const total = Math.ceil(length / size);
+    return { start, total };
+}

@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { contentProductStates } from '~/common/enums';
+import { resolverPagination } from '~/utils/funcs';
 import { count, getById, search } from '../async_thunks/productsAsync';
 import { products } from '../variables';
 
@@ -55,21 +56,13 @@ const productsSlice = createSlice({
             state.list.status = 'pending';
         });
         builder.addCase(search.fulfilled, (state, { payload }) => {
-            const page = payload.page - 1;
-            const size = payload.size;
-            const start = page * size;
-            const total = Math.ceil(payload.list.length / size);
-
-            // if (state.isFirstCall) {
-            //     state.maxPrice = Math.max(
-            //         ...payload.list.map(({ discount }) => discount),
-            //     );
-            //     state.isFirstCall = false;
-            // }
-
+            const { start, total } = resolverPagination({
+                ...payload,
+                length: payload.list.length,
+            });
             state.list.isLoading = false;
             state.list.status = 'fulfilled';
-            state.list.items = payload.list.slice(start, start + size);
+            state.list.items = payload.list.slice(start, start + payload.size);
             state.list.totalPage = total;
         });
         builder.addCase(search.rejected, (state, { payload }) => {

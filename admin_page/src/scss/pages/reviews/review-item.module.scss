@@ -1,15 +1,31 @@
-.wrapper-content {
-    min-height: 5rem;
-    padding: 0.8rem;
-    color: var(--text-color);
-    font-size: 1.6rem;
-    text-align: left;
-    background-color: #f2f3f5;
-    border-radius: 1.4rem;
+.td {
+    &-user {
+        --table-tb-user: 120px;
+        width: calc(var(--table-tb-user) + var(--table-padding));
+    }
+
+    &-product {
+        --table-tb-user: 160px;
+        max-width: calc(var(--table-tb-user) + var(--table-padding));
+    }
+
+    &-content {
+        --table-tb-content: 240px;
+        max-width: calc(var(--table-tb-content) + var(--table-padding));
+    }
+
+    &-create-date {
+        --table-tb-create-date: 126px;
+        max-width: calc(var(--table-tb-create-date) + var(--table-padding));
+    }
+
+    &-action {
+        --table-tb-action: 80px;
+        max-width: calc(var(--table-tb-action) + var(--table-padding));
+    }
 }
 
-.td {
-    &-review-id,
+.data {
     &-user,
     &-product {
         white-space: nowrap;
@@ -17,15 +33,12 @@
         text-overflow: ellipsis;
     }
 
-    &-review-id {
-        width: 120px;
-    }
-
-    &-user {
-        width: 160px;
-    }
-
-    &-product {
-        max-width: 220px;
+    &-content {
+        min-height: 50px;
+        max-height: 60px;
+        padding: 8px;
+        font-size: 1.6rem;
+        text-align: left;
+        overflow: auto;
     }
 }

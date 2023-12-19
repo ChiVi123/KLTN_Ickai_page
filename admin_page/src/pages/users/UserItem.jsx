@@ -5,6 +5,7 @@ import { useDispatch } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { keys, notifies } from '~/common';
+import { contentUserStates } from '~/common/enums';
 import { ButtonIcon } from '~/components';
 import { usersAsync } from '~/redux';
 import { userServices } from '~/services';
@@ -66,6 +67,7 @@ function UserItem({ user }) {
             <td>{user.phone}</td>
             <td>{user.email}</td>
             <td>{user.role.split('_')[1]}</td>
+            <td>{contentUserStates[user.state]}</td>
             <td>
                 {isDisplay && (
                     <ButtonIcon

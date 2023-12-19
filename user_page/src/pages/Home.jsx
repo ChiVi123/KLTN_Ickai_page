@@ -111,6 +111,9 @@ function Home() {
                         <Typography variant='h2'>
                             {contextPage.latest}
                         </Typography>
+                        <TextLink to={`/search?sortBy=latest`}>
+                            {contextPage.more}
+                        </TextLink>
                     </div>
 
                     {/* Latest */}
@@ -123,7 +126,9 @@ function Home() {
                         <Typography variant='h2'>
                             {contextPage.popular}
                         </Typography>
-                        <TextLink to={`/search/`}>{contextPage.more}</TextLink>
+                        <TextLink to={`/search/?sortBy=sold`}>
+                            {contextPage.more}
+                        </TextLink>
                     </div>
 
                     {/* Popular */}
@@ -138,7 +143,9 @@ function Home() {
                                 <Typography variant='h2'>
                                     {item.title}
                                 </Typography>
-                                <TextLink to={`/search/${item.categoryId}`}>
+                                <TextLink
+                                    to={`/search?categoryName=${item.title}`}
+                                >
                                     {contextPage.more}
                                 </TextLink>
                             </div>

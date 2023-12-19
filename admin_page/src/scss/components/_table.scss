@@ -12,7 +12,8 @@
 
     td,
     th {
-        padding-left: 8px;
+        --table-padding: 16px;
+        padding-left: var(--table-padding);
     }
 
     thead tr {

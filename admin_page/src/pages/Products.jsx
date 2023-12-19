@@ -21,7 +21,7 @@ import {
     Tabs,
     Typography,
 } from '~/components';
-import { productsActions, productsAsync, productsSelector } from '~/redux';
+import { productsAsync, productsSelector } from '~/redux';
 import PriceField from './products/PriceField';
 import ProductItem from './products/ProductItem';
 
@@ -37,11 +37,11 @@ function Products() {
     const productMaxPrice = useSelector(productsSelector.selectMaxPrice);
 
     const options = [
-        { value: 'latest', label: 'Mới nhất' },
+        { value: '', label: 'Mới nhất' },
         { value: 'oldest', label: 'Cũ nhất' },
         { value: 'sold', label: 'Bán chạy' },
         { value: 'priceDesc', label: 'Giá cao đến thấp' },
-        { value: '', label: 'Giá thấp đến cao' },
+        { value: 'priceAsc', label: 'Giá thấp đến cao' },
     ];
     const itemPerPage = 5;
     const firstPage = 1;
@@ -49,7 +49,7 @@ function Products() {
     const query = searchParams.get(keys.query) || '';
     const minPrice = parseInt(searchParams.get(keys.minPrice)) || 0;
     const maxPrice = parseInt(searchParams.get(keys.maxPrice)) || undefined;
-    const productSort = searchParams.get(keys.sortBy) || 'latest';
+    const productSort = searchParams.get(keys.sortBy) || '';
     const productState = searchParams.get(keys.state) || '';
 
     useEffect(() => {
@@ -64,10 +64,6 @@ function Products() {
                 size: itemPerPage,
             }),
         );
-
-        return () => {
-            dispatch(productsActions.resetList());
-        };
     }, [
         currentPage,
         dispatch,
@@ -95,10 +91,6 @@ function Products() {
 
             <Row gx={0} alignItems='center'>
                 <Col baseCols={3}>
-                    {/* {isLoading ? (
-                        <div style={{ height: '49px' }}></div>
-                    ) : (
-                        )} */}
                     <PriceField max={productMaxPrice} />
                 </Col>
                 <Col>

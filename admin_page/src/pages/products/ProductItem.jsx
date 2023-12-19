@@ -114,7 +114,12 @@ function ProductItem({ product }) {
                     </span>
                 </div>
             </td>
-            <td>{product.price && currencyVN(product.discount)}</td>
+            <td style={{ width: '70px', textAlign: 'right' }}>
+                {product.sold}
+            </td>
+            <td style={{ textAlign: 'right' }}>
+                {product.price && currencyVN(product.discount)}
+            </td>
             <td className={cx('col-actions')}>
                 {product.state === 'enable' && (
                     <ButtonIcon to={directions.editProduct(product.id)}>

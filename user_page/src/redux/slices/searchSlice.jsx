@@ -3,21 +3,16 @@ import { keys } from '~/common';
 import { getAllByCategoryId, getAllByQuery } from '../async_thunks/searchAsync';
 import { search } from '../variables';
 
-const sorts = {
-    latest: () => {},
-    sold: (a, b) => b.sold - a.sold,
-    priceAsc: (a, b) => a.discount - b.discount,
-    priceDesc: (a, b) => b.discount - a.discount,
-};
-
 const { name, initialState } = search;
 const searchSlice = createSlice({
     name,
     initialState,
     reducers: {
         reset(state) {
+            state.isLoading = false;
             state.items = [];
             state.message = '';
+            state.status = keys.pending;
             state.totalPage = 0;
         },
     },
@@ -28,16 +23,23 @@ const searchSlice = createSlice({
             state.isLoading = true;
         });
         builder.addCase(getAllByQuery.fulfilled, (state, { payload }) => {
-            const min = payload.minPrice;
-            const max = payload.maxPrice || Infinity;
-            const isInterval = (item) =>
-                item.discount >= min && item.discount <= max;
+            let list = payload.items;
+
+            if (payload.categoryName) {
+                list = payload.items.filter(
+                    (item) => payload.categoryName === item.category,
+                );
+            }
+
+            const page = payload.page - 1;
+            const size = payload.size;
+            const start = page * size;
+            const total = Math.ceil(list.length / size);
 
             state.status = keys.fulfilled;
             state.isLoading = false;
-            state.items = payload.items
-                .sort(sorts[payload.sortBy])
-                .filter(isInterval);
+            state.items = list.slice(start, start + size);
+            state.totalPage = total;
         });
         builder.addCase(getAllByQuery.rejected, (state, { payload }) => {
             state.status = keys.rejected;
@@ -52,16 +54,15 @@ const searchSlice = createSlice({
             state.isLoading = true;
         });
         builder.addCase(getAllByCategoryId.fulfilled, (state, { payload }) => {
-            const min = payload.minPrice;
-            const max = payload.maxPrice || Infinity;
-            const isInterval = (item) =>
-                item.discount >= min && item.discount <= max;
+            const page = payload.page - 1;
+            const size = payload.size;
+            const start = page * size;
+            const total = Math.ceil(payload.items.length / size);
 
             state.status = keys.fulfilled;
             state.isLoading = false;
-            state.items = payload.items
-                .sort(sorts[payload.sortBy])
-                .filter(isInterval);
+            state.items = payload.items.slice(start, start + size);
+            state.totalPage = total;
         });
         builder.addCase(getAllByCategoryId.rejected, (state, { payload }) => {
             state.status = keys.rejected;

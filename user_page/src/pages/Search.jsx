@@ -1,10 +1,12 @@
+import { faFilter } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { yupResolver } from '@hookform/resolvers/yup';
 import classNames from 'classnames/bind';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
+import ReactModal from 'react-modal';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams, useSearchParams } from 'react-router-dom';
-
+import { useSearchParams } from 'react-router-dom';
 import {
     contextPage,
     inputNames,
@@ -23,30 +25,23 @@ import {
 } from '~/components';
 import { FilterField, ModalFilter, Sorts } from '~/components/search';
 import { ProductCardSkeleton } from '~/components/skeletons';
+import { useModal } from '~/hooks';
 import {
     categoriesSelector,
     searchActions,
     searchAsync,
     searchSelector,
 } from '~/redux';
-import { createObjectParams, toArray } from '~/utils/funcs';
-import { logger } from '~/utils/logger';
-
-import { faFilter } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import ReactModal from 'react-modal';
-import { useModal } from '~/hooks';
 import styles from '~/scss/pages/search.module.scss';
+import { createObjectParams, toArray } from '~/utils/funcs';
 
 const cx = classNames.bind(styles);
 
 function Search() {
-    const isLogger = false;
     const sizeSearch = 8;
     const skeleton = toArray(sizeSearch);
     const dispatch = useDispatch();
     const [searchParams, setSearchParams] = useSearchParams();
-    const { categoryId } = useParams();
     const categories = useSelector(categoriesSelector.selectItems);
     const search = useSelector(searchSelector.selectList);
     const {
@@ -65,28 +60,37 @@ function Search() {
     const { isOpenModal, handleCloseModal, handleOpenModal } = useModal();
 
     const query = searchParams.get(keys.query) || '';
-    const sortBy = searchParams.get(keys.sortBy) || 'latest';
-    const minPrice = parseInt(searchParams.get(keys.minPrice)) || 0;
-    const maxPrice = parseInt(searchParams.get(keys.maxPrice)) || 0;
+    const categoryName = searchParams.get(keys.categoryName) || '';
+    const minPrice = parseInt(searchParams.get(keys.minPrice)) || undefined;
+    const maxPrice = parseInt(searchParams.get(keys.maxPrice)) || undefined;
+    const sortBy = searchParams.get(keys.sortBy) || '';
     const currentPage = parseInt(searchParams.get(keys.page)) || 1;
 
     useEffect(() => {
-        const params = { sortBy, minPrice, maxPrice };
+        const params = {
+            query,
+            categoryName,
+            minPrice,
+            maxPrice,
+            sortBy,
+            page: currentPage,
+            size: sizeSearch,
+        };
 
-        if (query) {
-            params.query = query;
-            dispatch(searchAsync.getAllByQuery(params));
-        }
-
-        if (categoryId) {
-            params.categoryId = categoryId;
-            dispatch(searchAsync.getAllByCategoryId(params));
-        }
+        dispatch(searchAsync.getAllByQuery(params));
 
         return () => {
             dispatch(searchActions.reset());
         };
-    }, [categoryId, dispatch, maxPrice, minPrice, query, sortBy]);
+    }, [
+        categoryName,
+        currentPage,
+        dispatch,
+        maxPrice,
+        minPrice,
+        query,
+        sortBy,
+    ]);
 
     const handleOnSubmit = (data) => {
         setSearchParams((prev) => ({
@@ -94,10 +98,6 @@ function Search() {
             ...data,
         }));
     };
-
-    if (isLogger) {
-        logger({ groupName: Search.name, values: [search] });
-    }
 
     return (
         <div className='container'>

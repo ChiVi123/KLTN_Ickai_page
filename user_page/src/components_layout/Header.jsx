@@ -5,7 +5,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames/bind';
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import ReactModal from 'react-modal';
 import { Link, useSearchParams } from 'react-router-dom';
 
@@ -27,9 +27,17 @@ const cx = classNames.bind(styles);
 
 function Header() {
     const [searchParams] = useSearchParams();
+    const inputRef = useRef();
+    const inputMobileRef = useRef();
     const formAction = useRef(process.env.REACT_APP_CLIENT);
     const { isOpenModal, handleCloseModal, handleOpenModal } = useModal(false);
     const query = searchParams.get(keys.query) || '';
+
+    useEffect(() => {
+        inputRef.current.value = query;
+        inputMobileRef.current.value = query;
+        return () => {};
+    }, [query]);
 
     return (
         <header className={cx('wrap')}>
@@ -88,6 +96,7 @@ function Header() {
                         >
                             <FontAwesomeIcon icon={faMagnifyingGlass} />
                             <input
+                                ref={inputRef}
                                 name={inputNames.search}
                                 type='text'
                                 placeholder={placeholders.search}
@@ -118,6 +127,7 @@ function Header() {
                         >
                             <FontAwesomeIcon icon={faMagnifyingGlass} />
                             <input
+                                ref={inputMobileRef}
                                 name={inputNames.search}
                                 type='text'
                                 placeholder={placeholders.search}

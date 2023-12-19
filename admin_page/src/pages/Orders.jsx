@@ -43,7 +43,7 @@ function Orders() {
     const currentPage = parseInt(searchParams.get(keys.page)) || firstPage;
     const query = searchParams.get(keys.query) || '';
     const orderState = searchParams.get(keys.state) || '';
-    const orderSort = searchParams.get(keys.sortBy) || 'newest';
+    const orderSort = searchParams.get(keys.sortBy) || '';
 
     useEffect(() => {
         dispatch(
@@ -53,7 +53,7 @@ function Orders() {
                 from: formatDate(startDate),
                 to: formatDate(endDate),
                 state: orderState,
-                page: currentPage - 1,
+                page: currentPage,
             }),
         );
     }, [
