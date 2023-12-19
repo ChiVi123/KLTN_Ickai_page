@@ -1,3 +1,20 @@
+# KHOÁ LUẬN TỐT NGHIỆP
+
+### Khoa Đào tạo Chất lượng cao
+
+#### **Tên đề tài**: _Xây dựng website bán hàng linh kiện điện tử sử dụng Spring boot và React JS._.
+
+GVHD: **GVHD** \
+GVPB: **GVPB**
+
+Sinh viên thực hiện:
+| Họ và tên | MSSV |
+|----------|:-------------:|
+| Trần Minh Sang | 19110278 |
+| Nguyễn Hoàng Chí Vĩ | 19110021 |
+
+Thời gian thực hiện: 08/2023 - 012/2023
+
 # KLTN_Ickai_page
 
 **Repo Front End Create React Apps**
