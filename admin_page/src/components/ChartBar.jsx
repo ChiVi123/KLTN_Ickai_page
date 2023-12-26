@@ -9,15 +9,37 @@ import {
     YAxis,
 } from 'recharts';
 
-function ChartBar({ data, keyXAxis, keyBar, name }) {
+function ChartBar({
+    width = '100%',
+    data,
+    dataKey,
+    keyBar,
+    name,
+    layout = 'horizontal',
+}) {
+    const propX = {};
+    const propY = {};
+
+    if (layout === 'horizontal') {
+        propX.dataKey = dataKey;
+    }
+
+    if (layout === 'vertical') {
+        propX.type = 'number';
+        propY.type = 'category';
+        propY.dataKey = dataKey;
+        propY.width = 160;
+    }
+
     return (
-        <ResponsiveContainer width={'100%'} height={400}>
+        <ResponsiveContainer width={width} height={400}>
             <BarChart
                 data={data}
+                layout={layout}
                 margin={{ top: 40, right: 0, bottom: 15, left: 10 }}
             >
-                <XAxis dataKey={keyXAxis} />
-                <YAxis />
+                <XAxis {...propX} />
+                <YAxis {...propY} />
                 <CartesianGrid stroke='#ccc' strokeDasharray='5 5' />
                 <Tooltip />
                 <Legend />

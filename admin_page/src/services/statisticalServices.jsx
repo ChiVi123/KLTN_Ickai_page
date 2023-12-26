@@ -10,6 +10,14 @@ const statisticalServices = {
             throw error?.response?.data?.message;
         }
     },
+    async getQuantitySoldByCategory() {
+        try {
+            const response = await request.get('admin/products/quantitysold');
+            return response.data;
+        } catch (error) {
+            throw error?.response?.data?.message;
+        }
+    },
 };
 
 export default statisticalServices;
