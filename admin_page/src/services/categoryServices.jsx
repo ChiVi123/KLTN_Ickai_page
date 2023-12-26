@@ -18,6 +18,14 @@ const categoryServices = {
             console.log(error);
         }
     },
+    async getAllEnable() {
+        try {
+            const response = await request.get('categories');
+            return response.data;
+        } catch (error) {
+            console.log(error.response.data);
+        }
+    },
 };
 
 export default categoryServices;
