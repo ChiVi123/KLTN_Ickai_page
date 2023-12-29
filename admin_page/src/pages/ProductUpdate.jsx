@@ -41,12 +41,9 @@ import {
     productsSelector,
 } from '~/redux';
 import { productServices } from '~/services';
-import { logger } from '~/utils/logger';
 
 // Component
 function ProductUpdate() {
-    const isLogger = false;
-
     const { items: categories } = useSelector(categoriesSelector.selectEnable);
     const product = useSelector(productsSelector.selectItem);
     const dispatch = useDispatch();
@@ -140,10 +137,6 @@ function ProductUpdate() {
             },
         });
     };
-
-    if (isLogger) {
-        logger({ groupName: ProductUpdate.name, values: [product] });
-    }
 
     return (
         <div className='section section--full-screen'>

@@ -32,7 +32,6 @@ import {
 } from '~/redux';
 import { orderServices } from '~/services';
 import { averageRating } from '~/utils/funcs';
-import { logger } from '~/utils/logger';
 
 import { useModal } from '~/hooks';
 import styles from '~/scss/pages/product.module.scss';
@@ -52,7 +51,6 @@ function Product() {
     const dispatch = useDispatch();
     const [searchParams] = useSearchParams();
 
-    const isLogger = false;
     const currentPage = parseInt(searchParams.get(keys.page)) || 1;
 
     useEffect(() => {
@@ -116,10 +114,6 @@ function Product() {
 
         return total;
     }, [review.list]);
-
-    if (isLogger) {
-        logger({ groupName: Product.name, values: [review] });
-    }
 
     return (
         <div className='container'>

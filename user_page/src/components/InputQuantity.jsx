@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { useRef } from 'react';
 import { types } from '~/common';
 import { MinusIcon, PlusIcon } from '~/icons';
-import { logger } from '~/utils/logger';
 
 function InputQuantity({
     id = 'quantity',
@@ -11,7 +10,6 @@ function InputQuantity({
     initValue = 1,
     onChange = () => {},
 }) {
-    const isLogger = false;
     const inputRef = useRef({ value: initValue });
 
     const handleMinus = () => {
@@ -28,13 +26,6 @@ function InputQuantity({
         inputRef.current.value = ++value;
         onChange(value);
     };
-
-    if (isLogger) {
-        logger({
-            groupName: InputQuantity.name,
-            values: [inputRef.current.value],
-        });
-    }
 
     return (
         <div className='quantity'>

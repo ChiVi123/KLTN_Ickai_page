@@ -26,7 +26,6 @@ import {
 import { cartActions, userSelector } from '~/redux';
 import { cartServices } from '~/services';
 import { currencyVN } from '~/utils/funcs';
-import { logger } from '~/utils/logger';
 import styles from '~product/intro-product.module.scss';
 import CarouselProduct from './CarouselProduct';
 
@@ -41,7 +40,6 @@ function IntroProduct({
     stars,
     stock,
 }) {
-    const isLogger = false;
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const userId = useSelector(userSelector.selectId);
@@ -81,10 +79,6 @@ function IntroProduct({
             navigate(directions.cart);
         }
     };
-
-    if (isLogger) {
-        logger({ groupName: IntroProduct.name, values: [discount] });
-    }
 
     return (
         <section className='section'>

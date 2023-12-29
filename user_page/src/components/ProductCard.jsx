@@ -7,13 +7,11 @@ import { contextPage, directions, notifies } from '~/common';
 import { userSelector } from '~/redux';
 import { cartServices } from '~/services';
 import { currencyVN } from '~/utils/funcs';
-import { logger } from '~/utils/logger';
 
 import Button from './Button';
 import Typography from './Typography';
 
 function ProductCard({ product }) {
-    const isLogger = false;
     const percent = 100;
     const width = Math.floor((1 - product.sale) * percent);
     const [isLoading, setIsLoading] = useState(false);
@@ -39,10 +37,6 @@ function ProductCard({ product }) {
 
         setIsLoading(false);
     };
-
-    if (isLogger) {
-        logger({ groupName: ProductCard.name, values: [product] });
-    }
 
     return (
         <article className='product-card'>

@@ -36,7 +36,6 @@ import { logger } from '~/utils/logger';
 
 // Component
 function ProductCreate() {
-    const isLogger = false;
     // Hooks
     const { items: categories } = useSelector(categoriesSelector.selectEnable);
     const dispatch = useDispatch();
@@ -114,10 +113,6 @@ function ProductCreate() {
             },
         });
     };
-
-    if (isLogger) {
-        logger({ groupName: ProductCreate.name, values: [errors] });
-    }
 
     return (
         <div className='section section--full-screen'>

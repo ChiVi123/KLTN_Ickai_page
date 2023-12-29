@@ -2,10 +2,8 @@ import cx from 'classnames';
 import PropTypes from 'prop-types';
 import { useEffect, useRef, useState } from 'react';
 import { ArrowLeft, ArrowRight } from '~/icons';
-import { logger } from '~/utils/logger';
 
 function Carousel({ children, cols, g, gx, gy, classes }) {
-    const isLogger = false;
     const [params, setParams] = useState({
         index: 0,
         width: 0,
@@ -43,10 +41,6 @@ function Carousel({ children, cols, g, gx, gy, classes }) {
             return { ...prev, index };
         });
     };
-
-    if (isLogger) {
-        logger({ groupName: Carousel.name, values: [params] });
-    }
 
     return (
         <div className='carousel'>

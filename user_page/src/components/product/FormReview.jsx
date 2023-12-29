@@ -20,7 +20,6 @@ import {
 } from '~/components';
 import { reviewsAsync } from '~/redux';
 import { reviewServices } from '~/services';
-import { logger } from '~/utils/logger';
 
 function FormReview({
     productId = '',
@@ -28,7 +27,6 @@ function FormReview({
     edit = false,
     onClose,
 }) {
-    const isLogger = false;
     const {
         control,
         formState: { errors },
@@ -73,10 +71,6 @@ function FormReview({
         dispatch(reviewsAsync.getByProductId(productId));
         onClose();
     };
-
-    if (isLogger) {
-        logger({ groupName: FormReview.name, values: ['re-render'] });
-    }
 
     return (
         <form onSubmit={handleSubmit(handleOnSubmit)}>

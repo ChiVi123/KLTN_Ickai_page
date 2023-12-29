@@ -1,17 +1,11 @@
 import { Link } from 'react-router-dom';
 import { directions } from '~/common';
 import { currencyVN } from '~/utils/funcs';
-import { logger } from '~/utils/logger';
 import Typography from './Typography';
 
 function ProductWatched({ product }) {
-    const isLogger = false;
     const percent = 100;
     const width = Math.floor((1 - product.sale) * percent);
-
-    if (isLogger) {
-        logger({ groupName: ProductWatched.name, values: [product] });
-    }
 
     return (
         <article className='product-card'>

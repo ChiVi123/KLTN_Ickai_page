@@ -18,7 +18,6 @@ import {
 import { Button, ButtonIcon, TextField, Typography } from '~/components';
 import { categoriesAsync } from '~/redux';
 import { categoryServices } from '~/services';
-import { logger } from '~/utils/logger';
 
 function CategoryForm({
     category = { name: '', state: 'enable' },
@@ -90,11 +89,6 @@ function CategoryForm({
 
         onClose();
     };
-    const isLogger = false;
-
-    if (isLogger) {
-        logger({ groupName: CategoryForm.name, values: ['re-render'] });
-    }
 
     return (
         <form onSubmit={handleSubmit(handleOnSubmit)}>

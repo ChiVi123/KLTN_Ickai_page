@@ -11,7 +11,7 @@ const authServices = {
     },
     withSocial: async (data = { name: '', email: '', avatar: '' }) => {
         try {
-            const response = await request.post('auth/register/social', data);
+            const response = await request.post('auth/scocial', data);
             return response.data;
         } catch (error) {
             console.log(error);

@@ -16,10 +16,8 @@ import {
 import { Button, TextField, Typography } from '~/components';
 import { userSelector } from '~/redux';
 import { userServices } from '~/services';
-import { logger } from '~/utils/logger';
 
 function ChangePassword() {
-    const isLogger = false;
     const userId = useSelector(userSelector.selectId);
     const navigate = useNavigate();
     const {
@@ -44,10 +42,6 @@ function ChangePassword() {
             } else {
                 toast.error(notifies.changePasswordFail);
             }
-        }
-
-        if (isLogger) {
-            logger({ groupName: ChangePassword.name, values: [data] });
         }
     };
 

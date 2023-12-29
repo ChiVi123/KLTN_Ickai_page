@@ -14,4 +14,4 @@ export const signUpSuccess = 'Tạo tài khoản thành công';
 export const unblockReviewFail = 'Không thể mở khóa đánh giá này';
 export const unblockReviewSuccess = 'Đã mở khóa đánh giá này';
 export const unblockUserFail = 'Không thể mở khóa';
-export const unblockUserSuccess = 'Người dùng đã được mở';
+export const unblockUserSuccess = 'Đã được kích hoạt';

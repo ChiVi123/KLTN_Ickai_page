@@ -3,13 +3,12 @@ import { Fragment, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 
-import { contextPage, directions } from '~/common';
+import { contextPage } from '~/common';
 import { Col, ProductCard, Row, TextLink, Typography } from '~/components';
 import { ProductCardSkeleton } from '~/components/skeletons';
 import { cartAsync, categoriesSelector, userSelector } from '~/redux';
 import { productServices } from '~/services';
 import { toArray } from '~/utils/funcs';
-import { logger } from '~/utils/logger';
 
 import styles from '~/scss/pages/home.module.scss';
 
@@ -19,7 +18,6 @@ function Home() {
     const page = 0;
     const size = 10;
     const productsSkeleton = toArray(size);
-    const isLogger = false;
 
     const [latest, setLatest] = useState([]);
     const [popular, setPopular] = useState([]);
@@ -51,10 +49,6 @@ function Home() {
             dispatch(cartAsync.getByToken());
         }
     }, [accessToken, dispatch]);
-
-    if (isLogger) {
-        logger({ groupName: Home.name, values: ['re-render'] });
-    }
 
     const listProduct = (array = []) => (
         <Row cols={2} colsMd={5} g={1}>
@@ -89,7 +83,7 @@ function Home() {
                             {contextPage.category}
                         </Typography>
                         {categories.map((item) => {
-                            const path = `${directions.search}/${item.id}`;
+                            const path = `/search?categoryName=${item.name}`;
 
                             return (
                                 <Typography

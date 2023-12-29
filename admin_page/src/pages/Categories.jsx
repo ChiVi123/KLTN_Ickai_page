@@ -5,13 +5,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { contextButton, lists, titles } from '~/common';
 import { Button, Row, Table, Typography } from '~/components';
 import { categoriesAsync, categoriesSelector } from '~/redux';
-import { logger } from '~/utils/logger';
 
 import CategoryForm from './categories/CategoryForm';
 import CategoryItem from './categories/CategoryItem';
 
 function Categories() {
-    const isLogger = false;
     const dispatch = useDispatch();
     const { items: categories, isLoading } = useSelector(
         categoriesSelector.selectAllState,
@@ -24,10 +22,6 @@ function Categories() {
 
     const handleOpen = () => setIsOpen(true);
     const handleClose = () => setIsOpen(false);
-
-    if (isLogger) {
-        logger({ groupName: Categories.name, values: ['render'] });
-    }
 
     return (
         <section className='section section--full-screen'>

@@ -1,15 +1,8 @@
 import { inputGroups } from '~/common';
-import { logger } from '~/utils/logger';
 import Radio from '../Radio';
 import Typography from '../Typography';
 
 function PayMethods({ register = () => ({}) }) {
-    const isLogger = false;
-
-    if (isLogger) {
-        logger({ groupName: PayMethods.name, values: [register] });
-    }
-
     return (
         <>
             {inputGroups.payments.map((item) => (

@@ -36,15 +36,12 @@ import { PayMethods } from '~/components/checkout';
 import { cartAsync, userSelector } from '~/redux';
 import { cartServices, paymentServices, servicesGHN } from '~/services';
 import { currencyVN } from '~/utils/funcs';
-import { logger } from '~/utils/logger';
 
 import styles from '~/scss/pages/checkout.module.scss';
 
 const cx = classNames.bind(styles);
 
 function Checkout() {
-    const isLogger = false;
-
     // Hooks
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -149,11 +146,6 @@ function Checkout() {
             shippingFee: feeShip,
             payment,
         };
-        const isLogger = false;
-
-        if (isLogger) {
-            logger({ groupName: Checkout.name, values: [data] }, data);
-        }
 
         Swal.fire({
             title: contextPage.titleModalOrder,
@@ -193,10 +185,6 @@ function Checkout() {
             }
         });
     };
-
-    if (isLogger) {
-        logger({ groupName: Checkout, values: ['re-render'] });
-    }
 
     return (
         <div className='container'>

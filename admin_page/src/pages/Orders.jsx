@@ -21,7 +21,12 @@ import {
 } from '~/components';
 import { orderHistorySelector, ordersAsync } from '~/redux';
 import { orderServices } from '~/services';
-import { currencyVN, formatDate, formatLocalDate } from '~/utils/funcs';
+import {
+    createObjectParams,
+    currencyVN,
+    formatDate,
+    formatLocalDate,
+} from '~/utils/funcs';
 
 import styles from '~/scss/pages/orders.module.scss';
 
@@ -30,7 +35,7 @@ function Orders() {
     const [tabs, setTabs] = useState([]);
     const [startDate, setStartDate] = useState(new Date('01-01-2022'));
     const [endDate, setEndDate] = useState(new Date());
-    const [searchParams] = useSearchParams();
+    const [searchParams, setSearchParams] = useSearchParams();
     const dispatch = useDispatch();
     const {
         items: orders,
@@ -80,9 +85,17 @@ function Orders() {
 
     const onStartDate = (value) => {
         setStartDate(value);
+        setSearchParams((prev) => ({
+            ...createObjectParams(prev),
+            page: 1,
+        }));
     };
     const onEndDate = (value) => {
         setEndDate(value);
+        setSearchParams((prev) => ({
+            ...createObjectParams(prev),
+            page: 1,
+        }));
     };
 
     return (

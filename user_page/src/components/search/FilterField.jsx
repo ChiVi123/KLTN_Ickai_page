@@ -1,5 +1,4 @@
 import classNames from 'classnames/bind';
-import { useRef } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { keys } from '~/common';
 import { Typography } from '~/components';
@@ -10,12 +9,8 @@ import styles from '~search/filter-field.module.scss';
 const cx = classNames.bind(styles);
 
 function FilterField({ heading, data = [] }) {
-    const isLogger = useRef(false);
     const [searchParams, getSearchParams] = useSearchParams();
     const categoryName = searchParams.get(keys.categoryName) || '';
-
-    if (isLogger.current) {
-    }
 
     function handleClick(value) {
         getSearchParams((prev) => ({

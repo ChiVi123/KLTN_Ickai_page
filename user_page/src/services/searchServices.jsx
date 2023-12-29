@@ -1,7 +1,5 @@
 import { request } from '~/utils';
-import { logger } from '~/utils/logger';
 
-const isLogger = false;
 const searchServices = {
     getProducts: async (query) => {
         try {
@@ -11,10 +9,6 @@ const searchServices = {
 
             return response.data;
         } catch (error) {
-            if (isLogger) {
-                logger({ groupName: 'search api', values: [error] });
-            }
-
             return { error, isSuccess: false };
         }
     },

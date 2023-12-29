@@ -3,7 +3,7 @@ import { Fragment } from 'react';
 
 import { contextPage, contextParams, enums } from '~/common';
 import { Button, Col, Row, Typography } from '~/components';
-import { currencyVN } from '~/utils/funcs';
+import { currencyVN, formatLocalDate } from '~/utils/funcs';
 import styles from '~order-history/order-item.module.scss';
 
 const cx = classNames.bind(styles);
@@ -33,7 +33,7 @@ function OrderItem({ order }) {
                         </div>
                         <div className={cx('inner')}>
                             <span className={cx('normal-text')}>
-                                {order.createdDate}
+                                {formatLocalDate(new Date(order.createdDate))}
                             </span>
                             <span className={cx('normal-text')}>
                                 {currencyVN(order.totalPrice)}

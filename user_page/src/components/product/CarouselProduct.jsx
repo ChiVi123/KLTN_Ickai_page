@@ -1,21 +1,14 @@
 import classNames from 'classnames/bind';
 import { useState } from 'react';
-
 import { Carousel, Col, Skeleton } from '~/components';
-import { logger } from '~/utils/logger';
 
 import styles from '~product/carousel-product.module.scss';
 
 const cx = classNames.bind(styles);
 
 function CarouselProduct({ images = [] }) {
-    const isLogger = false;
     const [indexImage, setIndexImage] = useState(0);
     const handleClick = (value) => setIndexImage(value);
-
-    if (isLogger) {
-        logger({ groupName: CarouselProduct.name, values: [...images] });
-    }
 
     return (
         <div className={cx('wrap-image')}>

@@ -17,14 +17,12 @@ import { TrashIcon } from '~/icons';
 import { cartAsync } from '~/redux';
 import { cartServices } from '~/services';
 import { currencyVN } from '~/utils/funcs';
-import { logger } from '~/utils/logger';
 
 import styles from '~cart/cart-list.module.scss';
 
 const cx = classNames.bind(styles);
 
 function CartItem({ product, isLoading = false }) {
-    const isLogger = false;
     const [loading, setLoading] = useState(isLoading);
     const dispatch = useDispatch();
 
@@ -60,13 +58,6 @@ function CartItem({ product, isLoading = false }) {
             }
         });
     };
-
-    if (isLogger) {
-        logger({
-            groupName: CartItem.name,
-            values: [product?.quantity, isLoading],
-        });
-    }
 
     return (
         <Row gx={2} classes={cx('align-start', 'item')}>

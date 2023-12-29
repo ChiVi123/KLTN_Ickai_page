@@ -1,21 +1,18 @@
 import classNames from 'classnames/bind';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-
+import { emptyCart } from '~/assets/images';
 import { contextPage, contextParams, directions } from '~/common';
 import { Button, TextLink, Typography } from '~/components';
 import { CartList } from '~/components/cart';
 import { cartAsync, cartSelector } from '~/redux';
 import { currencyVN } from '~/utils/funcs';
-import { logger } from '~/utils/logger';
 
-import { emptyCart } from '~/assets/images';
 import styles from '~/scss/pages/cart.module.scss';
 
 const cx = classNames.bind(styles);
 
 function Cart() {
-    const isLogger = false;
     const dispatch = useDispatch();
     const totalPrice = useSelector(cartSelector.selectTotalPrice);
     const totalProduct = useSelector(cartSelector.selectTotalProduct);
@@ -23,10 +20,6 @@ function Cart() {
     useEffect(() => {
         dispatch(cartAsync.getByToken());
     }, [dispatch]);
-
-    if (isLogger) {
-        logger({ groupName: Cart.name, values: [totalPrice] });
-    }
 
     return (
         <div className='width-md'>

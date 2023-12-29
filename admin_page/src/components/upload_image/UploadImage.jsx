@@ -8,11 +8,9 @@ import { uploadImage } from '~/assets/images';
 import { Button, Col, Row, Typography } from '~/components';
 import { productServices } from '~/services';
 
-import { logger } from '~/utils/logger';
 import { context, cx } from './constant';
 
 function UploadImage({ id, onChange, value = [], cols }) {
-    const isLogger = false;
     // Hooks
     // - useState
     const [dragover, setDragOver] = useState(false);
@@ -101,10 +99,6 @@ function UploadImage({ id, onChange, value = [], cols }) {
             },
         });
     };
-
-    if (isLogger) {
-        logger({ groupName: UploadImage.name, values: [id] });
-    }
 
     return (
         <div className={cx('wrapper')}>

@@ -7,7 +7,6 @@ import { contextPage, inputGroups, notifies, schemas, types } from '~/common';
 import { Button, Col, Row, TextField } from '~/components';
 import { userActions } from '~/redux';
 import { userServices } from '~/services';
-import { logger } from '~/utils/logger';
 
 const userType = {
     id: '',
@@ -17,7 +16,6 @@ const userType = {
 };
 
 function Form({ user = userType }) {
-    const isLogger = false;
     const dispatch = useDispatch();
     const {
         handleSubmit,
@@ -48,10 +46,6 @@ function Form({ user = userType }) {
             }
         }
     };
-
-    if (isLogger) {
-        logger({ groupName: Form.name, values: ['re-render'] });
-    }
 
     return (
         <form

@@ -80,8 +80,10 @@ function Login() {
                 };
                 const result = await authServices.withSocial(data);
 
-                dispatch(userActions.addUser(result));
-                toast.success(notifies.loginGoogleSuccess);
+                console.log(result);
+
+                // dispatch(userActions.addUser(result));
+                toast.success(notifies.loginSuccess);
             }
         })();
     }, [dispatch, profile]);
@@ -97,8 +99,6 @@ function Login() {
             toast.error(notifies.loginFail);
         }
     };
-
-    // logger({ groupName: 'Login', values: [inputs.login] });
 
     return (
         <article className='width-sm'>

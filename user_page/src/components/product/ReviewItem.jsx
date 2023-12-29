@@ -11,7 +11,6 @@ import { StarRating, Typography } from '~/components';
 import { useModal } from '~/hooks';
 import { reviewsAsync, userSelector } from '~/redux';
 import { reviewServices } from '~/services';
-import { logger } from '~/utils/logger';
 
 import styles from '~product/review.module.scss';
 
@@ -21,7 +20,6 @@ import FormReview from './FormReview';
 const cx = classNames.bind(styles);
 
 function ReviewItem({ review }) {
-    const isLogger = false;
     const level1 = 1;
 
     const dispatch = useDispatch();
@@ -45,13 +43,6 @@ function ReviewItem({ review }) {
             }
         });
     };
-
-    if (isLogger) {
-        logger({
-            groupName: ReviewItem.name,
-            values: [review],
-        });
-    }
 
     return (
         <div className={cx('wrap-review')}>
