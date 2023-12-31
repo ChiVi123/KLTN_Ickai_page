@@ -13,40 +13,44 @@ Sinh viên thực hiện:
 | Trần Minh Sang | 19110278 |
 | Nguyễn Hoàng Chí Vĩ | 19110021 |
 
-Thời gian thực hiện: 08/2023 - 012/2023
+Thời gian thực hiện: 08/2023 - 12/2023
 
-# KLTN_Ickai_page
+# Phía front end
 
-**Repo Front End Create React Apps**
+**Môi trường phía front end**
 
 node 20.5.1
 npm 10.0.0
 docker 24.0.6, build ed223c
 
-## Direct To Folder user_page/admin_page
+**Đến thư mục user_page/admin_page**
 
-### `npm i`
+Cài đặt thư viện
 
-### `npm start`
+`npm i`
 
-user_page open [http://localhost:3000](http://localhost:3000)
+Chạy ở chế độ dev
 
-admin_page open [http://localhost:3001](http://localhost:3001)
+`npm start`
 
-### `npm run build`
+user_page: [http://localhost:3000](http://localhost:3000)
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+admin_page: [http://localhost:3001](http://localhost:3001)
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Chạy ở chế độ product
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+**Tại thư mục user_page/admin_page**
 
-## Or Download Docker And Direct To Folder Docker
+`npm run build`
 
-### `docker compose up -d`
+**Đến thư mục docker**
 
-user page use port 3000
+`docker compose up -d`
 
-admin page use port 3001
+user page dùng port 3000
+
+admin page dùng port 3001
+
+# Phía back end
+
+link github: [backend](https://github.com/transang832001/Web-Electronic-Shop-Backend)
