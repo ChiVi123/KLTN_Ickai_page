@@ -32,8 +32,8 @@ function Login() {
     } = useForm({
         resolver: yupResolver(schemas.login),
         defaultValues: {
-            email: 'admin@gmail.com',
-            password: 'admin123',
+            email: '',
+            password: '',
         },
     });
     const dispatch = useDispatch();

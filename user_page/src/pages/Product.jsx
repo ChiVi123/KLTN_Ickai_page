@@ -83,6 +83,7 @@ function Product() {
     useEffect(() => {
         (async () => {
             if (userId) {
+                console.log(userId);
                 const orders = await orderServices.getAllStateComplete();
 
                 const existOrder = orders.list.some((order) =>

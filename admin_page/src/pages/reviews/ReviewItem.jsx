@@ -5,12 +5,13 @@ import HTMLReactParser from 'html-react-parser';
 import { useDispatch } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { keys, notifies } from '~/common';
+import { contextPage, keys, notifies, titles } from '~/common';
 import { ButtonIcon } from '~/components';
 import { reviewsAsync } from '~/redux';
 import { reviewServices } from '~/services';
 import { formatLocalDate } from '~/utils/funcs';
 
+import Swal from 'sweetalert2';
 import styles from '~/scss/pages/reviews/review-item.module.scss';
 
 const cx = classNames.bind(styles);
@@ -23,53 +24,68 @@ function ReviewItem({ review }) {
     const firstPage = 1;
     const currentPage = parseInt(searchParams.get(keys.page)) || firstPage;
     const reviewState = searchParams.get(keys.state) || '';
-    const reviewSort = searchParams.get(keys.sortBy) || 'newest';
+    const reviewSort = searchParams.get(keys.sortBy) || '';
 
     const handleToggleBlock = async ({ id, state }) => {
-        switch (state) {
-            case 'enable':
-                const expectMessageBlock = 'Block comment successfully ';
-                const resultBlock = await reviewServices.blockReview(id);
+        Swal.fire({
+            title: titles.confirmChange,
+            confirmButtonText: contextPage.yes,
+            showCancelButton: true,
+            cancelButtonText: contextPage.no,
+            width: 'auto',
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                switch (state) {
+                    case 'enable':
+                        const expectMessageBlock =
+                            'Block comment successfully ';
+                        const resultBlock = await reviewServices.blockReview(
+                            id,
+                        );
 
-                if (resultBlock?.message === expectMessageBlock) {
-                    toast.success(notifies.blockReviewSuccess);
+                        if (resultBlock?.message === expectMessageBlock) {
+                            toast.success(notifies.blockReviewSuccess);
 
-                    dispatch(
-                        reviewsAsync.search({
-                            sortBy: reviewSort,
-                            state: reviewState,
-                            page: currentPage - 1,
-                            size: itemPerPage,
-                        }),
-                    );
-                    dispatch(reviewsAsync.count());
-                } else {
-                    toast.error(notifies.blockReviewFail);
+                            dispatch(
+                                reviewsAsync.search({
+                                    sortBy: reviewSort,
+                                    state: reviewState,
+                                    page: currentPage,
+                                    size: itemPerPage,
+                                }),
+                            );
+                            dispatch(reviewsAsync.count());
+                        } else {
+                            toast.error(notifies.blockReviewFail);
+                        }
+                        break;
+                    case 'block':
+                        const expectMessageEnable = ' Comment successfully ';
+                        const resultEnable = await reviewServices.unblockReview(
+                            id,
+                        );
+
+                        if (resultEnable?.message === expectMessageEnable) {
+                            toast.success(notifies.unblockReviewSuccess);
+
+                            dispatch(
+                                reviewsAsync.search({
+                                    sortBy: reviewSort,
+                                    state: reviewState,
+                                    page: currentPage,
+                                    size: itemPerPage,
+                                }),
+                            );
+                            dispatch(reviewsAsync.count());
+                        } else {
+                            toast.error(notifies.unblockReviewFail);
+                        }
+                        break;
+                    default:
+                        break;
                 }
-                break;
-            case 'block':
-                const expectMessageEnable = ' Comment successfully ';
-                const resultEnable = await reviewServices.unblockReview(id);
-
-                if (resultEnable?.message === expectMessageEnable) {
-                    toast.success(notifies.unblockReviewSuccess);
-
-                    dispatch(
-                        reviewsAsync.search({
-                            sortBy: reviewSort,
-                            state: reviewState,
-                            page: currentPage - 1,
-                            size: itemPerPage,
-                        }),
-                    );
-                    dispatch(reviewsAsync.count());
-                } else {
-                    toast.error(notifies.unblockReviewFail);
-                }
-                break;
-            default:
-                break;
-        }
+            }
+        });
     };
 
     return (

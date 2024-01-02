@@ -59,12 +59,17 @@ function FormReview({
                 productId,
                 ...data,
             });
-            const expectMessage = 'Add comment success ';
 
-            if (result?.message === expectMessage) {
-                toast.success(notifies.success);
-            } else {
-                toast.error(notifies.fail);
+            switch (result?.message) {
+                case 'Add comment success ':
+                    toast.success(notifies.success);
+                    break;
+                case 'You already comment this product':
+                    toast.error(notifies.reviewAlready);
+                    break;
+                default:
+                    toast.error(notifies.fail);
+                    break;
             }
         }
 

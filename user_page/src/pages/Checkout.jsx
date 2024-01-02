@@ -67,7 +67,7 @@ function Checkout() {
         defaultValues: {
             name: '',
             email: user.email || '',
-            phone: '',
+            phone: user.phone || '',
             payment: 'cod',
             address: '',
         },

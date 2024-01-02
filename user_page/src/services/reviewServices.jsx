@@ -21,16 +21,16 @@ const reviewServices = {
         try {
             const response = await request.post('comment', data);
             return response;
-        } catch (error) {
-            throw error;
+        } catch ({ response }) {
+            return response?.data;
         }
     },
     editReview: async ({ id, data }) => {
         try {
             const response = await request.put(`comment/edit/${id}`, data);
             return response;
-        } catch (error) {
-            throw error;
+        } catch ({ response }) {
+            return response?.data;
         }
     },
     deleteByUser: async (id) => {

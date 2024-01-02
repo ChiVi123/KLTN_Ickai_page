@@ -25,5 +25,6 @@ export const updateAvatarFail = 'Cập nhật ảnh thất bại';
 export const updateAvatarSuccess = 'Cập nhật ảnh thành công';
 export const updateUserFail = 'Cập nhật thất bại';
 export const updateUserSuccess = 'Cập nhật thành công';
+export const reviewAlready = 'Đánh giá của bạn đã bị khóa';
 
 export const emailNotExist = (email) => `${email} không tồn tại`;

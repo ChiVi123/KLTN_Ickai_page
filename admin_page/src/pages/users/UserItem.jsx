@@ -4,7 +4,8 @@ import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { keys, notifies } from '~/common';
+import Swal from 'sweetalert2';
+import { contextPage, keys, notifies, titles } from '~/common';
 import { contentUserStates } from '~/common/enums';
 import { ButtonIcon } from '~/components';
 import { usersAsync } from '~/redux';
@@ -30,35 +31,53 @@ function UserItem({ user }) {
     }
 
     const handleIsActivate = async ({ id, state }) => {
-        switch (state) {
-            case 'active':
-                const resultBlock = await userServices.blockUserById(id);
-                const messageBlockSuccess = 'Delete user success';
+        Swal.fire({
+            title: titles.confirmChange,
+            confirmButtonText: contextPage.yes,
+            showCancelButton: true,
+            cancelButtonText: contextPage.no,
+            width: 'auto',
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                switch (state) {
+                    case 'active':
+                        const resultBlock = await userServices.blockUserById(
+                            id,
+                        );
+                        const messageBlockSuccess = 'Delete user success';
 
-                if (resultBlock?.message === messageBlockSuccess) {
-                    toast.success(notifies.blockUserSuccess);
-                } else {
-                    toast.error(notifies.blockUserFail);
+                        if (resultBlock?.message === messageBlockSuccess) {
+                            toast.success(notifies.blockUserSuccess);
+                        } else {
+                            toast.error(notifies.blockUserFail);
+                        }
+                        break;
+                    case 'block':
+                        const resultActive = await userServices.unblockUserById(
+                            id,
+                        );
+                        const messageUnblockSuccess = 'Unblock user success';
+
+                        if (resultActive?.message === messageUnblockSuccess) {
+                            toast.success(notifies.unblockUserSuccess);
+                        } else {
+                            toast.error(notifies.unblockUserFail);
+                        }
+                        break;
+                    default:
+                        break;
                 }
-                break;
-            case 'block':
-                const resultActive = await userServices.unblockUserById(id);
-                const messageUnblockSuccess = 'Unblock user success';
 
-                if (resultActive?.message === messageUnblockSuccess) {
-                    toast.success(notifies.unblockUserSuccess);
-                } else {
-                    toast.error(notifies.unblockUserFail);
-                }
-                break;
-            default:
-                break;
-        }
-
-        dispatch(
-            usersAsync.search({ query, state: userState, page: page - 1 }),
-        );
-        dispatch(usersAsync.count());
+                dispatch(
+                    usersAsync.search({
+                        query,
+                        state: userState,
+                        page: page - 1,
+                    }),
+                );
+                dispatch(usersAsync.count());
+            }
+        });
     };
 
     return (

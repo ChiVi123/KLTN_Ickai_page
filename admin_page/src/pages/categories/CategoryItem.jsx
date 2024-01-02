@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames/bind';
 import { useState } from 'react';
 import ReactModal from 'react-modal';
+import { labels } from '~/common';
 import { ButtonIcon } from '~/components';
 import styles from '~/scss/pages/categories/category-item.module.scss';
 import CategoryForm from './CategoryForm';
@@ -17,7 +18,7 @@ function CategoryItem({ category }) {
     return (
         <tr>
             <td>{category.name}</td>
-            <td>{category.state}</td>
+            <td>{labels[category.state]}</td>
             <td>
                 <ButtonIcon classes={cx('btn--edit')} onClick={handleOpen}>
                     <FontAwesomeIcon icon={faPen} />

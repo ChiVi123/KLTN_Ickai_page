@@ -62,7 +62,7 @@ function ProductItem({ product }) {
     const query = searchParams.get(keys.query) || '';
     const minPrice = parseInt(searchParams.get(keys.minPrice)) || 0;
     const maxPrice = parseInt(searchParams.get(keys.maxPrice)) || undefined;
-    const productSort = searchParams.get(keys.sortBy) || 'latest';
+    const productSort = searchParams.get(keys.sortBy) || '';
     const productState = searchParams.get(keys.state) || '';
 
     const handleClick = (product) => {

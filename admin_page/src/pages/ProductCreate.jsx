@@ -32,7 +32,6 @@ import {
 import { UploadImage } from '~/components/upload_image';
 import { categoriesAsync, categoriesSelector } from '~/redux';
 import { productServices } from '~/services';
-import { logger } from '~/utils/logger';
 
 // Component
 function ProductCreate() {
@@ -85,8 +84,6 @@ function ProductCreate() {
             summary: 'summary',
             description: data.description,
         };
-
-        logger({ groupName: ProductCreate.name, values: [data, newData] });
 
         Swal.fire({
             title: 'Thêm sản phẩm',

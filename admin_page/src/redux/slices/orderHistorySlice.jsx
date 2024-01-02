@@ -23,6 +23,10 @@ const orderHistorySlice = createSlice({
             state.list.status = 'pending';
         });
         builder.addCase(search.fulfilled, (state, { payload }) => {
+            if (!state?.startDate) {
+                const indexEnd = payload.list.length - 1;
+                state.startDate = payload.list[indexEnd].createdDate;
+            }
             const { start, total } = resolverPagination({
                 ...payload,
                 length: payload.list.length,
