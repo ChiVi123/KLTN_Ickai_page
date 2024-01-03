@@ -1,6 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { contentReviewStates } from '~/common/enums';
-import { resolverPagination } from '~/utils/funcs';
 import { count, search } from '../async_thunks/reviewsAsync';
 import { reviews } from '../variables';
 
@@ -23,14 +22,10 @@ const reviewsSlice = createSlice({
             state.list.status = 'pending';
         });
         builder.addCase(search.fulfilled, (state, { payload }) => {
-            const { start, total } = resolverPagination({
-                ...payload,
-                length: payload.list.length,
-            });
             state.list.isLoading = false;
             state.list.status = 'fulfilled';
-            state.list.items = payload.list.slice(start, start + payload.size);
-            state.list.totalPage = total;
+            state.list.items = payload.list;
+            state.list.totalPage = payload.totalPage;
         });
         builder.addCase(search.rejected, (state, { payload }) => {
             state.list.isLoading = false;

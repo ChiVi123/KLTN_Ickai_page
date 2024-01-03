@@ -1,5 +1,6 @@
 export const account = 'Thông tin cá nhân';
 export const addCart = 'Cho vào giỏ hàng';
+export const address = 'Địa chỉ';
 export const all = 'Tất cả';
 export const apply = 'Áp dụng';
 export const backHome = 'Về trang chủ';

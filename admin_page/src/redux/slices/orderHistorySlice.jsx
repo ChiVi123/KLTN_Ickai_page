@@ -1,6 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { contentOrderStates } from '~/common/enums';
-import { resolverPagination } from '~/utils/funcs';
 import { count, search } from '../async_thunks/ordersAsync';
 import { orderHistory } from '../variables';
 
@@ -23,16 +22,8 @@ const orderHistorySlice = createSlice({
             state.list.status = 'pending';
         });
         builder.addCase(search.fulfilled, (state, { payload }) => {
-            if (!state?.startDate) {
-                const indexEnd = payload.list.length - 1;
-                state.startDate = payload.list[indexEnd].createdDate;
-            }
-            const { start, total } = resolverPagination({
-                ...payload,
-                length: payload.list.length,
-            });
-            state.list.items = payload.list.slice(start, start + payload.size);
-            state.list.totalPage = total;
+            state.list.totalPage = payload.totalPage;
+            state.list.items = payload.list;
             state.list.isLoading = false;
             state.list.status = 'fulfilled';
         });

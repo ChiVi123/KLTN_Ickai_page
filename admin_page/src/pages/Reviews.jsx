@@ -36,7 +36,7 @@ function Reviews() {
             reviewsAsync.search({
                 sortBy: reviewSort,
                 state: reviewState,
-                page: currentPage,
+                page: currentPage - 1,
                 size: itemPerPage,
             }),
         );

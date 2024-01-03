@@ -5,13 +5,13 @@ import HTMLReactParser from 'html-react-parser';
 import { useDispatch } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import Swal from 'sweetalert2';
 import { contextPage, keys, notifies, titles } from '~/common';
 import { ButtonIcon } from '~/components';
 import { reviewsAsync } from '~/redux';
 import { reviewServices } from '~/services';
 import { formatLocalDate } from '~/utils/funcs';
 
-import Swal from 'sweetalert2';
 import styles from '~/scss/pages/reviews/review-item.module.scss';
 
 const cx = classNames.bind(styles);
@@ -50,7 +50,7 @@ function ReviewItem({ review }) {
                                 reviewsAsync.search({
                                     sortBy: reviewSort,
                                     state: reviewState,
-                                    page: currentPage,
+                                    page: currentPage - 1,
                                     size: itemPerPage,
                                 }),
                             );
@@ -72,7 +72,7 @@ function ReviewItem({ review }) {
                                 reviewsAsync.search({
                                     sortBy: reviewSort,
                                     state: reviewState,
-                                    page: currentPage,
+                                    page: currentPage - 1,
                                     size: itemPerPage,
                                 }),
                             );

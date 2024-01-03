@@ -4,8 +4,8 @@ import { useSearchParams } from 'react-router-dom';
 import { createObjectParams } from '~/utils/funcs';
 
 function Tabs({ tabs = [] }) {
-    const [tab, setTab] = useState('all');
-    const [, setSearchParams] = useSearchParams();
+    const [searchParams, setSearchParams] = useSearchParams();
+    const [tab, setTab] = useState(searchParams.get('state') || 'all');
 
     const handleClick = (value) => {
         setTab(value);

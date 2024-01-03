@@ -5,7 +5,7 @@ export const pageNoteFound = (pathName) =>
     `Xin lỗi, trang ${pathName} không tồn tại!`;
 export const titleOrderId = (id) => `Mã đơn hàng: ${id}`;
 export const summaryItems = (items) => {
-    if (items.length > 1) {
+    if (items?.length > 1) {
         return `${items[0].name} ...và ${items.length - 1} sản phẩm khác.`;
     } else {
         return `${items[0].name}.`;

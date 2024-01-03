@@ -9,9 +9,9 @@ export const search = createAsyncThunk(
     ) {
         try {
             const response = await request.get('admin/manage/comment/findall', {
-                params: { sortBy, state },
+                params: { sortBy, state, page, size },
             });
-            return { list: response.data, page, size };
+            return response.data;
         } catch (error) {
             return rejectWithValue(error);
         }

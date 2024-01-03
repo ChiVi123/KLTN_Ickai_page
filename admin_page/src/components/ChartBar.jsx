@@ -15,6 +15,7 @@ function ChartBar({
     dataKey,
     keyBar,
     name,
+    fill = '#8884d8',
     layout = 'horizontal',
 }) {
     const propX = {};
@@ -45,9 +46,9 @@ function ChartBar({
                 <Legend />
                 <Bar
                     dataKey={keyBar}
-                    fill='green'
+                    fill={fill}
                     name={name}
-                    animationDuration={1600}
+                    animationDuration={800}
                 />
             </BarChart>
         </ResponsiveContainer>

@@ -19,6 +19,7 @@ import {
     Verify,
     VerifyRegister,
 } from '~/pages';
+import Address from '~/pages/Address';
 import * as paths from './paths';
 
 export const router = createBrowserRouter([
@@ -138,6 +139,14 @@ export const router = createBrowserRouter([
                 element: (
                     <DefaultLayout>
                         <Cart />
+                    </DefaultLayout>
+                ),
+            },
+            {
+                path: paths.address,
+                element: (
+                    <DefaultLayout>
+                        <Address />
                     </DefaultLayout>
                 ),
             },

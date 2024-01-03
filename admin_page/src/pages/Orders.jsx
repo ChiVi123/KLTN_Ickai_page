@@ -42,7 +42,6 @@ function Orders() {
         totalPage,
         isLoading,
     } = useSelector(orderHistorySelector.selectList);
-    const stateStartDate = useSelector(orderHistorySelector.selectStartDate);
 
     const skeleton = Array.from({ length: 10 }, (_, index) => index);
     const firstPage = 1;
@@ -59,7 +58,7 @@ function Orders() {
                 from: formatDate(startDate),
                 to: formatDate(endDate),
                 state: orderState,
-                page: currentPage,
+                page: currentPage - 1,
             }),
         );
     }, [
@@ -83,11 +82,6 @@ function Orders() {
             );
         })();
     }, []);
-    useEffect(() => {
-        if (stateStartDate) {
-            setStartDate(new Date(stateStartDate));
-        }
-    }, [stateStartDate]);
 
     const onStartDate = (value) => {
         setStartDate(value);
@@ -179,7 +173,9 @@ function Orders() {
                             <td className={cx('td-id')} title={order.id}>
                                 {order.id}
                             </td>
-                            <td className={cx('td-name')}>{order.userName}</td>
+                            <td className={cx('td-name')}>
+                                {order.delivery.shipName}
+                            </td>
                             <td>
                                 {formatLocalDate(new Date(order.createdDate))}
                             </td>

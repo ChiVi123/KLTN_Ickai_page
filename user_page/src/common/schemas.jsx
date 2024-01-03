@@ -113,3 +113,12 @@ export const changePassword = yup.object({
     oldpass: yup.string().required(passwordRequired),
     newpass: yup.string().min(8, leastCharacter).required(passwordRequired),
 });
+
+export const addressForm = yup.object({
+    shipName: yup.string().trim().required(nameRequired),
+    phone,
+    province: yup.object().required(provinceRequired),
+    district: yup.object().required(districtRequired),
+    ward: yup.object().required(wardRequired),
+    address: yup.string().trim().required(addressRequired),
+});

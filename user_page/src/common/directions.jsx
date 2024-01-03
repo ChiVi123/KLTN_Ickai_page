@@ -10,6 +10,7 @@ export const changePassword = '/change-password';
 export const cart = '/cart';
 export const checkout = '/checkout';
 export const orders = '/orders';
+export const address = '/address';
 export const addresses = '/addresses';
 export const addressForm = '/address-form';
 export const product = (id) => `/product/${id}`;

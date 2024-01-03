@@ -17,7 +17,7 @@ function Footer() {
                     <div className='row row-cols-1 gy-2'>
                         <div className='col col-sm-2'>
                             <p className={cx('text', 'text--middle')}>
-                                KLTN Nhóm 2
+                                KLTN Nhóm 12
                             </p>
                         </div>
                         <div className='col col-sm-8'>

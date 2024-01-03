@@ -95,6 +95,7 @@ function Checkout() {
                         result = await servicesGHN.getDistrict(
                             value[name].value,
                         );
+                        console.log(result);
                         setDistricts(result);
                         setValue('district', undefined);
                         setValue('ward', undefined);
@@ -167,7 +168,7 @@ function Checkout() {
                         switch (result?.message) {
                             case 'Payment init complete':
                             case 'Payment Complete':
-                                window.open(result.data);
+                                window.open(result.data, '_self');
                                 break;
                             case ' Pay by COD successfully':
                                 toast.success(notifies.paySuccess);

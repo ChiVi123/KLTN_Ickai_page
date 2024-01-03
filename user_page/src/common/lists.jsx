@@ -6,6 +6,10 @@ export const menuModal = [
         context: 'Tài khoản',
     },
     {
+        to: directions.address,
+        context: 'Địa chỉ',
+    },
+    {
         to: directions.changePassword,
         context: 'Thay đổi mật khẩu',
     },
@@ -22,6 +26,10 @@ export const menuAccount = [
     {
         to: directions.profile,
         context: 'Tài khoản',
+    },
+    {
+        to: directions.address,
+        context: 'Địa chỉ',
     },
     {
         to: directions.changePassword,

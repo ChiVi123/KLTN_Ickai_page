@@ -4,6 +4,23 @@
     overflow: hidden;
     transition: height 800ms;
 
+    strong {
+        font-weight: bold;
+    }
+
+    em {
+        font-style: italic;
+    }
+
+    ul {
+        list-style: circle;
+    }
+
+    h3 {
+        font-size: 1.17em;
+        font-weight: bold;
+    }
+
     &--more {
         height: var(--height);
     }

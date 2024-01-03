@@ -2,16 +2,25 @@ import classNames from 'classnames/bind';
 import { useEffect, useMemo, useState } from 'react';
 import DateTimePicker from 'react-datetime-picker';
 import { useDispatch, useSelector } from 'react-redux';
-
-import 'react-calendar/dist/Calendar.css';
-import 'react-datetime-picker/dist/DateTimePicker.css';
-
+import ReactSelect from 'react-select';
 import { ChartBar, Col, Row, Typography } from '~/components';
 import { categoriesAsync, statAsync, statSelector } from '~/redux';
 import { categoryServices, statisticalServices } from '~/services';
 import { formatDate } from '~/utils/funcs';
 
-import ReactSelect from 'react-select';
+import 'react-calendar/dist/Calendar.css';
+import 'react-datetime-picker/dist/DateTimePicker.css';
+
+import {
+    CartesianGrid,
+    Legend,
+    Line,
+    LineChart,
+    ResponsiveContainer,
+    Tooltip,
+    XAxis,
+    YAxis,
+} from 'recharts';
 import styles from '~/scss/pages/dashboard.module.scss';
 
 const cx = classNames.bind(styles);
@@ -194,12 +203,31 @@ function Dashboard() {
                     />
                 </Col>
             </Row>
-            <ChartBar
-                data={statisticalAmount}
-                dataKey='date'
-                keyBar='amount'
-                name='Tổng doanh thu tháng'
-            />
+
+            <ResponsiveContainer height={400}>
+                <LineChart
+                    data={statisticalAmount}
+                    margin={{
+                        top: 50,
+                        right: 30,
+                        left: 20,
+                        bottom: 5,
+                    }}
+                >
+                    <CartesianGrid strokeDasharray='3 3' />
+                    <XAxis dataKey='date' />
+                    <YAxis />
+                    <Tooltip />
+                    <Legend />
+                    <Line
+                        type='monotone'
+                        dataKey='amount'
+                        stroke='#82ca9d'
+                        name='Doanh thu tháng'
+                        activeDot={{ r: 8 }}
+                    />
+                </LineChart>
+            </ResponsiveContainer>
         </section>
     );
 }

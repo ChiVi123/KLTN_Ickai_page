@@ -8,6 +8,7 @@ export const signUp = 'sign-up';
 export const verify = 'check-otp';
 export const verifyRegister = 'check-otp-register';
 
+export const address = 'address';
 export const cart = 'cart';
 export const changePassword = 'change-password';
 export const checkout = 'checkout';

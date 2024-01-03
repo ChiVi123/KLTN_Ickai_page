@@ -36,7 +36,7 @@ function Description({ textHTML = '' }) {
             <div
                 ref={elementRef}
                 style={{ '--height': `${height}px` }}
-                className={cx('description', {
+                className={cx('description', 'ql-snow', 'ql-editor', {
                     'description--more': isOpen,
                 })}
                 dangerouslySetInnerHTML={{

@@ -3,7 +3,6 @@ import { useEffect, useMemo, useState } from 'react';
 import ReactModal from 'react-modal';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams, useSearchParams } from 'react-router-dom';
-
 import { contextPage, keys } from '~/common';
 import {
     Button,
@@ -19,6 +18,7 @@ import {
     IntroProduct,
     Reviews,
 } from '~/components/product';
+import { useModal } from '~/hooks';
 import {
     productsActions,
     productsAsync,
@@ -33,8 +33,11 @@ import {
 import { orderServices } from '~/services';
 import { averageRating } from '~/utils/funcs';
 
-import { useModal } from '~/hooks';
 import styles from '~/scss/pages/product.module.scss';
+
+import 'react-quill/dist/quill.snow.css';
+
+import '~/scss/vendors/quill.scss';
 
 const cx = classNames.bind(styles);
 
