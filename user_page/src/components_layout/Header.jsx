@@ -5,10 +5,14 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames/bind';
-import { useEffect, useRef } from 'react';
+import { useEffect, useState } from 'react';
 import ReactModal from 'react-modal';
-import { Link, useSearchParams } from 'react-router-dom';
-
+import {
+    Link,
+    useLocation,
+    useNavigate,
+    useSearchParams,
+} from 'react-router-dom';
 import {
     contextPage,
     directions,
@@ -17,27 +21,64 @@ import {
     placeholders,
 } from '~/common';
 import { Col, Row } from '~/components';
-import styles from '~/scss/layouts/header.module.scss';
-
 import { useModal } from '~/hooks';
+import { createObjectParams } from '~/utils/funcs';
 import Actions from './header/Actions';
 import ModalMenu from './header/ModalMenu';
+
+import styles from '~/scss/layouts/header.module.scss';
 
 const cx = classNames.bind(styles);
 
 function Header() {
-    const [searchParams] = useSearchParams();
-    const inputRef = useRef();
-    const inputMobileRef = useRef();
-    const formAction = useRef(process.env.REACT_APP_CLIENT);
-    const { isOpenModal, handleCloseModal, handleOpenModal } = useModal(false);
+    const [searchParams, setSearchParams] = useSearchParams();
     const query = searchParams.get(keys.query) || '';
+    const { pathname } = useLocation();
+    const [inputSearch, setInputSearch] = useState(query);
+    const [inputSearchMobile, setInputSearchMobile] = useState(query);
+    const { isOpenModal, handleCloseModal, handleOpenModal } = useModal(false);
+    const navigate = useNavigate();
+    const queryParam = '/search';
 
     useEffect(() => {
-        inputRef.current.value = query;
-        inputMobileRef.current.value = query;
+        if (pathname !== queryParam) {
+            setInputSearch('');
+            setInputSearchMobile('');
+        } else {
+            setInputSearch(query);
+            setInputSearchMobile(query);
+        }
         return () => {};
-    }, [query]);
+    }, [pathname, query]);
+
+    function handleInputSearch({ target }) {
+        setInputSearch(target.value);
+    }
+    function handleInputSearchMobile({ target }) {
+        setInputSearchMobile(target.value);
+    }
+    function handleSubmit(event) {
+        event.preventDefault();
+        if (pathname === queryParam) {
+            setSearchParams((prev) => ({
+                ...createObjectParams(prev),
+                query: inputSearch,
+            }));
+        } else {
+            navigate(`${directions.search}?query=${inputSearch}`);
+        }
+    }
+    function handleSubmitMobile(event) {
+        event.preventDefault();
+        if (pathname === queryParam) {
+            setSearchParams((prev) => ({
+                ...createObjectParams(prev),
+                query: inputSearch,
+            }));
+        } else {
+            navigate(`${directions.search}?query=${inputSearch}`);
+        }
+    }
 
     return (
         <header className={cx('wrap')}>
@@ -89,20 +130,16 @@ function Header() {
                         baseColsLg={4}
                         offsetSm={2}
                     >
-                        <form
-                            action={`${formAction.current}/search`}
-                            method='get'
-                            className={cx('form')}
-                        >
+                        <form className={cx('form')} onSubmit={handleSubmit}>
                             <FontAwesomeIcon icon={faMagnifyingGlass} />
                             <input
-                                ref={inputRef}
                                 name={inputNames.search}
                                 type='text'
+                                value={inputSearch}
                                 placeholder={placeholders.search}
                                 autoComplete='off'
-                                defaultValue={query}
                                 className={cx('input')}
+                                onChange={handleInputSearch}
                             />
                         </form>
                     </Col>
@@ -121,19 +158,18 @@ function Header() {
                     {/* Search bar mobile */}
                     <Col baseCols={10} baseColsSm={0}>
                         <form
-                            action={`${formAction.current}/search`}
-                            method='get'
                             className={cx('form')}
+                            onSubmit={handleSubmitMobile}
                         >
                             <FontAwesomeIcon icon={faMagnifyingGlass} />
                             <input
-                                ref={inputMobileRef}
                                 name={inputNames.search}
                                 type='text'
+                                value={inputSearchMobile}
                                 placeholder={placeholders.search}
                                 autoComplete='off'
-                                defaultValue={query}
                                 className={cx('input')}
+                                onChange={handleInputSearchMobile}
                             />
                         </form>
                     </Col>

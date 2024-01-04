@@ -23,7 +23,7 @@ node 20.5.1
 npm 10.0.0
 docker 24.0.6, build ed223c
 
-**Đến thư mục user_page/admin_page**
+**Đến thư mục user_page hoặc admin_page**
 
 Cài đặt thư viện
 
@@ -50,6 +50,12 @@ admin_page: [http://localhost:3001](http://localhost:3001)
 user page dùng port 3000
 
 admin page dùng port 3001
+
+## Deploy
+
+trang người dùng: [https://kltn-user-page.vercel.app/](https://kltn-user-page.vercel.app/)
+
+trang quan trị: [https://kltn-admin-page.vercel.app](https://kltn-admin-page.vercel.app)
 
 # Phía back end
 
