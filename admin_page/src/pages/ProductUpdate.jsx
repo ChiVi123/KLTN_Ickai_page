@@ -108,9 +108,6 @@ function ProductUpdate() {
     const handleOnSubmit = async (data) => {
         const newSale = parseFloat(data.sale);
         const newSlugify = slugify(data.name);
-
-        delete data.images;
-
         const newData = {
             ...data,
             slugify: newSlugify,
@@ -118,6 +115,8 @@ function ProductUpdate() {
             category: data.category.value,
             state: product.state,
         };
+
+        delete newData.images;
 
         Swal.fire({
             title: 'Chỉnh sửa sản phẩm',
@@ -130,6 +129,7 @@ function ProductUpdate() {
 
                 if (result.isSuccess) {
                     toast.success(notifies.success);
+                    // navigate(-1);
                 } else {
                     toast.error(notifies.fail);
                 }
@@ -254,7 +254,7 @@ function ProductUpdate() {
                         </FormGroup>
                     </Col>
 
-                    <Col style={{ marginTop: '14px' }}>
+                    <Col style={{ marginTop: '15px', marginBottom: '15px' }}>
                         <Button type={types.submit} color='primary'>
                             {contextButton.edit}
                         </Button>

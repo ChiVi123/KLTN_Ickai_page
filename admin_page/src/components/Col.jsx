@@ -12,6 +12,7 @@ function Col({
     offset,
     classes,
     component,
+    ...props
 }) {
     const infix = baseCols ? `-${baseCols}` : '';
     const Component = component || 'div';
@@ -26,6 +27,7 @@ function Col({
                 [`offset-${offset}`]: offset || offset === 0,
                 [classes]: classes,
             })}
+            {...props}
         >
             {children}
         </Component>

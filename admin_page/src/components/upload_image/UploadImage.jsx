@@ -1,9 +1,8 @@
-import { faImage, faXmark } from '@fortawesome/free-solid-svg-icons';
+import { faXmark } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import Swal from 'sweetalert2';
-
 import { uploadImage } from '~/assets/images';
 import { Button, Col, Row, Typography } from '~/components';
 import { productServices } from '~/services';
@@ -130,7 +129,7 @@ function UploadImage({ id, onChange, value = [], cols }) {
                     'images-preview--empty': !files.length,
                 })}
             >
-                {!!files.length && <Typography variant='h2'>Ảnh cũ</Typography>}
+                {!!files.length && <Typography variant='h3'>Ảnh cũ</Typography>}
                 <Row cols={cols}>
                     {!!files.length &&
                         files.map((item, index) => (
@@ -166,7 +165,7 @@ function UploadImage({ id, onChange, value = [], cols }) {
                 })}
             >
                 {!!filesAddition.length && (
-                    <Typography variant='h2'>Ảnh mới</Typography>
+                    <Typography variant='h3'>Ảnh mới</Typography>
                 )}
                 <Row cols={cols} g={2}>
                     {filesAddition.map((item, index) => (
@@ -198,7 +197,7 @@ function UploadImage({ id, onChange, value = [], cols }) {
                             full
                             onClick={handleAddImages}
                         >
-                            <FontAwesomeIcon icon={faImage} />
+                            Thêm ảnh
                         </Button>
                     )}
                 </div>
