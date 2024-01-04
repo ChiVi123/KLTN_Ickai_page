@@ -16,6 +16,16 @@ function TextField({
 }) {
     const props = { ...passProps };
 
+    function handleBlur(event) {
+        if (event?.currentTarget) {
+            event.currentTarget?.blur();
+        }
+    }
+
+    if (type === 'number') {
+        props.onWheel = handleBlur;
+    }
+
     return (
         <div className='text-field'>
             <label

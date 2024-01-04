@@ -20,6 +20,7 @@ import {
     titles,
     types,
 } from '~/common';
+import { documentTitle, resetDocumentTitle } from '~/common/document.title';
 import {
     Button,
     Col,
@@ -103,6 +104,14 @@ function ProductUpdate() {
         product.summary,
         setValue,
     ]);
+    useEffect(() => {
+        if (product.name) {
+            document.title = documentTitle(product.name);
+        }
+        return () => {
+            document.title = resetDocumentTitle;
+        };
+    }, [product.name]);
 
     // Handle event
     const handleOnSubmit = async (data) => {
@@ -115,34 +124,51 @@ function ProductUpdate() {
             category: data.category.value,
             state: product.state,
         };
+        const dataEntries = Object.entries(data);
+        const isUpdate = dataEntries.some((value) => {
+            if (value[0] === 'category') {
+                return value[1].value !== product.category_id;
+            }
+
+            if (value[0] === 'tags' || value[0] === 'images') {
+                return false;
+            }
+
+            return value[1] !== product[value[0]];
+        });
 
         delete newData.images;
 
-        Swal.fire({
-            title: 'Chỉnh sửa sản phẩm',
-            didOpen: async () => {
-                Swal.showLoading();
-                const result = await productServices.editProduct({
-                    id: product.id,
-                    data: newData,
-                });
+        if (isUpdate) {
+            Swal.fire({
+                title: 'Chỉnh sửa sản phẩm',
+                didOpen: async () => {
+                    Swal.showLoading();
+                    const result = await productServices.editProduct({
+                        id: product.id,
+                        data: newData,
+                    });
 
-                if (result.isSuccess) {
-                    toast.success(notifies.success);
-                    // navigate(-1);
-                } else {
-                    toast.error(notifies.fail);
-                }
+                    if (result.isSuccess) {
+                        toast.success(notifies.success);
+                    } else {
+                        toast.error(notifies.fail);
+                    }
 
-                Swal.close();
-            },
-        });
+                    Swal.close();
+                },
+            });
+        } else {
+            toast.warn('Không có thay đổi nào!!!');
+        }
     };
 
     return (
         <div className='section section--full-screen'>
             <section className='width-md' style={{ marginBottom: '24px' }}>
-                <Typography variant='h1'>{titles.productEdit}</Typography>
+                <Typography variant='h1' style={{ marginBottom: '30px' }}>
+                    {titles.productEdit}
+                </Typography>
                 <Button to={directions.products} color='primary'>
                     {contextButton.backPage}
                 </Button>
