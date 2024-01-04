@@ -129,6 +129,7 @@ function Product() {
                         name={product.name}
                         discount={product.discount}
                         price={product.price}
+                        summary={product.summary}
                         images={product.images}
                         stars={averageRating(rating.totalStar, rating.quantity)}
                         stock={product.quantity}

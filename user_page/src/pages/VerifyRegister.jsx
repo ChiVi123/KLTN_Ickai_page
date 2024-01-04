@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import Swal from 'sweetalert2';
-
 import {
     contextPage,
     directions,
@@ -23,7 +22,6 @@ function CheckOtpRegister() {
     const dispatch = useDispatch();
     const user = useSelector(userSelector.selectInfo);
     const [searchParams] = useSearchParams();
-
     const {
         handleSubmit,
         register,
@@ -49,11 +47,6 @@ function CheckOtpRegister() {
         const type = 'register';
         const attribute = 'button-type';
         const { value } = attributes[attribute];
-
-        // logger({
-        //     groupName: 'CheckOtpRegister handleSubmit',
-        //     values: [value],
-        // });
 
         switch (value) {
             case 're-send':
@@ -82,7 +75,7 @@ function CheckOtpRegister() {
                 if (result?.data?.id) {
                     dispatch(userActions.addUser(result.data));
                     toast.success(notifies.confirmOTPSuccess);
-                    navigate(directions.home);
+                    navigate(directions.signIn);
                 } else {
                     toast.error(notifies.confirmOTPFail);
                 }

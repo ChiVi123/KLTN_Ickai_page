@@ -77,6 +77,10 @@ export const tableReviews = [
     'Ngày tạo',
     'Thao tác',
 ];
+export const formatsSummary = ['list', 'bullet', 'indent'];
+export const modulesSummary = {
+    toolbar: [[{ list: 'ordered' }, { list: 'bullet' }]],
+};
 export const formatsDescription = [
     'header',
     'bold',

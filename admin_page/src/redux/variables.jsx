@@ -19,7 +19,7 @@ export const products = {
             price: 0,
             quantity: 0,
             sale: 0,
-            summary: 'summary',
+            summary: '',
             tags: [],
             state: '',
             status: 'pending',

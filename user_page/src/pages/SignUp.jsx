@@ -1,9 +1,9 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import Swal from 'sweetalert2';
-
 import {
     contextPage,
     directions,
@@ -31,7 +31,7 @@ function Register() {
     } = useForm({
         resolver: yupResolver(schemas.register),
     });
-
+    const navigate = useNavigate();
     const dispatch = useDispatch();
 
     const handleOnSubmit = async ({ name, email, password }) => {
@@ -49,6 +49,7 @@ function Register() {
                 if (user?.message === expectMessage) {
                     toast.success(notifies.signUpSuccess);
                     dispatch(userActions.addUser({ name, email, password }));
+                    navigate(directions.signIn);
                 } else {
                     toast.error(notifies.signUpFail);
                 }

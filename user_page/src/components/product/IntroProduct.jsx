@@ -6,7 +6,6 @@ import { Controller, useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-
 import {
     contextPage,
     directions,
@@ -36,6 +35,7 @@ function IntroProduct({
     name,
     price,
     discount,
+    summary = '',
     images,
     stars,
     stock,
@@ -140,6 +140,12 @@ function IntroProduct({
                             )}
                         </div>
                     </Skeleton>
+
+                    <div
+                        dangerouslySetInnerHTML={{ __html: summary }}
+                        style={{ height: 'min-content' }}
+                        className={cx('summary', 'ql-snow', 'ql-editor')}
+                    ></div>
 
                     {/* Form */}
                     <form

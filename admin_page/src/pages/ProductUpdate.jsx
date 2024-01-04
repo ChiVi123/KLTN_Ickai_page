@@ -6,7 +6,6 @@ import { useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import slugify from 'slugify';
 import Swal from 'sweetalert2';
-
 import {
     contextButton,
     directions,
@@ -87,6 +86,7 @@ function ProductUpdate() {
             value: product.category_id,
         });
         setValue(keys.quantity, product.quantity);
+        setValue(keys.summary, product.summary);
         setValue(keys.description, product.description);
         setValue(keys.images, product.images);
 
@@ -100,6 +100,7 @@ function ProductUpdate() {
         product.price,
         product.quantity,
         product.sale,
+        product.summary,
         setValue,
     ]);
 
@@ -187,6 +188,23 @@ function ProductUpdate() {
                                     control={control}
                                 />
                             </Skeleton>
+                        </FormGroup>
+                    </Col>
+
+                    {/* Summary */}
+                    <Col>
+                        <FormGroup
+                            name={inputNames.summary}
+                            label={labels.summary}
+                            errors={errors}
+                        >
+                            <FormQuill
+                                name={inputNames.summary}
+                                control={control}
+                                placeholder=''
+                                formats={lists.formatsSummary}
+                                modules={lists.modulesSummary}
+                            />
                         </FormGroup>
                     </Col>
 

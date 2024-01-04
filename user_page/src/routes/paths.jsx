@@ -7,6 +7,7 @@ export const sendOTP = 'send-otp';
 export const signUp = 'sign-up';
 export const verify = 'check-otp';
 export const verifyRegister = 'check-otp-register';
+export const resetPassword = 'reset-password';
 
 export const address = 'address';
 export const cart = 'cart';

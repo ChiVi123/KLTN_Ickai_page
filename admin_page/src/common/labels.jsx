@@ -1,6 +1,6 @@
 export const address = 'Địa chỉ:';
 export const category = 'Danh mục:';
-export const description = 'Mô tả:';
+export const description = 'Mô tả chi tiết:';
 export const email = 'Email:';
 export const name = 'Họ và tên:';
 export const productName = 'Tên sản phẩm:';
@@ -12,3 +12,4 @@ export const quantity = 'Số lượng:';
 export const sale = 'Giảm giá:';
 export const enable = 'Hiển thị';
 export const disable = 'Ẩn';
+export const summary = 'Sơ lược: ';

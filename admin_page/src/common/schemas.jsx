@@ -35,6 +35,7 @@ export const product = yup.object({
         .min(0, isPositive)
         .max(1, notRatherOne),
     images: yup.array().required(imageRequired),
+    summary: yup.string(),
     description: yup.string().required(descriptionRequired),
     category: yup.object().required(categoryRequired),
     quantity: yup

@@ -42,6 +42,7 @@ const productsSlice = createSlice({
             state.item.quantity = payload.quantity;
             state.item.category = payload.category;
             state.item.category_id = payload.category_id;
+            state.item.summary = payload.summary;
             state.item.description = payload.description;
             state.item.images = payload.images;
             state.item.state = payload.state;

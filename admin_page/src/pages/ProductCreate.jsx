@@ -5,7 +5,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import slugify from 'slugify';
 import Swal from 'sweetalert2';
-
 import {
     contextButton,
     directions,
@@ -81,7 +80,7 @@ function ProductCreate() {
             category: data.category.value,
             quantity: data.quantity,
             tags: [],
-            summary: 'summary',
+            summary: data.summary,
             description: data.description,
         };
 
@@ -153,6 +152,23 @@ function ProductCreate() {
                                 value='id'
                                 placeholder={placeholders.category}
                                 control={control}
+                            />
+                        </FormGroup>
+                    </Col>
+
+                    {/* Summary */}
+                    <Col>
+                        <FormGroup
+                            name={inputNames.summary}
+                            label={labels.summary}
+                            errors={errors}
+                        >
+                            <FormQuill
+                                name={inputNames.summary}
+                                control={control}
+                                placeholder=''
+                                formats={lists.formatsSummary}
+                                modules={lists.modulesSummary}
                             />
                         </FormGroup>
                     </Col>

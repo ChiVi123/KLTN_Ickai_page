@@ -24,6 +24,7 @@ const productsSlice = createSlice({
             state.item.images = payload.images;
             state.item.discount = payload.discount;
             state.item.quantity = payload.quantity;
+            state.item.summary = payload.summary;
             state.item.description = payload.description;
         });
         builder.addCase(getProductById.rejected, (state) => {

@@ -20,6 +20,7 @@ import {
     VerifyRegister,
 } from '~/pages';
 import Address from '~/pages/Address';
+import ResetPassword from '~/pages/ResetPassword';
 import * as paths from './paths';
 
 export const router = createBrowserRouter([
@@ -94,6 +95,14 @@ export const router = createBrowserRouter([
                 element: (
                     <DefaultLayout>
                         <Verify />
+                    </DefaultLayout>
+                ),
+            },
+            {
+                path: paths.resetPassword,
+                element: (
+                    <DefaultLayout>
+                        <ResetPassword />
                     </DefaultLayout>
                 ),
             },

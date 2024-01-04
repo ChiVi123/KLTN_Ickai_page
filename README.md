@@ -4,8 +4,8 @@
 
 #### **Tên đề tài**: _Xây dựng website bán hàng linh kiện điện tử sử dụng Spring boot và React JS._.
 
-GVHD: **GVHD** \
-GVPB: **GVPB**
+GVHD: **TS. LÊ VĂN VINH** \
+GVPB: **ThS. Lê Thị Minh Châu**
 
 Sinh viên thực hiện:
 | Họ và tên | MSSV |

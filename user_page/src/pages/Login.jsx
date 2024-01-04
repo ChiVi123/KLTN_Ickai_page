@@ -80,13 +80,12 @@ function Login() {
                 };
                 const result = await authServices.withSocial(data);
 
-                console.log(result);
-
-                // dispatch(userActions.addUser(result));
+                dispatch(userActions.addUser(result));
                 toast.success(notifies.loginSuccess);
+                navigate(directions.home);
             }
         })();
-    }, [dispatch, profile]);
+    }, [dispatch, navigate, profile]);
 
     const handleSubmitData = async (data) => {
         const result = await authServices.login(data);

@@ -14,3 +14,4 @@ export const query = 'query';
 export const sale = 'sale';
 export const sortBy = 'sortBy';
 export const state = 'state';
+export const summary = 'summary';
