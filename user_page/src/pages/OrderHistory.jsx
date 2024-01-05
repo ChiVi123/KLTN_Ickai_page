@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { contextPage, lists } from '~/common';
 import { Col, Row, Typography } from '~/components';
@@ -12,22 +12,50 @@ import {
 import { toArray } from '~/utils/funcs';
 
 function OrderHistory() {
-    const skeleton = toArray(10);
-    const [tab, setTab] = useState({ content: 'Tất cả', value: '' });
+    const size = 5;
+    const skeleton = toArray(size);
+    const [page, setPage] = useState(0);
+    const [tab, setTab] = useState(lists.tabs[0]);
+    const stateRef = useRef(lists.tabs[0].value);
     const dispatch = useDispatch();
-    const { items: orders, isLoading } = useSelector(
-        orderHistorySelector.selectFilter,
-    );
+    const {
+        items: orders,
+        isLoading,
+        totalPage,
+    } = useSelector(orderHistorySelector.selectFilter);
 
     useEffect(() => {
-        dispatch(ordersAsync.getAllOrder());
-    }, [dispatch]);
+        const isChange = tab.value !== stateRef.current;
+        let currentPage = isChange ? 0 : page;
 
-    useEffect(() => {
-        dispatch(orderHistoryActions.filter(tab.value));
-    }, [dispatch, tab]);
+        if (isChange) {
+            setPage(0);
+            stateRef.current = tab.value;
+        }
 
-    const handleClickTab = (tab) => setTab(tab);
+        dispatch(
+            ordersAsync.getAllOrder({
+                state: tab.value,
+                page: currentPage,
+                size,
+                isChange,
+            }),
+        );
+
+        return () => {
+            dispatch(orderHistoryActions.reset());
+            stateRef.current = lists.tabs[0].value;
+        };
+    }, [dispatch, page, tab.value]);
+
+    function handleClickTab(tab) {
+        setTab(tab);
+    }
+    function handleMore() {
+        if (page + 1 < totalPage) {
+            setPage(page + 1);
+        }
+    }
 
     return (
         <div className='width-md'>
@@ -42,18 +70,34 @@ function OrderHistory() {
 
             <div className='width-sm'>
                 <Row cols={1} gy={1}>
-                    {isLoading
-                        ? skeleton.map((_, index) => (
-                              <Col key={index}>
-                                  <OrderItemSkeleton />
-                              </Col>
-                          ))
-                        : orders.map((order, index) => (
-                              <Col key={index}>
-                                  <OrderItem order={order} />
-                              </Col>
-                          ))}
+                    {orders &&
+                        orders.map((order, index) => (
+                            <Col key={index}>
+                                <OrderItem order={order} />
+                            </Col>
+                        ))}
+                    {isLoading &&
+                        skeleton.map((_, index) => (
+                            <Col key={index}>
+                                <OrderItemSkeleton />
+                            </Col>
+                        ))}
                 </Row>
+                {page + 1 < totalPage && (
+                    <span
+                        style={{
+                            display: 'block',
+                            marginTop: '20px',
+                            textAlign: 'center',
+                            color: 'var(--primary-color)',
+                            cursor: 'pointer',
+                            opacity: isLoading && 0.4,
+                        }}
+                        onClick={handleMore}
+                    >
+                        Xem thêm
+                    </span>
+                )}
             </div>
         </div>
     );

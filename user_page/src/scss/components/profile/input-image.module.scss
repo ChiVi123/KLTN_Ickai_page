@@ -1,11 +1,15 @@
 .input {
     position: relative;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 24px;
 
     .avatar {
-        --size: 60px;
+        --size: 80px;
 
         width: var(--size);
         height: var(--size);
+        margin: 0 auto;
         border-radius: var(--round);
         background-color: var(--bg-theme-color);
     }

@@ -13,6 +13,7 @@ import styles from '~/scss/pages/order.module.scss';
 const cx = classNames.bind(styles);
 
 function Order() {
+    const [loading, setLoading] = useState(false);
     const [order, setOrder] = useState();
     const [isCancel, setIsCancel] = useState(false);
     const { orderId } = useParams();
@@ -24,8 +25,10 @@ function Order() {
 
     useEffect(() => {
         (async (orderId) => {
+            setLoading(true);
             const result = await orderServices.getOrderById(orderId);
 
+            setLoading(false);
             setOrder(result);
             setIsCancel(isCancelDisplay(result));
         })(orderId);
@@ -110,9 +113,9 @@ function Order() {
 
                         {/* Delivery */}
                         <Col>
-                            {order?.delivery && (
+                            {order?.delivery && !loading && (
                                 <span className={cx('large-text')}>
-                                    {contextParams.address(order?.delivery)}
+                                    {contextParams.address(order.delivery)}
                                 </span>
                             )}
                         </Col>
@@ -126,11 +129,36 @@ function Order() {
                         </Col>
 
                         {/* State payment */}
-                        {order?.paymentType && order?.state && (
+                        {!loading && order?.state && (
                             <Col>
                                 <span className={cx('large-text')}>
                                     {contextPage.status}
                                     {enums.payments[order.state].state}
+                                </span>
+                            </Col>
+                        )}
+
+                        {/* State subtotal */}
+                        {!loading && (
+                            <Col>
+                                <span className={cx('large-text')}>
+                                    Tạm tính:
+                                </span>
+                                <span className={cx('large-text')}>
+                                    {order?.subtotal &&
+                                        currencyVN(order.subtotal)}
+                                </span>
+                            </Col>
+                        )}
+
+                        {/* State fee */}
+                        {!loading && (
+                            <Col>
+                                <span className={cx('large-text')}>
+                                    Phí giao hàng:
+                                </span>
+                                <span className={cx('large-text')}>
+                                    {order?.fee && currencyVN(order.fee)}
                                 </span>
                             </Col>
                         )}
@@ -147,7 +175,7 @@ function Order() {
                                         'large-text--blue',
                                     )}
                                 >
-                                    {currencyVN(order?.totalPrice)}
+                                    {currencyVN(order.totalPrice)}
                                 </span>
                             )}
                         </Col>
@@ -192,7 +220,7 @@ function Order() {
                                 </div>
                                 {item?.price && (
                                     <span className={cx('text')}>
-                                        {currencyVN(item?.subPrice)}
+                                        {currencyVN(item?.price)}
                                     </span>
                                 )}
                             </li>

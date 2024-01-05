@@ -3,10 +3,12 @@ import { request } from '~/utils';
 
 export const getAllOrder = createAsyncThunk(
     'orders/getAllOrder',
-    async (page, { rejectWithValue }) => {
+    async ({ state, page, size = 5, isChange }, { rejectWithValue }) => {
         try {
-            const response = await request.get(`orders/getallorder`);
-            return response.data;
+            const response = await request.get(`orders/getallorder`, {
+                params: { state, page, size },
+            });
+            return { ...response.data, isChange };
         } catch (error) {
             return rejectWithValue(error?.response?.data?.message);
         }

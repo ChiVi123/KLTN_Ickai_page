@@ -1,17 +1,17 @@
 import axios from 'axios';
 import { keys } from '~/common';
 
+const domain =
+    process.env.NODE_ENV === 'production'
+        ? process.env.REACT_APP_API_PRODUCTION
+        : process.env.REACT_APP_API;
 const key = `persist:${keys.persist}`;
-const baseURL = `${process.env.REACT_APP_API}/api/`;
+const baseURL = `${domain}/api/`;
 
-// const getToken = (request) => {
+console.log(domain);
+
 const getToken = () => {
     const item = window.localStorage.getItem(key);
-
-    // logger({
-    //     groupName: getToken.name,
-    //     values: [item, request],
-    // });
 
     if (item) {
         const { user } = JSON.parse(item);

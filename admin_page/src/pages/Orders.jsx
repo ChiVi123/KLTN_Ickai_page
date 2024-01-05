@@ -43,7 +43,7 @@ function Orders() {
         isLoading,
     } = useSelector(orderHistorySelector.selectList);
 
-    const skeleton = Array.from({ length: 10 }, (_, index) => index);
+    const skeleton = Array.from({ length: 6 }, (_, index) => index);
     const firstPage = 1;
     const currentPage = parseInt(searchParams.get(keys.page)) || firstPage;
     const query = searchParams.get(keys.query) || '';

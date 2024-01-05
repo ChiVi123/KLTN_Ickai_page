@@ -11,7 +11,7 @@ function PublicRoutes() {
     const { accessToken } = useSelector(userSelector.selectInfo);
 
     useEffect(() => {
-        if (isExpired(accessToken)) {
+        if (accessToken && isExpired(accessToken)) {
             logout();
         }
         return () => {};

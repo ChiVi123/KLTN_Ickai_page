@@ -16,5 +16,5 @@ export const address = ({
     shipProvince,
     shipDistrict,
     shipWard,
-}) => `Địa chỉ: ${shipAddress}, ${shipProvince}, ${shipDistrict}, ${shipWard}`;
+}) => `Địa chỉ: ${shipAddress}, ${shipWard}, ${shipDistrict}, ${shipProvince}`;
 export const hello = (username) => `Xin chào ${username}`;

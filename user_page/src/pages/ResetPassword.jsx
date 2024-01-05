@@ -34,16 +34,16 @@ function ResetPassword() {
 
     const handleOnSubmit = async (data) => {
         const id = user.id;
-        const resetPassword = data.password;
-        const result = await userServices.resetPassword(id, { resetPassword });
+        const resetpass = data.password;
+        const result = await userServices.resetPassword(id, { resetpass });
 
         if (result?.data?.id) {
             toast.success(notifies.resetPasswordSuccess);
-            dispatch(userActions.reset());
             navigate(directions.signIn);
         } else {
             toast.error(notifies.resetPasswordFail);
         }
+        dispatch(userActions.reset());
     };
 
     return (

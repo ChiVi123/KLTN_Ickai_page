@@ -12,7 +12,7 @@ function PrivateRoutes() {
     const user = useSelector(userSelector.selectInfo);
 
     useEffect(() => {
-        if (isExpired(user.accessToken)) {
+        if (user?.accessToken && isExpired(user.accessToken)) {
             logout();
         }
         return () => {};

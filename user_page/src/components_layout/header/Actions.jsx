@@ -1,9 +1,7 @@
 import Tippy from '@tippyjs/react';
 import classNames from 'classnames/bind';
-import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-
 import { avatarDefault } from '~/assets/images';
 import { contextPage, directions } from '~/common';
 import { Button, Typography } from '~/components';
@@ -11,8 +9,6 @@ import { useLogout } from '~/hooks';
 import { CartIcon } from '~/icons';
 import { cartSelector, userSelector } from '~/redux';
 import styles from '~/scss/layouts/actions-header.module.scss';
-
-import ButtonToggle from './ButtonToggle';
 import UserDropdown from './UserDropdown';
 
 const cx = classNames.bind(styles);
@@ -38,26 +34,10 @@ const buttons = [
 ];
 
 function Actions() {
-    const initDark = JSON.parse(localStorage.getItem('isDark'));
-
-    const [isDark, setIsDark] = useState(initDark);
     const { avatar, name } = useSelector(userSelector.selectInfo);
     const totalProduct = useSelector(cartSelector.selectTotalProduct);
 
     const handleLogOut = useLogout();
-    const handleToggle = () => setIsDark((prev) => !prev);
-
-    useEffect(() => {
-        if (isDark) {
-            document.body.classList.add('dark');
-        } else {
-            document.body.classList.remove('dark');
-        }
-
-        localStorage.setItem('isDark', JSON.stringify(isDark));
-
-        return () => {};
-    }, [isDark]);
 
     return (
         <div className={cx('wrap')}>
@@ -76,27 +56,13 @@ function Actions() {
                     </Button>
                 ))}
 
-            {!name && (
-                <ButtonToggle
-                    component='button'
-                    handleTheme={handleToggle}
-                    dark={isDark}
-                    tabIndex={-1}
-                    classes={cx('btn-toggle')}
-                />
-            )}
-
             {name && (
                 <div>
                     <Tippy
                         content={
                             <UserDropdown
-                                dark={isDark}
                                 handleLogOut={handleLogOut}
-                                handleTheme={handleToggle}
-                            >
-                                <ButtonToggle component='span' dark={isDark} />
-                            </UserDropdown>
+                            ></UserDropdown>
                         }
                         placement='bottom-end'
                         trigger='click'

@@ -50,6 +50,7 @@
 .product {
     position: relative;
     display: flex;
+    align-items: center;
     justify-content: space-between;
     max-width: 427px;
     padding-top: var(--spacer-3);
@@ -93,6 +94,10 @@
 .text {
     color: var(--text-3-color);
     font-size: 1.4rem;
+
+    &--price {
+        transform: translateY(-15%);
+    }
 }
 
 .large-text {

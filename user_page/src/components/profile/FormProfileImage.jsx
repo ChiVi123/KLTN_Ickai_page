@@ -3,12 +3,12 @@ import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
 import Swal from 'sweetalert2';
-
 import { avatarDefault } from '~/assets/images';
 import { contextPage, inputNames, labels, notifies, types } from '~/common';
 import { Button, Col, Row } from '~/components';
 import { userActions } from '~/redux';
 import { userServices } from '~/services';
+
 import styles from '~profile/input-image.module.scss';
 
 const cx = classNames.bind(styles);
@@ -39,8 +39,6 @@ function FormProfileImage({ user = userType }) {
     };
     const handleOnSubmit = (event) => {
         event.preventDefault();
-        // logger({ groupName: FormProfileImage.name, values: [file] });
-
         const formData = new FormData();
         const { id } = user;
         formData.append(inputNames.avatar, file);
@@ -70,15 +68,9 @@ function FormProfileImage({ user = userType }) {
     };
 
     return (
-        <form
-            className='form'
-            style={{
-                '--width': '100%',
-            }}
-            onSubmit={handleOnSubmit}
-        >
+        <form className='form' onSubmit={handleOnSubmit}>
             <Row cols={1} gx={3}>
-                <Col baseCols={2}>
+                <Col>
                     <div className={cx('input')}>
                         <label
                             htmlFor={inputNames.avatar}
@@ -103,15 +95,15 @@ function FormProfileImage({ user = userType }) {
                         />
                     </div>
                 </Col>
-                <Col baseCols={4}>
-                    <div className='df-center' style={{ height: '100%' }}>
+                <Col>
+                    <div className='df-center'>
                         <Button
                             type={types.submit}
                             variant='outlined'
                             color='primary'
                             size='sm'
                         >
-                            {contextPage.save}
+                            Lưu ảnh đại diện
                         </Button>
                     </div>
                 </Col>

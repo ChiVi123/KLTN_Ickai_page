@@ -1,7 +1,7 @@
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames/bind';
-import { Fragment, useEffect, useState } from 'react';
+import { Fragment } from 'react';
 import { useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import { contextPage, contextParams, directions } from '~/common';
@@ -10,30 +10,14 @@ import { Typography } from '~/components';
 import { useLogout } from '~/hooks';
 import { categoriesSelector, userSelector } from '~/redux';
 import styles from '~/scss/layouts/modal-menu.module.scss';
-import ButtonToggle from './ButtonToggle';
 
 const cx = classNames.bind(styles);
 
 function ModalMenu({ onClose = () => {} }) {
-    const initDark = JSON.parse(localStorage.getItem('isDark'));
-    const [isDark, setIsDark] = useState(initDark);
     const user = useSelector(userSelector.selectInfo);
     const categories = useSelector(categoriesSelector.selectItems);
 
-    useEffect(() => {
-        if (isDark) {
-            document.body.classList.add('dark');
-        } else {
-            document.body.classList.remove('dark');
-        }
-
-        localStorage.setItem('isDark', JSON.stringify(isDark));
-
-        return () => {};
-    }, [isDark]);
-
     const handleLogOut = useLogout();
-    const handleToggle = () => setIsDark((prev) => !prev);
 
     return (
         <Fragment>
@@ -103,10 +87,6 @@ function ModalMenu({ onClose = () => {} }) {
                         {contextPage.signOut}
                     </span>
                 )}
-                <span className={cx('item')} onClick={handleToggle}>
-                    {isDark ? contextPage.dark : contextPage.light}
-                    <ButtonToggle component='span' dark={isDark} />
-                </span>
 
                 {/* Category */}
                 <Typography variant='h3' classes={cx('heading')}>

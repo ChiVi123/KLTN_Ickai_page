@@ -18,9 +18,11 @@ function Col({
     offsetXxl,
     classes,
     component,
+    ...passProps
 }) {
     const infix = baseCols || baseCols === 0 ? `-${baseCols}` : '';
     const Component = component || 'div';
+    const props = { ...passProps };
 
     return (
         <Component
@@ -38,6 +40,7 @@ function Col({
                 [`offset-xxl-${offsetXxl}`]: offsetXxl || offsetXxl === 0,
                 [classes]: classes,
             })}
+            {...props}
         >
             {children}
         </Component>

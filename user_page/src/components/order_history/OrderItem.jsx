@@ -9,7 +9,7 @@ import styles from '~order-history/order-item.module.scss';
 const cx = classNames.bind(styles);
 
 function OrderItem({ order }) {
-    if (order.state === 'enable') {
+    if (order?.state === 'enable') {
         return <Fragment />;
     } else {
         return (
@@ -18,38 +18,46 @@ function OrderItem({ order }) {
                     <Col baseCols={12} baseColsMd={9}>
                         <div className={cx('inner')}>
                             <Typography variant='h4' classes={cx('title')}>
-                                {contextParams.titleOrderId(order.id)}
+                                {order?.id &&
+                                    contextParams.titleOrderId(order.id)}
                             </Typography>
-                            <span className={cx('tag', `tag--${order.state}`)}>
-                                {enums.payments[order.state].state}
+                            <span className={cx('tag', `tag--${order?.state}`)}>
+                                {enums.payments[order?.state]?.state}
                             </span>
                         </div>
                         <div className={cx('inner')}>
                             <span
                                 className={cx('normal-text', 'info__summary')}
                             >
-                                {contextParams.summaryItems(order.items)}
+                                {order?.items &&
+                                    contextParams.summaryItems(order.items)}
                             </span>
                         </div>
                         <div className={cx('inner')}>
                             <span className={cx('normal-text')}>
-                                {formatLocalDate(new Date(order.createdDate))}
+                                {order?.createdDate &&
+                                    formatLocalDate(
+                                        new Date(order.createdDate),
+                                    )}
                             </span>
                             <span className={cx('normal-text')}>
-                                {currencyVN(order.totalPrice)}
+                                {order?.totalPrice &&
+                                    currencyVN(order.totalPrice)}
                             </span>
                         </div>
                     </Col>
 
                     <Col>
                         <div className={cx('wrap-btn')}>
-                            <Button
-                                to={`/order/${order.id}`}
-                                color='primary'
-                                size='sm'
-                            >
-                                {contextPage.moreDetail}
-                            </Button>
+                            {order?.id && (
+                                <Button
+                                    to={`/order/${order.id}`}
+                                    color='primary'
+                                    size='sm'
+                                >
+                                    {contextPage.moreDetail}
+                                </Button>
+                            )}
                         </div>
                     </Col>
                 </Row>

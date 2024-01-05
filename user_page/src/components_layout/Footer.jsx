@@ -16,9 +16,7 @@ function Footer() {
                 <div className='container'>
                     <div className='row row-cols-1 gy-2'>
                         <div className='col col-sm-2'>
-                            <p className={cx('text', 'text--middle')}>
-                                KLTN Nhóm 12 Hội đồng 2
-                            </p>
+                            <p className={cx('text', 'text--middle')}></p>
                         </div>
                         <div className='col col-sm-8'>
                             <p className={cx('text', 'text--middle')}>

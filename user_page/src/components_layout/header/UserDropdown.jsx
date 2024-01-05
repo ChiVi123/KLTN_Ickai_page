@@ -22,14 +22,6 @@ function UserDropdown({
                 </Link>
             ))}
 
-            {/* Theme */}
-            <span className={cx('item')} onClick={handleTheme}>
-                <Typography variant='text1'>
-                    {dark ? contextPage.dark : contextPage.light}
-                </Typography>
-                {children}
-            </span>
-
             {/* Log Out */}
             <span
                 className={cx('item', 'item--separate')}

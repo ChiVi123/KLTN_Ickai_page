@@ -14,7 +14,7 @@ import {
 } from '~/common';
 import { Button, Col, Row, Typography } from '~/components';
 import { orderServices, userServices } from '~/services';
-import { currencyVN, priceSaleVN } from '~/utils/funcs';
+import { currencyVN } from '~/utils/funcs';
 
 import styles from '~/scss/pages/order.module.scss';
 
@@ -197,11 +197,10 @@ function AdminOrder() {
 
                         {/* Delivery */}
                         <Col>
-                            {order?.delivery && (
-                                <span className={cx('large-text')}>
-                                    {contextParams.address(order?.delivery)}
-                                </span>
-                            )}
+                            <span className={cx('large-text')}>
+                                {order?.delivery &&
+                                    contextParams.address(order.delivery)}
+                            </span>
                         </Col>
 
                         {/* Method payment */}
@@ -217,7 +216,7 @@ function AdminOrder() {
                             <Col>
                                 <span className={cx('large-text')}>
                                     {contextPage.fieldState}
-                                    {orderState.isPay}
+                                    {orderState.state}
                                 </span>
                             </Col>
                         )}
@@ -228,18 +227,13 @@ function AdminOrder() {
                                 {contextPage.resolvePrice}
                             </span>
                         </Col>
-                        {order?.totalPrice && (
-                            <Col baseColsXl={6}>
-                                <span
-                                    className={cx(
-                                        'large-text',
-                                        'large-text--blue',
-                                    )}
-                                >
-                                    {currencyVN(order?.totalPrice)}
-                                </span>
-                            </Col>
-                        )}
+                        <Col baseColsXl={6}>
+                            <span
+                                className={cx('large-text', 'large-text--blue')}
+                            >
+                                {order?.subtotal && currencyVN(order.subtotal)}
+                            </span>
+                        </Col>
 
                         {orderState.isCancel && (
                             <Col baseColsXl={4}>
@@ -284,13 +278,9 @@ function AdminOrder() {
                                 {item.name}
                             </Typography>
                         </div>
-                        {item?.price && (
-                            <span className={cx('text')}>
-                                {currencyVN(
-                                    priceSaleVN(item?.price, item?.sale),
-                                )}
-                            </span>
-                        )}
+                        <span className={cx('text')}>
+                            {item?.price && currencyVN(item.price)}
+                        </span>
                     </li>
                 ))}
             </ul>

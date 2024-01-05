@@ -1,10 +1,13 @@
 import axios from 'axios';
 import { keys } from '~/common';
 
+const domain =
+    process.env.NODE_ENV === 'production'
+        ? process.env.REACT_APP_API_PRODUCTION
+        : process.env.REACT_APP_API;
 const key = `persist:${keys.persist}`;
-const baseURL = `${process.env.REACT_APP_API}/api/`;
+const baseURL = `${domain}/api/`;
 
-// const getToken = (request) => {
 const getToken = () => {
     const localStorage = window.localStorage.getItem(key);
 

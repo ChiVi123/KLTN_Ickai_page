@@ -11,7 +11,7 @@ export const search = createAsyncThunk(
             to = '30-12-2023',
             state = '',
             page = 0,
-            size = 10,
+            size = 6,
         },
         { rejectWithValue },
     ) {

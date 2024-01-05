@@ -60,6 +60,10 @@
     color: var(--text-1-color);
     font-size: 1.8rem;
 
+    & ~ & {
+        margin-left: 8px;
+    }
+
     &--blue {
         color: var(--fourth-color);
         font-weight: 600;

@@ -65,7 +65,7 @@ function Checkout() {
     } = useForm({
         resolver: yupResolver(schemas.makeOrder),
         defaultValues: {
-            name: '',
+            name: user.name || '',
             email: user.email || '',
             phone: user.phone || '',
             payment: 'cod',
@@ -332,7 +332,12 @@ function Checkout() {
                                                         {item.name}
                                                     </Typography>
                                                 </div>
-                                                <span className={cx('text')}>
+                                                <span
+                                                    className={cx(
+                                                        'text',
+                                                        'text--price',
+                                                    )}
+                                                >
                                                     {currencyVN(item.subPrice)}
                                                 </span>
                                             </li>
@@ -341,11 +346,7 @@ function Checkout() {
                             </div>
 
                             {/* Bill */}
-                            <Row
-                                cols={1}
-                                colsSm={2}
-                                classes={cx('wrap-section')}
-                            >
+                            <Row cols={1} classes={cx('wrap-section')}>
                                 <Col>
                                     <div className={cx('wrap-text')}>
                                         <span className={cx('text')}>

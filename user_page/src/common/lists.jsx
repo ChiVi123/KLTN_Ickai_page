@@ -6,10 +6,6 @@ export const menuModal = [
         context: 'Tài khoản',
     },
     {
-        to: directions.address,
-        context: 'Địa chỉ',
-    },
-    {
         to: directions.changePassword,
         context: 'Thay đổi mật khẩu',
     },
@@ -26,10 +22,6 @@ export const menuAccount = [
     {
         to: directions.profile,
         context: 'Tài khoản',
-    },
-    {
-        to: directions.address,
-        context: 'Địa chỉ',
     },
     {
         to: directions.changePassword,
@@ -52,10 +44,10 @@ export const sortMobile = [
     { name: 'Giá', value: 'priceAsc' },
 ];
 export const tabs = [
-    { content: 'Tất cả', value: '' },
-    { content: 'Đã thanh toán', value: 'pendingpay' },
+    { content: 'Tất cả', value: 'all' },
+    { content: 'Đã thanh toán và đang xử lý', value: 'pendingpay' },
     { content: 'Đang xử lý', value: 'pending' },
-    { content: 'Đang vận chuyển', value: 'delivery' },
+    { content: 'Đang giao hàng', value: 'delivery' },
     { content: 'Hoàn thành', value: 'complete' },
     { content: 'Đã hủy', value: 'cancel' },
 ];

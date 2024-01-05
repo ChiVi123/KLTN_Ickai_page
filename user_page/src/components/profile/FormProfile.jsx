@@ -2,8 +2,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
-
-import { contextPage, inputGroups, notifies, schemas, types } from '~/common';
+import { inputGroups, notifies, schemas, types } from '~/common';
 import { Button, Col, Row, TextField } from '~/components';
 import { userActions } from '~/redux';
 import { userServices } from '~/services';
@@ -53,38 +52,33 @@ function Form({ user = userType }) {
             style={{ '--width': '100%' }}
             onSubmit={handleSubmit(handleOnSubmit)}
         >
-            <Row g={3}>
-                <Col baseCols={8}>
-                    <Row cols={1}>
-                        {inputGroups.profile.map((item) => (
-                            <Col key={item.inputName}>
-                                <TextField
-                                    type={item.type}
-                                    id={item.inputName}
-                                    label={item.label}
-                                    name={item.inputName}
-                                    placeholder={item.placeholder}
-                                    disabled={item?.disabled}
-                                    register={register}
-                                    errors={errors}
-                                />
-                            </Col>
-                        ))}
-                    </Row>
-                </Col>
-                <Col baseCols={4}>
-                    <div className='df-center' style={{ height: '100%' }}>
-                        <Button
-                            type={types.submit}
-                            variant='outlined'
-                            color='primary'
-                            size='sm'
-                        >
-                            {contextPage.save}
-                        </Button>
-                    </div>
-                </Col>
+            <Row cols={1} g={3}>
+                {inputGroups.profile.map((item) => (
+                    <Col key={item.inputName}>
+                        <TextField
+                            type={item.type}
+                            id={item.inputName}
+                            label={item.label}
+                            name={item.inputName}
+                            placeholder={item.placeholder}
+                            disabled={item?.disabled}
+                            register={register}
+                            errors={errors}
+                        />
+                    </Col>
+                ))}
             </Row>
+
+            <div className='flex flex-end'>
+                <Button
+                    type={types.submit}
+                    variant='outlined'
+                    color='primary'
+                    size='sm'
+                >
+                    Lưu thông tin
+                </Button>
+            </div>
         </form>
     );
 }
