@@ -13,7 +13,7 @@ import { logger } from '~/utils/logger';
 
 const cx = classNames.bind(styles);
 
-function FilterSort({ max = 999999, placeholder = '' }) {
+function FilterSort({ max = 9999999, placeholder = '' }) {
     const [searchParams, setSearchParams] = useSearchParams();
     const {
         register,
