@@ -1,28 +1,19 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
-
-import {
-    contextButton,
-    contextPage,
-    directions,
-    keys,
-    lists,
-    titles,
-} from '~/common';
+import { contextButton, directions, keys, lists, titles } from '~/common';
 import {
     Button,
     Col,
     Pagination,
     Row,
-    SearchList,
     SortSelect,
     Table,
     Tabs,
     Typography,
 } from '~/components';
 import { productsAsync, productsSelector } from '~/redux';
-import PriceField from './products/PriceField';
+import FilterSort from './products/FilterSort';
 import ProductItem from './products/ProductItem';
 
 function Products() {
@@ -34,7 +25,7 @@ function Products() {
         isLoading,
     } = useSelector(productsSelector.selectList);
     const { items: tabs } = useSelector(productsSelector.selectCount);
-    const productMaxPrice = useSelector(productsSelector.selectMaxPrice);
+    // const productMaxPrice = useSelector(productsSelector.selectMaxPrice);
 
     const options = [
         { value: '', label: 'Mới nhất' },
@@ -89,28 +80,11 @@ function Products() {
 
             <div style={{ marginBlock: '60px' }}></div>
 
-            <Row gx={0} alignItems='center'>
-                <Col baseCols={3}>
-                    <PriceField max={productMaxPrice} />
-                </Col>
-                <Col>
-                    <SearchList placeholder='Tìm kiếm...' />
-                </Col>
-                <Col baseCols={2}>
-                    <button
-                        type='submit'
-                        form='form-price'
-                        className='btn'
-                        style={{
-                            '--btn-height': '49px',
-                            '--btn-min-width': '80px',
-                            '--btn-bg-color': '#372ff0',
-                            '--btn-color': '#ffffff',
-                        }}
-                    >
-                        {contextPage.apply}
-                    </button>
-                </Col>
+            <FilterSort placeholder='Tìm kiếm...' />
+
+            <div style={{ marginBlock: '20px' }}></div>
+
+            <Row>
                 <Col baseCols={9}>
                     <Tabs tabs={tabs} />
                 </Col>

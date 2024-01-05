@@ -65,7 +65,7 @@ function IntroProduct({
         }
 
         const isBuyNow = !!submitter.attributes['buy-now'];
-        const data = { productId, quantity: isBuyNow ? 1 : quantity };
+        const data = { productId, quantity };
         const result = await cartServices.addCart(data);
 
         if (result.isSuccess) {

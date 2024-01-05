@@ -71,4 +71,5 @@ export const filterPrice = yup.object({
             (value) => value >= 0,
         )
         .moreThan(yup.ref('minPrice'), 'giá trị quá nhỏ'),
+    query: yup.string().trim(),
 });

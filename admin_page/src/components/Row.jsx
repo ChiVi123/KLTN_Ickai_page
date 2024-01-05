@@ -17,9 +17,16 @@ function Row({
     sb = false,
     noSide = false,
     classes,
+    component,
+    ...props
 }) {
+    let Component = 'div';
+
+    if (component) {
+        Component = component;
+    }
     return (
-        <div
+        <Component
             className={cx('row', {
                 [`row-cols-${cols}`]: cols,
                 [`row-cols-sm-${colsSm}`]: colsSm,
@@ -36,9 +43,10 @@ function Row({
                 'no-gutter-side': noSide,
                 [classes]: classes,
             })}
+            {...props}
         >
             {children}
-        </div>
+        </Component>
     );
 }
 

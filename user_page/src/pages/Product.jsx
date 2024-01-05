@@ -31,12 +31,13 @@ import {
     watchedSelector,
 } from '~/redux';
 import { orderServices } from '~/services';
-import { averageRating } from '~/utils/funcs';
+import { averageRating, documentTitle } from '~/utils/funcs';
 
 import styles from '~/scss/pages/product.module.scss';
 
 import 'react-quill/dist/quill.snow.css';
 
+import { ickai } from '~/common/titles';
 import '~/scss/vendors/quill.scss';
 
 const cx = classNames.bind(styles);
@@ -82,7 +83,14 @@ function Product() {
             );
         }
     }, [dispatch, id, product]);
-
+    useEffect(() => {
+        if (product?.name) {
+            document.title = documentTitle(product.name);
+        }
+        return () => {
+            document.title = ickai;
+        };
+    }, [product.name]);
     useEffect(() => {
         (async () => {
             if (userId) {

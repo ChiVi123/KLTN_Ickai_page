@@ -97,3 +97,6 @@ export function createObjectList() {
         status: 'pending',
     };
 }
+export function documentTitle(value) {
+    return `${value} | ICKAI`;
+}
